@@ -65,7 +65,6 @@ export const AuthButton: React.FC = () => {
             <div className="p-2">
               <button
                 onClick={() => {
-                  // Navigate to profile
                   window.location.hash = 'dashboard';
                   setShowUserMenu(false);
                 }}

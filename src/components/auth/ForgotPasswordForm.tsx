@@ -41,6 +41,7 @@ export const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setFormError(null);
     
     const emailValidationError = validateEmail(email);
     if (emailValidationError) {
@@ -59,19 +60,18 @@ export const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
   if (isSubmitted) {
     return (
       <div className="space-y-6 text-center">
-        <div className="w-16 h-16 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mx-auto mb-2">
-          <Mail className="w-8 h-8 text-green-600 dark:text-green-400" />
+        <div className="w-16 h-16 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mx-auto mb-6">
+          <Mail className="w-8 h-8 text-green-600" />
         </div>
         
-        <div>
-          <h2 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">
-            Check Your Email
-          </h2>
-          <p className="text-sm text-neutral-600 dark:text-neutral-400">
-            We've sent a password reset link to <strong>{email}</strong>
-          </p>
-        </div>
-
+        <h2 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
+          Check Your Email
+        </h2>
+        
+        <p className="text-neutral-600 dark:text-neutral-400 mb-6">
+          We've sent a password reset link to <strong>{email}</strong>
+        </p>
+        
         <div className="space-y-4">
           <Button
             variant="primary"
