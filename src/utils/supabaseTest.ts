@@ -15,7 +15,6 @@ export const testSupabaseConnection = async () => {
     }
     
     console.log('✅ Supabase connection successful!');
-    console.log('📊 Profiles table count:', data);
     
     // Test auth
     const { data: { session } } = await supabase.auth.getSession();
@@ -24,7 +23,7 @@ export const testSupabaseConnection = async () => {
     return { success: true, data };
   } catch (error) {
     console.error('❌ Connection test failed:', error);
-    return { success: false, error: error.message };
+    return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
   }
 };
 
@@ -52,6 +51,6 @@ export const createTestProfile = async () => {
     return { success: true, data };
   } catch (error) {
     console.error('❌ User creation failed:', error);
-    return { success: false, error: error.message };
+    return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
   }
 };

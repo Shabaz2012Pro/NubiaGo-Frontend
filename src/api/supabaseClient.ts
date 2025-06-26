@@ -23,18 +23,12 @@ export const supabase = createClient<Database>(
       flowType: 'pkce'
     },
     global: {
-      fetch: fetch.bind(globalThis),
       headers: {
         'X-Client-Info': 'nubiago-frontend@1.0.0'
       }
     },
     db: {
       schema: 'public'
-    },
-    realtime: {
-      params: {
-        eventsPerSecond: 2
-      }
     }
   }
 );

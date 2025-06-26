@@ -34,6 +34,8 @@ class ErrorTracker {
   }
 
   private setupGlobalErrorHandlers() {
+    if (typeof window === 'undefined') return;
+    
     // Handle JavaScript errors
     window.addEventListener('error', (event) => {
       this.trackError({
@@ -76,44 +78,18 @@ class ErrorTracker {
     };
   }
 
-  logError(error: Error, metadata?: Record<string, any>): void {
+  logError(error: Error | string, metadata?: Record<string, any>): void {
+    const errorMessage = error instanceof Error ? error.message : error;
+    const errorStack = error instanceof Error ? error.stack : undefined;
+    
     const errorEvent: ErrorEvent = {
       id: this.generateId(),
       timestamp: new Date(),
       level: 'error',
-      message: error.message,
-      stack: error.stack,
-      userAgent: navigator.userAgent,
-      url: window.location.href,
-      metadata
-    };
-
-    this.addError(errorEvent);
-    this.sendToService(errorEvent);
-  }
-
-  logWarning(message: string, metadata?: Record<string, any>): void {
-    const errorEvent: ErrorEvent = {
-      id: this.generateId(),
-      timestamp: new Date(),
-      level: 'warning',
-      message,
-      userAgent: navigator.userAgent,
-      url: window.location.href,
-      metadata
-    };
-
-    this.addError(errorEvent);
-  }
-
-  logInfo(message: string, metadata?: Record<string, any>): void {
-    const errorEvent: ErrorEvent = {
-      id: this.generateId(),
-      timestamp: new Date(),
-      level: 'info',
-      message,
-      userAgent: navigator.userAgent,
-      url: window.location.href,
+      message: errorMessage,
+      stack: errorStack,
+      userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : undefined,
+      url: typeof window !== 'undefined' ? window.location.href : '',
       metadata
     };
 
@@ -121,6 +97,8 @@ class ErrorTracker {
   }
 
   trackError(error: Partial<ErrorReport>) {
+    if (typeof navigator === 'undefined' || typeof window === 'undefined') return;
+    
     const fullError: ErrorReport = {
       message: error.message || 'Unknown error',
       stack: error.stack,
@@ -145,16 +123,12 @@ class ErrorTracker {
       if (fullError.stack) {
         this.originalConsoleError(fullError.stack);
       }
-      this.originalConsoleError('Details:', fullError);
-    }
-
-    // Send to monitoring service in production
-    if (!import.meta.env.DEV) {
-      this.sendErrorToService(fullError);
     }
   }
 
   private addError(errorEvent: ErrorEvent): void {
+    if (typeof navigator === 'undefined') return;
+    
     this.errors.unshift({
       message: errorEvent.message,
       stack: errorEvent.stack,
@@ -173,36 +147,6 @@ class ErrorTracker {
     return Math.random().toString(36).substr(2, 9);
   }
 
-  private async sendToService(errorEvent: ErrorEvent): Promise<void> {
-    try {
-      // Use the correct backend API base URL
-      const errorTrackingUrl = `${api.defaults.baseURL}/errors`;
-      await fetch(errorTrackingUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(errorEvent)
-      });
-    } catch (e) {
-      this.originalConsoleError('Failed to send error to tracking service:', e);
-    }
-  }
-
-  private async sendErrorToService(error: ErrorReport): Promise<void> {
-    try {
-      // Use the correct backend API base URL
-      const errorTrackingUrl = `${api.defaults.baseURL}/errors`;
-      await fetch(errorTrackingUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(error),
-      });
-    } catch (e) {
-      this.originalConsoleError('Failed to send error to tracking service:', e);
-    }
-  }
-
   getErrors(): ErrorReport[] {
     return [...this.errors];
   }
@@ -210,95 +154,18 @@ class ErrorTracker {
   clearErrors(): void {
     this.errors = [];
   }
-
-  // Track custom application errors
-  trackCustomError(message: string, context?: any) {
-    this.trackError({
-      message: `Custom Error: ${message}`,
-      stack: new Error().stack,
-      userAgent: navigator.userAgent,
-      timestamp: new Date().toISOString(),
-      url: window.location.href,
-      ...context,
-    });
-  }
-
-  // Track performance issues
-  trackPerformanceIssue(metric: string, value: number, threshold: number) {
-    if (value > threshold) {
-      this.trackError({
-        message: `Performance Issue: ${metric} exceeded threshold (${value} > ${threshold})`,
-        userAgent: navigator.userAgent,
-        timestamp: new Date().toISOString(),
-        url: window.location.href,
-      });
-    }
-  }
 }
 
 // Global error tracker instance
 const errorTracker = new ErrorTracker();
 
-// Performance monitoring
-export const performanceMonitor = {
-  measurePageLoad: () => {
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        const perfData = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
-        
-        const metrics = {
-          domContentLoaded: perfData.domContentLoadedEventEnd - perfData.domContentLoadedEventStart,
-          loadComplete: perfData.loadEventEnd - perfData.loadEventStart,
-          firstByte: perfData.responseStart - perfData.requestStart,
-          pageLoad: perfData.loadEventEnd - perfData.navigationStart
-        };
-
-        errorTracker.logInfo('Page performance metrics', metrics);
-      }, 0);
-    });
-  },
-
-  measureApiCall: async <T>(
-    name: string,
-    apiCall: () => Promise<T>
-  ): Promise<T> => {
-    const start = performance.now();
-    try {
-      const result = await apiCall();
-      const duration = performance.now() - start;
-      
-      errorTracker.logInfo(`API call: ${name}`, {
-        duration: Math.round(duration),
-        success: true
-      });
-      
-      return result;
-    } catch (error) {
-      const duration = performance.now() - start;
-      
-      errorTracker.logError(error as Error, {
-        apiCall: name,
-        duration: Math.round(duration)
-      });
-      
-      throw error;
-    }
-  }
-};
-
 // Export functions for use throughout the app
 export const initErrorTracking = () => {
-  console.log('Error tracking initialized');
-  performanceMonitor.measurePageLoad();
   return errorTracker;
 };
 
 export const trackError = (message: string, context?: any) => {
-  errorTracker.trackCustomError(message, context);
-};
-
-export const trackPerformanceIssue = (metric: string, value: number, threshold: number) => {
-  errorTracker.trackPerformanceIssue(metric, value, threshold);
+  errorTracker.logError(message, context);
 };
 
 export const getErrorHistory = () => {

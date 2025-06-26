@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { X, Download, Smartphone, Monitor } from 'lucide-react';
 
@@ -78,12 +77,6 @@ const PWAInstallPrompt: React.FC<PWAInstallPromptProps> = ({
         deferredPrompt.prompt();
         const { outcome } = await deferredPrompt.userChoice;
         
-        if (outcome === 'accepted') {
-          console.log('User accepted the install prompt');
-        } else {
-          console.log('User dismissed the install prompt');
-        }
-
         setDeferredPrompt(null);
         setShowPrompt(false);
         localStorage.setItem('pwa-prompt-shown', 'true');
