@@ -11,7 +11,7 @@ import { AuthProvider } from './contexts/AuthContext';
 
 // Components
 import { RouteErrorBoundary } from './components/molecules/RouteErrorBoundary';
-import { LoadingScreen } from './components/molecules/LoadingScreen';
+import LoadingScreen from './components/molecules/LoadingScreen';
 import OfflineIndicator from './components/molecules/OfflineIndicator';
 import PWAInstallPrompt from './components/molecules/PWAInstallPrompt';
 import { PerformanceMonitor } from './components/molecules/PerformanceMonitor';
