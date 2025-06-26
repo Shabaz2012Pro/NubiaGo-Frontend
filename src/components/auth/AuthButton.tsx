@@ -3,12 +3,14 @@ import { User, LogOut } from 'lucide-react';
 import { useAuthStore } from '../../store/useAuthStore';
 import { Button } from '../atoms/Button';
 import { AuthModal } from './AuthModal';
+import { useNavigate } from 'react-router-dom';
 
 export const AuthButton: React.FC = () => {
   const { user, isAuthenticated, signOut } = useAuthStore();
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [authModalView, setAuthModalView] = useState<'signIn' | 'signUp'>('signIn');
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const navigate = useNavigate();
 
   const handleSignIn = () => {
     setAuthModalView('signIn');
@@ -22,6 +24,11 @@ export const AuthButton: React.FC = () => {
 
   const handleSignOut = async () => {
     await signOut();
+    setShowUserMenu(false);
+  };
+
+  const handleNavigateToDashboard = () => {
+    navigate('/dashboard');
     setShowUserMenu(false);
   };
 
@@ -64,10 +71,7 @@ export const AuthButton: React.FC = () => {
             
             <div className="p-2">
               <button
-                onClick={() => {
-                  window.location.hash = 'dashboard';
-                  setShowUserMenu(false);
-                }}
+                onClick={handleNavigateToDashboard}
                 className="w-full flex items-center space-x-2 p-2 text-left hover:bg-neutral-100 dark:hover:bg-neutral-700 rounded-lg transition-colors"
               >
                 <User className="w-4 h-4" />
