@@ -16,8 +16,6 @@ import {
   Phone,
   Star
 } from 'lucide-react';
-import Header from '../components/organisms/Header';
-import Footer from '../components/organisms/Footer';
 import Card from '../components/atoms/Card';
 import Badge from '../components/atoms/Badge';
 import Button from '../components/atoms/Button';
@@ -85,7 +83,7 @@ const BecomeSupplierPage: React.FC = () => {
       company: 'AudioTech Turkey',
       industry: 'Electronics',
       achievement: '250% increase in export sales within first year',
-      testimonial: 'NubiaGO has transformed our business by opening up African markets we never had access to before. The platform\'s logistics and payment solutions removed all the barriers to international trade.',
+      testimonial: 'NubiaGo has transformed our business by opening up African markets we never had access to before. The platform\'s logistics and payment solutions removed all the barriers to international trade.',
       representative: 'Ahmet Yılmaz, CEO',
       image: 'https://images.pexels.com/photos/3394650/pexels-photo-3394650.jpeg?auto=compress&cs=tinysrgb&w=300'
     },
@@ -93,7 +91,7 @@ const BecomeSupplierPage: React.FC = () => {
       company: 'Istanbul Leather Co.',
       industry: 'Fashion',
       achievement: 'Expanded to 28 African countries in 6 months',
-      testimonial: 'As a traditional leather goods manufacturer, we were hesitant about e-commerce. NubiaGO made the transition seamless, providing all the tools and support we needed to succeed in digital exports.',
+      testimonial: 'As a traditional leather goods manufacturer, we were hesitant about e-commerce. NubiaGo made the transition seamless, providing all the tools and support we needed to succeed in digital exports.',
       representative: 'Zeynep Kaya, Export Manager',
       image: 'https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb&w=300'
     }
@@ -121,8 +119,6 @@ const BecomeSupplierPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white dark:bg-neutral-900">
-      <Header />
-      
       <main className="py-8">
         {/* Breadcrumb */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
@@ -172,10 +168,10 @@ const BecomeSupplierPage: React.FC = () => {
           >
             <motion.div variants={itemVariants} className="text-center mb-12">
               <h2 className="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
-                Why Sell on NubiaGO?
+                Why Sell on NubiaGo?
               </h2>
               <p className="text-lg text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto">
-                Join thousands of Turkish suppliers already growing their business with NubiaGO
+                Join thousands of Turkish suppliers already growing their business with NubiaGo
               </p>
             </motion.div>
 
@@ -211,7 +207,7 @@ const BecomeSupplierPage: React.FC = () => {
             >
               <motion.div variants={itemVariants} className="mb-12">
                 <h2 className="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
-                  NubiaGO by the Numbers
+                  NubiaGo by the Numbers
                 </h2>
                 <p className="text-lg text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto">
                   Join a thriving marketplace with proven results
@@ -252,7 +248,7 @@ const BecomeSupplierPage: React.FC = () => {
                 How It Works
               </h2>
               <p className="text-lg text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto">
-                A simple process to start selling on NubiaGO
+                A simple process to start selling on NubiaGo
               </p>
             </motion.div>
 
@@ -264,7 +260,7 @@ const BecomeSupplierPage: React.FC = () => {
                   { title: 'Apply', description: 'Complete our supplier application form with your business details' },
                   { title: 'Verification', description: 'Our team verifies your business credentials and product quality' },
                   { title: 'Onboarding', description: 'Set up your supplier dashboard and upload your products' },
-                  { title: 'Start Selling', description: 'Your products go live on NubiaGO, reaching millions of African customers' }
+                  { title: 'Start Selling', description: 'Your products go live on NubiaGo, reaching millions of African customers' }
                 ].map((step, index) => (
                   <motion.div
                     key={index}
@@ -366,7 +362,7 @@ const BecomeSupplierPage: React.FC = () => {
                 Supplier Success Stories
               </h2>
               <p className="text-lg text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto">
-                Hear from Turkish suppliers who have grown their business with NubiaGO
+                Hear from Turkish suppliers who have grown their business with NubiaGo
               </p>
             </motion.div>
 
@@ -433,7 +429,7 @@ const BecomeSupplierPage: React.FC = () => {
                   Ready to Expand Your Business?
                 </h2>
                 <p className="text-xl text-red-100 mb-8 max-w-2xl mx-auto">
-                  Join thousands of Turkish suppliers already growing their business with NubiaGO.
+                  Join thousands of Turkish suppliers already growing their business with NubiaGo.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Button 
@@ -474,7 +470,7 @@ const BecomeSupplierPage: React.FC = () => {
                       Still Have Questions?
                     </h2>
                     <p className="text-neutral-600 dark:text-neutral-400 mb-6">
-                      Our supplier support team is here to help you with any questions about joining NubiaGO as a supplier.
+                      Our supplier support team is here to help you with any questions about joining NubiaGo as a supplier.
                     </p>
                     <div className="space-y-4">
                       <div className="flex items-center space-x-3">
@@ -512,8 +508,6 @@ const BecomeSupplierPage: React.FC = () => {
           </motion.div>
         </section>
       </main>
-
-      <Footer />
     </div>
   );
 };

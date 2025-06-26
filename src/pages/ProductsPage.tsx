@@ -1,33 +1,39 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import ProductsGrid from '../components/organisms/ProductsGrid';
 import { Product } from '../types';
 import Breadcrumb from '../components/molecules/Breadcrumb';
 
 const ProductsPage: React.FC = () => {
+  const [searchParams] = useSearchParams();
+  const location = useLocation();
   const [category, setCategory] = useState<string>('');
   const [title, setTitle] = useState('All Products');
   const [description, setDescription] = useState('Discover premium products from verified Turkish suppliers');
   const [loading, setLoading] = useState(true);
 
-  // Get category from URL hash
+  // Get category from URL search params
   useEffect(() => {
-    const hash = window.location.hash.slice(1);
-    if (hash.startsWith('categories/')) {
-      const categoryFromHash = hash.replace('categories/', '');
-      setCategory(categoryFromHash);
+    const categoryParam = searchParams.get('category');
+    if (categoryParam) {
+      setCategory(categoryParam);
       
       // Set title and description based on category
-      const formattedCategory = categoryFromHash.charAt(0).toUpperCase() + categoryFromHash.slice(1).replace(/-/g, ' ');
+      const formattedCategory = categoryParam.charAt(0).toUpperCase() + categoryParam.slice(1).replace(/-/g, ' ');
       setTitle(`${formattedCategory} Products`);
       setDescription(`Discover premium ${formattedCategory.toLowerCase()} products from verified Turkish suppliers`);
+    } else {
+      setCategory('');
+      setTitle('All Products');
+      setDescription('Discover premium products from verified Turkish suppliers');
     }
     
     // Simulate loading
     setTimeout(() => {
       setLoading(false);
     }, 1000);
-  }, []);
+  }, [searchParams]);
 
   // Generate breadcrumb items based on category
   const getBreadcrumbItems = () => {

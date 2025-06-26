@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Building, 
@@ -20,8 +20,6 @@ import {
   Globe,
   ArrowRight
 } from 'lucide-react';
-import Header from '../components/organisms/Header';
-import Footer from '../components/organisms/Footer';
 import Card from '../components/atoms/Card';
 import Badge from '../components/atoms/Badge';
 import Button from '../components/atoms/Button';
@@ -185,8 +183,6 @@ const SuppliersPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white dark:bg-neutral-900">
-      <Header />
-      
       <main>
         {/* Hero Section */}
         <section className="bg-gradient-to-br from-red-600 via-red-700 to-red-800 text-white py-20">
@@ -447,7 +443,7 @@ const SuppliersPage: React.FC = () => {
               </h2>
               <p className="text-xl text-red-100 mb-8 max-w-2xl mx-auto">
                 Join thousands of verified suppliers already serving African markets through our platform. 
-                Expand your business globally with NubiaGO.
+                Expand your business globally with NubiaGo.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button
@@ -470,8 +466,6 @@ const SuppliersPage: React.FC = () => {
           </div>
         </section>
       </main>
-
-      <Footer />
     </div>
   );
 };

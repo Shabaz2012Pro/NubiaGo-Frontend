@@ -45,13 +45,13 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => {
 
   // Navigation items
   const navigationItems = useMemo(() => [
-    { name: 'Electronics', href: '/categories/electronics', icon: <Smartphone className="w-5 h-5" /> },
-    { name: 'Appliances', href: '/categories/appliances', icon: <Home className="w-5 h-5" /> },
-    { name: 'Fashion', href: '/categories/fashion', icon: <Shirt className="w-5 h-5" /> },
-    { name: 'Personal Care', href: '/categories/personal-care', icon: <Sparkles className="w-5 h-5" /> },
-    { name: 'Sports', href: '/categories/sports', icon: <Dumbbell className="w-5 h-5" /> },
+    { name: 'Electronics', href: '/products?category=electronics', icon: <Smartphone className="w-5 h-5" /> },
+    { name: 'Appliances', href: '/products?category=appliances', icon: <Home className="w-5 h-5" /> },
+    { name: 'Fashion', href: '/products?category=fashion', icon: <Shirt className="w-5 h-5" /> },
+    { name: 'Personal Care', href: '/products?category=personal-care', icon: <Sparkles className="w-5 h-5" /> },
+    { name: 'Sports', href: '/products?category=sports', icon: <Dumbbell className="w-5 h-5" /> },
     { name: 'All Products', href: '/products', icon: null }
-  ], [location.pathname]);
+  ], []);
 
   // Scroll handler with debouncing
   const handleScroll = useCallback(
@@ -109,6 +109,10 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => {
       navigate('/');
     }
   }, [location.pathname, navigate]);
+
+  const handleCategoryClick = (category: string) => {
+    navigate(`/products?category=${category.toLowerCase()}`);
+  };
 
   return (
     <>

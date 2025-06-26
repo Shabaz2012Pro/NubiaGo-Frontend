@@ -9,7 +9,7 @@ import { useWishlistStore } from '../../store/useWishlistStore';
 import { optimizeImage } from '../../utils/imageOptimizer';
 import { clsx } from 'clsx';
 
-interface ProductCardProps {
+interface ProductCardOptimizedProps {
   product: Product;
   variant?: 'default' | 'compact' | 'detailed' | 'grid';
   showQuickView?: boolean;
@@ -19,7 +19,7 @@ interface ProductCardProps {
   priority?: boolean;
 }
 
-const ProductCardOptimized: React.FC<ProductCardProps> = memo(({
+const ProductCardOptimized: React.FC<ProductCardOptimizedProps> = memo(({
   product,
   variant = 'default',
   showQuickView = true,

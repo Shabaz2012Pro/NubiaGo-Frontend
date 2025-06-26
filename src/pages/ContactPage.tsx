@@ -390,7 +390,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ className }) => {
             className="text-center"
           >
             <h2 className="font-display font-bold text-3xl mb-8">
-              Why Choose NubiaGO?
+              Why Choose NubiaGo?
             </h2>
             
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">

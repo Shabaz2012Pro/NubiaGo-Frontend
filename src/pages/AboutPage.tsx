@@ -85,7 +85,7 @@ const AboutPage: React.FC = () => {
   ];
 
   const milestones = [
-    { year: '2020', event: 'NubiaGO Founded', description: 'Started with a vision to connect Turkish suppliers with African markets' },
+    { year: '2020', event: 'NubiaGo Founded', description: 'Started with a vision to connect Turkish suppliers with African markets' },
     { year: '2021', event: 'First 1,000 Suppliers', description: 'Reached our first milestone of verified Turkish suppliers' },
     { year: '2022', event: 'African Expansion', description: 'Expanded to 25 African countries with local partnerships' },
     { year: '2023', event: '1M+ Customers', description: 'Celebrated serving over 1 million customers across Africa' },
