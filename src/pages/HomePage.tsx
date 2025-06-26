@@ -13,8 +13,7 @@ import {
   Award,
   Package,
   ArrowRight,
-  Truck,
-  X
+  Truck
 } from 'lucide-react';
 import { Card } from '../components/atoms/Card';
 import { Button } from '../components/atoms/Button';
@@ -30,7 +29,6 @@ import TrustIndicators from '../components/organisms/TrustIndicators';
 import Newsletter from '../components/organisms/Newsletter';
 import Header from '../components/organisms/Header';
 import Footer from '../components/organisms/Footer';
-import SupabaseSetupGuide from '../components/SupabaseSetupGuide';
 import { Suspense } from 'react';
 
 // Lazy-loaded components
@@ -41,7 +39,6 @@ const HomePage: React.FC = () => {
   const { searchProducts } = useProductStore();
   const { user } = useAuthStore();
   const [supabaseTestResult, setSupabaseTestResult] = useState<string>('');
-  const [showSupabaseGuide, setShowSupabaseGuide] = useState(true);
 
   // Handle hero CTA click
   const handleExploreProducts = useCallback(() => {
@@ -65,21 +62,6 @@ const HomePage: React.FC = () => {
     <div className="min-h-screen bg-white dark:bg-neutral-900">
       <Header />
       <main>
-        {/* Supabase Setup Guide */}
-        {showSupabaseGuide && (
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div className="relative">
-              <button 
-                className="absolute top-4 right-4 text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300"
-                onClick={() => setShowSupabaseGuide(false)}
-              >
-                <X className="w-5 h-5" />
-              </button>
-              <SupabaseSetupGuide />
-            </div>
-          </div>
-        )}
-        
         <ImageSlider />
         <CategoriesGrid />
         <FeaturedProducts />
