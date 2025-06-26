@@ -200,7 +200,6 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
                 <li><Link to="/investors" className="text-neutral-300 hover:text-gold-400 transition-colors text-sm">Investor Relations</Link></li>
                 <li><Link to="/become-supplier" className="text-neutral-300 hover:text-gold-400 transition-colors text-sm">Become a Supplier</Link></li>
                 <li><Link to="/affiliate" className="text-neutral-300 hover:text-gold-400 transition-colors text-sm">Affiliate Program</Link></li>
-                <li><Link to="/sustainability" className="text-neutral-300 hover:text-gold-400 transition-colors text-sm">Sustainability</Link></li>
               </ul>
             </div>
           </div>
