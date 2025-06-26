@@ -66,6 +66,7 @@ export const AuthButton: React.FC = () => {
               <button
                 onClick={() => {
                   // Navigate to profile
+                  window.location.hash = 'dashboard';
                   setShowUserMenu(false);
                 }}
                 className="w-full flex items-center space-x-2 p-2 text-left hover:bg-neutral-100 dark:hover:bg-neutral-700 rounded-lg transition-colors"

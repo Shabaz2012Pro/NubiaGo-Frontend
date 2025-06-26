@@ -76,7 +76,7 @@ export const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
           <Button
             variant="primary"
             size="lg"
-            className="w-full"
+            className="w-full bg-red-600 hover:bg-red-700"
             onClick={onSuccess}
           >
             Back to Sign In
@@ -127,7 +127,7 @@ export const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
           type="submit"
           variant="primary"
           size="lg"
-          className="w-full"
+          className="w-full bg-red-600 hover:bg-red-700"
           loading={isLoading}
         >
           Send Reset Link

@@ -26,7 +26,7 @@ export const createTestUser = async () => {
           last_name: 'User',
           full_name: 'Test User'
         },
-        emailRedirectTo: undefined // Disable email confirmation for test user
+        emailRedirectTo: `${window.location.origin}/#auth?action=verifyEmail`
       }
     });
 
@@ -46,8 +46,8 @@ export const createTestUser = async () => {
       }
       
       return { 
-        success: false, 
-        error: 'Test user created but email confirmation is required. Please check your Supabase settings to disable email confirmation or manually confirm the user in the Supabase dashboard.' 
+        success: true, 
+        message: 'Test user created! Please check your email for confirmation or sign in with test@nubiago.com and TestPassword123!' 
       };
     }
 
@@ -131,24 +131,30 @@ export const deleteTestUser = async () => {
 // Helper function to check if test user exists and is confirmed
 export const checkTestUserStatus = async () => {
   try {
-    const { data: { users }, error } = await supabase.auth.admin.listUsers();
+    // Try to sign in as test user
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: 'test@nubiago.com',
+      password: 'TestPassword123!'
+    });
     
     if (error) {
       console.error('Error checking user status:', error);
       return { exists: false, confirmed: false, error: error.message };
     }
 
-    const testUser = users?.find(user => user.email === 'test@nubiago.com');
-    
-    if (!testUser) {
-      return { exists: false, confirmed: false };
+    // If we can sign in, the user exists and is confirmed
+    if (data.user) {
+      // Sign out immediately
+      await supabase.auth.signOut();
+      
+      return { 
+        exists: true, 
+        confirmed: true,
+        user: data.user 
+      };
     }
 
-    return { 
-      exists: true, 
-      confirmed: !!testUser.email_confirmed_at,
-      user: testUser 
-    };
+    return { exists: false, confirmed: false };
   } catch (error) {
     console.error('Failed to check test user status:', error);
     return { exists: false, confirmed: false, error: 'Failed to check user status' };
