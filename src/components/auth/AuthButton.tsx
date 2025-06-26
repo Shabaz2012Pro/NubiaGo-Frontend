@@ -35,7 +35,7 @@ export const AuthButton: React.FC = () => {
           {user.avatar ? (
             <img
               src={user.avatar}
-              alt={`${user.firstName} ${user.lastName}`}
+              alt={`${user.firstName || ''} ${user.lastName || ''}`}
               className="w-8 h-8 rounded-full object-cover"
             />
           ) : (
@@ -46,7 +46,7 @@ export const AuthButton: React.FC = () => {
             </div>
           )}
           <span className="hidden md:block text-neutral-900 dark:text-neutral-100">
-            {user.firstName}
+            {user.firstName || 'User'}
           </span>
         </button>
 
@@ -55,7 +55,7 @@ export const AuthButton: React.FC = () => {
           <div className="absolute right-0 top-full mt-2 w-64 bg-white dark:bg-neutral-800 rounded-lg shadow-lg border border-neutral-200 dark:border-neutral-700 z-50">
             <div className="p-4 border-b border-neutral-200 dark:border-neutral-700">
               <p className="font-medium text-neutral-900 dark:text-neutral-100">
-                {user.firstName} {user.lastName}
+                {user.firstName || ''} {user.lastName || ''}
               </p>
               <p className="text-sm text-neutral-600 dark:text-neutral-400">
                 {user.email}
@@ -110,6 +110,7 @@ export const AuthButton: React.FC = () => {
           variant="primary"
           size="sm"
           onClick={handleSignUp}
+          className="bg-red-600 hover:bg-red-700"
         >
           Sign Up
         </Button>
