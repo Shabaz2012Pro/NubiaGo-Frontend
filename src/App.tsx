@@ -14,7 +14,7 @@ import { RouteErrorBoundary } from './components/molecules/RouteErrorBoundary';
 import LoadingScreen from './components/molecules/LoadingScreen';
 import OfflineIndicator from './components/molecules/OfflineIndicator';
 import PWAInstallPrompt from './components/molecules/PWAInstallPrompt';
-import { PerformanceMonitor } from './components/molecules/PerformanceMonitor';
+import PerformanceMonitor from './components/molecules/PerformanceMonitor';
 
 // Lazy-loaded components for code splitting
 const Header = React.lazy(() => import('./components/organisms/Header'));
