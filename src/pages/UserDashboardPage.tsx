@@ -17,132 +17,54 @@ import {
   Edit,
   Truck,
   CheckCircle,
-  AlertTriangle,
-  Save,
-  Mail,
-  Phone,
-  Building,
-  Home,
-  FileText,
-  Eye,
+  AlertCircle,
   Star,
   Plus,
   Trash2,
-  Download
+  Download,
+  Eye
 } from 'lucide-react';
+import Header from '../components/organisms/Header';
+import Footer from '../components/organisms/Footer';
 import Card from '../components/atoms/Card';
 import Button from '../components/atoms/Button';
-import Input from '../components/atoms/Input';
 import Badge from '../components/atoms/Badge';
-import { useAuthStore } from '../store/useAuthStore';
+import { useAuth } from '../contexts/AuthContext';
 import { useCartStore } from '../store/useCartStore';
 import { useWishlistStore } from '../store/useWishlistStore';
 import { clsx } from 'clsx';
+import UserDashboard from '../components/organisms/UserDashboard';
 import AccountSecurityDashboard from '../components/molecules/AccountSecurityDashboard';
 import NotificationCenter from '../components/molecules/NotificationCenter';
-import { supabase } from '../api/supabaseClient';
-import { useUIStore } from '../store/useUIStore';
 
 const UserDashboardPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState('overview');
-  const { user, signOut, updateProfile } = useAuthStore();
+  const { user, logout } = useAuth();
   const { items: cartItems } = useCartStore();
   const { items: wishlistItems } = useWishlistStore();
-  const { addNotification } = useUIStore();
-  
-  // Profile editing state
-  const [isEditing, setIsEditing] = useState(false);
-  const [profileData, setProfileData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    company: '',
-    avatar: ''
-  });
-  const [isUpdating, setIsUpdating] = useState(false);
-  const [addressData, setAddressData] = useState({
-    street: '',
-    city: '',
-    state: '',
-    postalCode: '',
-    country: 'Nigeria'
-  });
-
-  // Load user data into form
-  useEffect(() => {
-    if (user) {
-      setProfileData({
-        firstName: user.firstName || '',
-        lastName: user.lastName || '',
-        email: user.email || '',
-        phone: user.phone || '',
-        company: user.company || '',
-        avatar: user.avatar || ''
-      });
-    }
-  }, [user]);
 
   // Mock orders data
   const [orders, setOrders] = useState([
     {
       id: 'ORD-12345',
-      date: '2024-06-15',
+      date: '2024-05-15',
       status: 'delivered',
       total: 299.98,
-      items: 2,
-      products: [
-        { name: 'Wireless Headphones', price: 199.99, image: 'https://images.pexels.com/photos/3394650/pexels-photo-3394650.jpeg?auto=compress&cs=tinysrgb&w=100' },
-        { name: 'Smart Watch', price: 99.99, image: 'https://images.pexels.com/photos/1649771/pexels-photo-1649771.jpeg?auto=compress&cs=tinysrgb&w=100' }
-      ]
+      items: 2
     },
     {
       id: 'ORD-12346',
-      date: '2024-06-10',
+      date: '2024-05-10',
       status: 'shipped',
       total: 149.99,
-      items: 1,
-      products: [
-        { name: 'Premium Leather Bag', price: 149.99, image: 'https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb&w=100' }
-      ]
+      items: 1
     },
     {
       id: 'ORD-12347',
-      date: '2024-06-05',
+      date: '2024-05-05',
       status: 'processing',
       total: 89.99,
-      items: 1,
-      products: [
-        { name: 'Turkish Coffee Set', price: 89.99, image: 'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=100' }
-      ]
-    }
-  ]);
-
-  // Mock addresses
-  const [addresses, setAddresses] = useState([
-    {
-      id: '1',
-      type: 'home',
-      name: 'Home Address',
-      street: '123 Victoria Island Road',
-      city: 'Lagos',
-      state: 'Lagos State',
-      country: 'Nigeria',
-      postalCode: '100001',
-      phone: '+234 XXX XXX XXXX',
-      isDefault: true
-    },
-    {
-      id: '2',
-      type: 'work',
-      name: 'Office Address',
-      street: '456 Business District',
-      city: 'Lagos',
-      state: 'Lagos State',
-      country: 'Nigeria',
-      postalCode: '100002',
-      phone: '+234 XXX XXX XXXX',
-      isDefault: false
+      items: 1
     }
   ]);
 
@@ -155,111 +77,6 @@ const UserDashboardPage: React.FC = () => {
       case 'cancelled': return 'error';
       default: return 'default';
     }
-  };
-
-  // Handle profile update
-  const handleUpdateProfile = async () => {
-    if (!user) return;
-    
-    setIsUpdating(true);
-    
-    try {
-      await updateProfile({
-        firstName: profileData.firstName,
-        lastName: profileData.lastName,
-        phone: profileData.phone,
-        company: profileData.company
-      });
-      
-      // Update profile in Supabase
-      const { error } = await supabase
-        .from('profiles')
-        .update({
-          first_name: profileData.firstName,
-          last_name: profileData.lastName,
-          phone: profileData.phone,
-          company: profileData.company,
-          updated_at: new Date().toISOString()
-        })
-        .eq('id', user.id);
-      
-      if (error) throw error;
-      
-      setIsEditing(false);
-      addNotification({
-        type: 'success',
-        message: 'Profile updated successfully',
-        autoClose: true
-      });
-    } catch (error) {
-      console.error('Error updating profile:', error);
-      addNotification({
-        type: 'error',
-        message: 'Failed to update profile',
-        autoClose: true
-      });
-    } finally {
-      setIsUpdating(false);
-    }
-  };
-
-  // Add new address
-  const [showAddAddress, setShowAddAddress] = useState(false);
-  
-  const handleAddAddress = () => {
-    const newAddress = {
-      id: `${addresses.length + 1}`,
-      type: 'home',
-      name: 'New Address',
-      street: addressData.street,
-      city: addressData.city,
-      state: addressData.state,
-      country: addressData.country,
-      postalCode: addressData.postalCode,
-      phone: user?.phone || '',
-      isDefault: false
-    };
-    
-    setAddresses([...addresses, newAddress]);
-    setShowAddAddress(false);
-    setAddressData({
-      street: '',
-      city: '',
-      state: '',
-      postalCode: '',
-      country: 'Nigeria'
-    });
-    
-    addNotification({
-      type: 'success',
-      message: 'Address added successfully',
-      autoClose: true
-    });
-  };
-
-  // Delete address
-  const handleDeleteAddress = (id: string) => {
-    setAddresses(addresses.filter(address => address.id !== id));
-    
-    addNotification({
-      type: 'success',
-      message: 'Address deleted successfully',
-      autoClose: true
-    });
-  };
-
-  // Set default address
-  const handleSetDefaultAddress = (id: string) => {
-    setAddresses(addresses.map(address => ({
-      ...address,
-      isDefault: address.id === id
-    })));
-    
-    addNotification({
-      type: 'success',
-      message: 'Default address updated',
-      autoClose: true
-    });
   };
 
   const containerVariants = {
@@ -283,6 +100,8 @@ const UserDashboardPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white dark:bg-neutral-900">
+      <Header />
+      
       <main className="py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
@@ -291,7 +110,7 @@ const UserDashboardPage: React.FC = () => {
                 My Dashboard
               </h1>
               <p className="text-neutral-600 dark:text-neutral-400">
-                Welcome back, {user.firstName || 'User'}! Manage your account, orders, and preferences.
+                Welcome back, {user.firstName}! Manage your account, orders, and preferences.
               </p>
             </div>
             <div className="flex space-x-3">
@@ -299,7 +118,6 @@ const UserDashboardPage: React.FC = () => {
                 variant="outline" 
                 size="sm"
                 leftIcon={<Bell className="w-4 h-4" />}
-                onClick={() => setActiveTab('notifications')}
               >
                 Notifications
               </Button>
@@ -307,7 +125,7 @@ const UserDashboardPage: React.FC = () => {
                 variant="outline" 
                 size="sm"
                 leftIcon={<LogOut className="w-4 h-4" />}
-                onClick={signOut}
+                onClick={logout}
               >
                 Sign Out
               </Button>
@@ -321,30 +139,21 @@ const UserDashboardPage: React.FC = () => {
                 {/* User Info */}
                 <div className="text-center mb-6 pb-6 border-b border-neutral-200 dark:border-neutral-700">
                   <div className="relative inline-block mb-4">
-                    {user.avatar ? (
-                      <img
-                        src={user.avatar}
-                        alt={`${user.firstName || ''} ${user.lastName || ''}`}
-                        className="w-20 h-20 rounded-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-20 h-20 bg-red-500 rounded-full flex items-center justify-center text-white text-xl font-bold mx-auto">
-                        {(user.firstName?.[0] || '?')}{(user.lastName?.[0] || '?')}
-                      </div>
-                    )}
-                    <button 
-                      className="absolute bottom-0 right-0 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors"
-                      onClick={() => setActiveTab('profile')}
-                    >
+                    <img
+                      src={user.avatar || 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=200&h=200&fit=crop'}
+                      alt={`${user.firstName} ${user.lastName}`}
+                      className="w-20 h-20 rounded-full object-cover"
+                    />
+                    <button className="absolute bottom-0 right-0 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors">
                       <Edit className="w-3 h-3" />
                     </button>
                   </div>
                   <h3 className="font-semibold text-neutral-900 dark:text-neutral-100">
-                    {user.firstName || ''} {user.lastName || ''}
+                    {user.firstName} {user.lastName}
                   </h3>
                   <p className="text-sm text-neutral-500">{user.email}</p>
                   <div className="flex justify-center space-x-4 mt-3 text-xs text-neutral-500">
-                    <span>Member since {user.memberSince || new Date().getFullYear()}</span>
+                    <span>Member since {user.memberSince || '2023'}</span>
                     <span>•</span>
                     <span>{orders.length} orders</span>
                   </div>
@@ -354,12 +163,12 @@ const UserDashboardPage: React.FC = () => {
                 <nav className="space-y-1">
                   {[
                     { id: 'overview', label: 'Overview', icon: <User className="w-4 h-4" /> },
-                    { id: 'orders', label: 'My Orders', icon: <Package className="w-4 h-4" /> },
+                    { id: 'orders', label: 'Orders', icon: <Package className="w-4 h-4" /> },
+                    { id: 'notifications', label: 'Notifications', icon: <Bell className="w-4 h-4" /> },
                     { id: 'wishlist', label: 'Wishlist', icon: <Heart className="w-4 h-4" /> },
                     { id: 'addresses', label: 'Addresses', icon: <MapPin className="w-4 h-4" /> },
-                    { id: 'payment', label: 'Payment Methods', icon: <CreditCard className="w-4 h-4" /> },
                     { id: 'security', label: 'Security', icon: <Shield className="w-4 h-4" /> },
-                    { id: 'notifications', label: 'Notifications', icon: <Bell className="w-4 h-4" /> },
+                    { id: 'payment', label: 'Payment Methods', icon: <CreditCard className="w-4 h-4" /> },
                     { id: 'settings', label: 'Settings', icon: <Settings className="w-4 h-4" /> }
                   ].map((tab) => (
                     <button
@@ -569,85 +378,6 @@ const UserDashboardPage: React.FC = () => {
                   </div>
                 )}
 
-                {/* Profile Tab */}
-                {activeTab === 'profile' && (
-                  <Card variant="default" padding="lg">
-                    <div className="flex items-center justify-between mb-6">
-                      <h2 className="text-xl font-bold text-neutral-900 dark:text-neutral-100">
-                        Profile Information
-                      </h2>
-                      <Button
-                        variant={isEditing ? "primary" : "outline"}
-                        onClick={() => isEditing ? handleUpdateProfile() : setIsEditing(true)}
-                        leftIcon={isEditing ? <Save className="w-4 h-4" /> : <Edit className="w-4 h-4" />}
-                        loading={isUpdating}
-                        className={isEditing ? "bg-red-600 hover:bg-red-700" : ""}
-                      >
-                        {isEditing ? 'Save Changes' : 'Edit Profile'}
-                      </Button>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <Input
-                        label="First Name"
-                        value={profileData.firstName}
-                        onChange={(value) => setProfileData({...profileData, firstName: value})}
-                        disabled={!isEditing}
-                        leftIcon={<User className="w-4 h-4" />}
-                      />
-                      <Input
-                        label="Last Name"
-                        value={profileData.lastName}
-                        onChange={(value) => setProfileData({...profileData, lastName: value})}
-                        disabled={!isEditing}
-                        leftIcon={<User className="w-4 h-4" />}
-                      />
-                      <Input
-                        label="Email Address"
-                        value={profileData.email}
-                        onChange={(value) => setProfileData({...profileData, email: value})}
-                        disabled={true} // Email cannot be changed
-                        leftIcon={<Mail className="w-4 h-4" />}
-                      />
-                      <Input
-                        label="Phone Number"
-                        value={profileData.phone}
-                        onChange={(value) => setProfileData({...profileData, phone: value})}
-                        disabled={!isEditing}
-                        leftIcon={<Phone className="w-4 h-4" />}
-                      />
-                      <Input
-                        label="Company (Optional)"
-                        value={profileData.company}
-                        onChange={(value) => setProfileData({...profileData, company: value})}
-                        disabled={!isEditing}
-                        leftIcon={<Building className="w-4 h-4" />}
-                      />
-                    </div>
-
-                    {/* Account Stats */}
-                    <div className="mt-8 pt-6 border-t border-neutral-200 dark:border-neutral-700">
-                      <h3 className="font-semibold text-neutral-900 dark:text-neutral-100 mb-4">
-                        Account Statistics
-                      </h3>
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div className="text-center p-4 bg-neutral-50 dark:bg-neutral-800 rounded-lg">
-                          <div className="text-2xl font-bold text-neutral-900 dark:text-neutral-100">{orders.length}</div>
-                          <div className="text-xs text-neutral-500">Total Orders</div>
-                        </div>
-                        <div className="text-center p-4 bg-neutral-50 dark:bg-neutral-800 rounded-lg">
-                          <div className="text-2xl font-bold text-green-600">${orders.reduce((sum, order) => sum + order.total, 0).toFixed(2)}</div>
-                          <div className="text-xs text-neutral-500">Total Spent</div>
-                        </div>
-                        <div className="text-center p-4 bg-neutral-50 dark:bg-neutral-800 rounded-lg">
-                          <div className="text-2xl font-bold text-blue-600">{wishlistItems.length}</div>
-                          <div className="text-xs text-neutral-500">Wishlist Items</div>
-                        </div>
-                      </div>
-                    </div>
-                  </Card>
-                )}
-
                 {/* Orders Tab */}
                 {activeTab === 'orders' && (
                   <Card variant="default" padding="lg">
@@ -655,329 +385,65 @@ const UserDashboardPage: React.FC = () => {
                       Order History
                     </h2>
 
-                    <div className="space-y-6">
+                    <div className="space-y-4">
                       {orders.map((order) => (
                         <motion.div
                           key={order.id}
                           variants={itemVariants}
-                          className="border border-neutral-200 dark:border-neutral-700 rounded-lg overflow-hidden"
+                          className="border border-neutral-200 dark:border-neutral-700 rounded-lg p-6"
                         >
-                          <div className="p-6">
-                            <div className="flex items-center justify-between mb-4">
-                              <div className="flex items-center space-x-3">
-                                <h3 className="font-semibold text-neutral-900 dark:text-neutral-100">
-                                  Order {order.id}
-                                </h3>
-                                <Badge variant={getStatusColor(order.status)} size="sm">
-                                  <div className="capitalize">{order.status}</div>
-                                </Badge>
-                              </div>
-                              <span className="font-bold text-neutral-900 dark:text-neutral-100">
-                                ${order.total.toFixed(2)}
-                              </span>
+                          <div className="flex items-center justify-between mb-4">
+                            <div className="flex items-center space-x-3">
+                              <h3 className="font-semibold text-neutral-900 dark:text-neutral-100">
+                                Order {order.id}
+                              </h3>
+                              <Badge variant={getStatusColor(order.status)} size="sm">
+                                <div className="capitalize">{order.status}</div>
+                              </Badge>
                             </div>
+                            <span className="font-bold text-neutral-900 dark:text-neutral-100">
+                              ${order.total.toFixed(2)}
+                            </span>
+                          </div>
 
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm mb-4">
-                              <div>
-                                <span className="text-neutral-500">Date:</span>
-                                <p className="font-medium">{order.date}</p>
-                              </div>
-                              <div>
-                                <span className="text-neutral-500">Items:</span>
-                                <p className="font-medium">{order.items} item{order.items > 1 ? 's' : ''}</p>
-                              </div>
-                              <div>
-                                <span className="text-neutral-500">Status:</span>
-                                <p className="font-medium capitalize">{order.status}</p>
-                              </div>
-                              <div>
-                                <span className="text-neutral-500">Tracking:</span>
-                                <p className="font-medium">{order.status === 'shipped' || order.status === 'delivered' ? 'TRK-123456789' : 'N/A'}</p>
-                              </div>
+                          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                            <div>
+                              <span className="text-neutral-500">Date:</span>
+                              <p className="font-medium">{order.date}</p>
                             </div>
-
-                            {/* Order Items */}
-                            <div className="mt-4 space-y-3">
-                              {order.products.map((product, idx) => (
-                                <div key={idx} className="flex items-center space-x-4 p-3 bg-neutral-50 dark:bg-neutral-800 rounded-lg">
-                                  <img 
-                                    src={product.image} 
-                                    alt={product.name} 
-                                    className="w-12 h-12 object-cover rounded-md"
-                                  />
-                                  <div className="flex-1">
-                                    <p className="font-medium text-neutral-900 dark:text-neutral-100">{product.name}</p>
-                                    <p className="text-sm text-neutral-500">${product.price.toFixed(2)}</p>
-                                  </div>
-                                </div>
-                              ))}
+                            <div>
+                              <span className="text-neutral-500">Items:</span>
+                              <p className="font-medium">{order.items} item{order.items > 1 ? 's' : ''}</p>
                             </div>
+                            <div>
+                              <span className="text-neutral-500">Status:</span>
+                              <p className="font-medium capitalize">{order.status}</p>
+                            </div>
+                            <div>
+                              <span className="text-neutral-500">Tracking:</span>
+                              <p className="font-medium">{order.status === 'shipped' || order.status === 'delivered' ? 'TRK-123456789' : 'N/A'}</p>
+                            </div>
+                          </div>
 
-                            <div className="flex space-x-3 mt-4">
-                              <Button variant="outline" size="sm" leftIcon={<Eye className="w-4 h-4" />}>
-                                View Details
+                          <div className="flex space-x-3 mt-4">
+                            <Button variant="outline" size="sm" leftIcon={<Eye className="w-4 h-4" />}>
+                              View Details
+                            </Button>
+                            {(order.status === 'shipped' || order.status === 'processing') && (
+                              <Button variant="outline" size="sm" leftIcon={<Truck className="w-4 h-4" />}>
+                                Track Order
                               </Button>
-                              {(order.status === 'shipped' || order.status === 'processing') && (
-                                <Button 
-                                  variant="outline" 
-                                  size="sm" 
-                                  leftIcon={<Truck className="w-4 h-4" />}
-                                  onClick={() => window.location.hash = 'track-order'}
-                                >
-                                  Track Order
-                                </Button>
-                              )}
-                              {order.status === 'delivered' && (
-                                <Button variant="outline" size="sm" leftIcon={<Star className="w-4 h-4" />}>
-                                  Leave Review
-                                </Button>
-                              )}
-                            </div>
+                            )}
+                            {order.status === 'delivered' && (
+                              <Button variant="outline" size="sm" leftIcon={<Star className="w-4 h-4" />}>
+                                Leave Review
+                              </Button>
+                            )}
                           </div>
                         </motion.div>
                       ))}
                     </div>
                   </Card>
-                )}
-
-                {/* Wishlist Tab */}
-                {activeTab === 'wishlist' && (
-                  <Card variant="default" padding="lg">
-                    <h2 className="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-6">
-                      My Wishlist
-                    </h2>
-
-                    {wishlistItems.length > 0 ? (
-                      <div className="space-y-4">
-                        {wishlistItems.map((item) => (
-                          <div 
-                            key={item.id}
-                            className="flex items-center space-x-4 p-4 border border-neutral-200 dark:border-neutral-700 rounded-lg hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors"
-                          >
-                            <img 
-                              src={item.images[0]} 
-                              alt={item.name} 
-                              className="w-16 h-16 object-cover rounded-md"
-                            />
-                            <div className="flex-1">
-                              <h3 className="font-medium text-neutral-900 dark:text-neutral-100 mb-1">
-                                {item.name}
-                              </h3>
-                              <p className="text-sm text-neutral-500 mb-2">
-                                {item.supplier.name}
-                              </p>
-                              <div className="flex items-center space-x-2">
-                                <span className="font-bold text-red-600">${item.price.toFixed(2)}</span>
-                                {item.originalPrice && (
-                                  <span className="text-sm text-neutral-500 line-through">
-                                    ${item.originalPrice.toFixed(2)}
-                                  </span>
-                                )}
-                              </div>
-                            </div>
-                            <div className="flex space-x-2">
-                              <Button 
-                                variant="primary" 
-                                size="sm"
-                                className="bg-red-600 hover:bg-red-700"
-                                onClick={() => {
-                                  useCartStore.getState().addItem(item);
-                                  addNotification({
-                                    type: 'success',
-                                    message: 'Added to cart',
-                                    autoClose: true
-                                  });
-                                }}
-                              >
-                                Add to Cart
-                              </Button>
-                              <Button 
-                                variant="outline" 
-                                size="sm"
-                                onClick={() => {
-                                  useWishlistStore.getState().removeItem(item.id);
-                                  addNotification({
-                                    type: 'success',
-                                    message: 'Removed from wishlist',
-                                    autoClose: true
-                                  });
-                                }}
-                              >
-                                Remove
-                              </Button>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="text-center py-12">
-                        <Heart className="w-16 h-16 text-neutral-300 mx-auto mb-4" />
-                        <h3 className="text-lg font-medium text-neutral-900 dark:text-neutral-100 mb-2">
-                          Your wishlist is empty
-                        </h3>
-                        <p className="text-neutral-600 dark:text-neutral-400 mb-6">
-                          Save items you like to your wishlist so you can easily find them later.
-                        </p>
-                        <Button 
-                          variant="primary" 
-                          onClick={() => window.location.hash = 'products'}
-                          className="bg-red-600 hover:bg-red-700"
-                        >
-                          Browse Products
-                        </Button>
-                      </div>
-                    )}
-                  </Card>
-                )}
-
-                {/* Addresses Tab */}
-                {activeTab === 'addresses' && (
-                  <Card variant="default" padding="lg">
-                    <div className="flex items-center justify-between mb-6">
-                      <h2 className="text-xl font-bold text-neutral-900 dark:text-neutral-100">
-                        My Addresses
-                      </h2>
-                      <Button
-                        variant="primary"
-                        onClick={() => setShowAddAddress(true)}
-                        leftIcon={<Plus className="w-4 h-4" />}
-                        className="bg-red-600 hover:bg-red-700"
-                      >
-                        Add New Address
-                      </Button>
-                    </div>
-
-                    {showAddAddress ? (
-                      <div className="mb-6 p-4 border border-neutral-200 dark:border-neutral-700 rounded-lg">
-                        <h3 className="font-semibold text-neutral-900 dark:text-neutral-100 mb-4">
-                          Add New Address
-                        </h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                          <Input
-                            label="Street Address"
-                            value={addressData.street}
-                            onChange={(value) => setAddressData({...addressData, street: value})}
-                            leftIcon={<Home className="w-4 h-4" />}
-                            required
-                          />
-                          <Input
-                            label="City"
-                            value={addressData.city}
-                            onChange={(value) => setAddressData({...addressData, city: value})}
-                            leftIcon={<Building className="w-4 h-4" />}
-                            required
-                          />
-                          <Input
-                            label="State/Province"
-                            value={addressData.state}
-                            onChange={(value) => setAddressData({...addressData, state: value})}
-                            leftIcon={<MapPin className="w-4 h-4" />}
-                            required
-                          />
-                          <Input
-                            label="Postal Code"
-                            value={addressData.postalCode}
-                            onChange={(value) => setAddressData({...addressData, postalCode: value})}
-                            leftIcon={<FileText className="w-4 h-4" />}
-                          />
-                          <div className="md:col-span-2">
-                            <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
-                              Country
-                            </label>
-                            <select
-                              value={addressData.country}
-                              onChange={(e) => setAddressData({...addressData, country: e.target.value})}
-                              className="w-full px-3 py-2 border border-neutral-300 dark:border-neutral-600 rounded-lg bg-white dark:bg-neutral-800"
-                            >
-                              <option value="Nigeria">Nigeria</option>
-                              <option value="Ghana">Ghana</option>
-                              <option value="Kenya">Kenya</option>
-                              <option value="South Africa">South Africa</option>
-                              <option value="Egypt">Egypt</option>
-                            </select>
-                          </div>
-                        </div>
-                        <div className="flex space-x-3">
-                          <Button
-                            variant="primary"
-                            onClick={handleAddAddress}
-                            className="bg-red-600 hover:bg-red-700"
-                          >
-                            Save Address
-                          </Button>
-                          <Button
-                            variant="outline"
-                            onClick={() => setShowAddAddress(false)}
-                          >
-                            Cancel
-                          </Button>
-                        </div>
-                      </div>
-                    ) : null}
-
-                    <div className="space-y-4">
-                      {addresses.map((address) => (
-                        <div 
-                          key={address.id}
-                          className="p-4 border border-neutral-200 dark:border-neutral-700 rounded-lg"
-                        >
-                          <div className="flex items-start justify-between mb-3">
-                            <div>
-                              <div className="flex items-center space-x-2">
-                                <h3 className="font-semibold text-neutral-900 dark:text-neutral-100">
-                                  {address.name}
-                                </h3>
-                                {address.isDefault && (
-                                  <Badge variant="success" size="sm">Default</Badge>
-                                )}
-                              </div>
-                              <p className="text-sm text-neutral-500 capitalize">
-                                {address.type} Address
-                              </p>
-                            </div>
-                            <div className="flex space-x-2">
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                leftIcon={<Edit className="w-4 h-4" />}
-                              >
-                                Edit
-                              </Button>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                leftIcon={<Trash2 className="w-4 h-4" />}
-                                onClick={() => handleDeleteAddress(address.id)}
-                              >
-                                Delete
-                              </Button>
-                            </div>
-                          </div>
-                          <div className="text-neutral-600 dark:text-neutral-400 text-sm space-y-1">
-                            <p>{address.street}</p>
-                            <p>{address.city}, {address.state} {address.postalCode}</p>
-                            <p>{address.country}</p>
-                            <p>{address.phone}</p>
-                          </div>
-                          {!address.isDefault && (
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              className="mt-3"
-                              onClick={() => handleSetDefaultAddress(address.id)}
-                            >
-                              Set as Default
-                            </Button>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  </Card>
-                )}
-
-                {/* Security Tab */}
-                {activeTab === 'security' && (
-                  <AccountSecurityDashboard />
                 )}
 
                 {/* Notifications Tab */}
@@ -991,7 +457,7 @@ const UserDashboardPage: React.FC = () => {
                         variant="outline" 
                         size="sm"
                         leftIcon={<Settings className="w-4 h-4" />}
-                        onClick={() => setActiveTab('settings')}
+                        onClick={() => window.location.hash = 'settings?tab=notifications'}
                       >
                         Preferences
                       </Button>
@@ -1009,216 +475,47 @@ const UserDashboardPage: React.FC = () => {
                   </div>
                 )}
 
-                {/* Payment Methods Tab */}
-                {activeTab === 'payment' && (
-                  <Card variant="default" padding="lg">
-                    <h2 className="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-6">
-                      Payment Methods
-                    </h2>
-                    
-                    <div className="space-y-6">
-                      <div className="p-4 border border-neutral-200 dark:border-neutral-700 rounded-lg">
-                        <div className="flex items-center justify-between mb-3">
-                          <div className="flex items-center space-x-3">
-                            <div className="p-2 bg-blue-100 dark:bg-blue-900/20 rounded-lg">
-                              <CreditCard className="w-5 h-5 text-blue-600" />
-                            </div>
-                            <div>
-                              <h3 className="font-semibold text-neutral-900 dark:text-neutral-100">
-                                Visa ending in 4242
-                              </h3>
-                              <p className="text-sm text-neutral-500">
-                                Expires 12/25
-                              </p>
-                            </div>
-                          </div>
-                          <Badge variant="success" size="sm">Default</Badge>
-                        </div>
-                        <div className="flex space-x-2">
-                          <Button variant="outline" size="sm">
-                            Edit
-                          </Button>
-                          <Button variant="outline" size="sm">
-                            Remove
-                          </Button>
-                        </div>
-                      </div>
-                      
-                      <div className="p-4 border border-neutral-200 dark:border-neutral-700 rounded-lg">
-                        <div className="flex items-center justify-between mb-3">
-                          <div className="flex items-center space-x-3">
-                            <div className="p-2 bg-red-100 dark:bg-red-900/20 rounded-lg">
-                              <CreditCard className="w-5 h-5 text-red-600" />
-                            </div>
-                            <div>
-                              <h3 className="font-semibold text-neutral-900 dark:text-neutral-100">
-                                Mastercard ending in 5678
-                              </h3>
-                              <p className="text-sm text-neutral-500">
-                                Expires 09/24
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="flex space-x-2">
-                          <Button variant="outline" size="sm">
-                            Edit
-                          </Button>
-                          <Button variant="outline" size="sm">
-                            Remove
-                          </Button>
-                          <Button variant="outline" size="sm">
-                            Set as Default
-                          </Button>
-                        </div>
-                      </div>
-                      
-                      <Button
-                        variant="primary"
-                        leftIcon={<Plus className="w-4 h-4" />}
-                        className="bg-red-600 hover:bg-red-700"
-                      >
-                        Add Payment Method
-                      </Button>
-                    </div>
-                  </Card>
+                {/* Security Tab */}
+                {activeTab === 'security' && (
+                  <AccountSecurityDashboard />
                 )}
 
-                {/* Settings Tab */}
-                {activeTab === 'settings' && (
-                  <Card variant="default" padding="lg">
-                    <h2 className="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-6">
-                      Account Settings
-                    </h2>
-                    
-                    <div className="space-y-6">
-                      <div>
-                        <h3 className="font-semibold text-neutral-900 dark:text-neutral-100 mb-4">
-                          Notification Preferences
-                        </h3>
-                        <div className="space-y-3">
-                          <div className="flex items-center justify-between p-3 bg-neutral-50 dark:bg-neutral-800 rounded-lg">
-                            <div>
-                              <p className="font-medium text-neutral-900 dark:text-neutral-100">
-                                Order Updates
-                              </p>
-                              <p className="text-sm text-neutral-500">
-                                Receive notifications about your orders
-                              </p>
-                            </div>
-                            <label className="relative inline-flex items-center cursor-pointer">
-                              <input type="checkbox" className="sr-only peer" checked />
-                              <div className="w-11 h-6 bg-neutral-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-red-300 dark:peer-focus:ring-red-800 rounded-full peer dark:bg-neutral-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-neutral-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-neutral-600 peer-checked:bg-red-600"></div>
-                            </label>
-                          </div>
-                          
-                          <div className="flex items-center justify-between p-3 bg-neutral-50 dark:bg-neutral-800 rounded-lg">
-                            <div>
-                              <p className="font-medium text-neutral-900 dark:text-neutral-100">
-                                Promotions & Deals
-                              </p>
-                              <p className="text-sm text-neutral-500">
-                                Receive notifications about promotions and special offers
-                              </p>
-                            </div>
-                            <label className="relative inline-flex items-center cursor-pointer">
-                              <input type="checkbox" className="sr-only peer" checked />
-                              <div className="w-11 h-6 bg-neutral-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-red-300 dark:peer-focus:ring-red-800 rounded-full peer dark:bg-neutral-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-neutral-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-neutral-600 peer-checked:bg-red-600"></div>
-                            </label>
-                          </div>
-                          
-                          <div className="flex items-center justify-between p-3 bg-neutral-50 dark:bg-neutral-800 rounded-lg">
-                            <div>
-                              <p className="font-medium text-neutral-900 dark:text-neutral-100">
-                                New Products
-                              </p>
-                              <p className="text-sm text-neutral-500">
-                                Receive notifications about new products
-                              </p>
-                            </div>
-                            <label className="relative inline-flex items-center cursor-pointer">
-                              <input type="checkbox" className="sr-only peer" />
-                              <div className="w-11 h-6 bg-neutral-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-red-300 dark:peer-focus:ring-red-800 rounded-full peer dark:bg-neutral-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-neutral-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-neutral-600 peer-checked:bg-red-600"></div>
-                            </label>
-                          </div>
-                          
-                          <div className="flex items-center justify-between p-3 bg-neutral-50 dark:bg-neutral-800 rounded-lg">
-                            <div>
-                              <p className="font-medium text-neutral-900 dark:text-neutral-100">
-                                Price Drops
-                              </p>
-                              <p className="text-sm text-neutral-500">
-                                Receive notifications when items in your wishlist drop in price
-                              </p>
-                            </div>
-                            <label className="relative inline-flex items-center cursor-pointer">
-                              <input type="checkbox" className="sr-only peer" checked />
-                              <div className="w-11 h-6 bg-neutral-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-red-300 dark:peer-focus:ring-red-800 rounded-full peer dark:bg-neutral-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-neutral-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-neutral-600 peer-checked:bg-red-600"></div>
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div className="pt-6 border-t border-neutral-200 dark:border-neutral-700">
-                        <h3 className="font-semibold text-neutral-900 dark:text-neutral-100 mb-4">
-                          Language & Currency
-                        </h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div>
-                            <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
-                              Language
-                            </label>
-                            <select className="w-full px-3 py-2 border border-neutral-300 dark:border-neutral-600 rounded-lg bg-white dark:bg-neutral-800">
-                              <option value="en">English</option>
-                              <option value="fr">French</option>
-                              <option value="ar">Arabic</option>
-                              <option value="tr">Turkish</option>
-                            </select>
-                          </div>
-                          <div>
-                            <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
-                              Currency
-                            </label>
-                            <select className="w-full px-3 py-2 border border-neutral-300 dark:border-neutral-600 rounded-lg bg-white dark:bg-neutral-800">
-                              <option value="USD">USD ($)</option>
-                              <option value="EUR">EUR (€)</option>
-                              <option value="GBP">GBP (£)</option>
-                              <option value="NGN">NGN (₦)</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div className="pt-6 border-t border-neutral-200 dark:border-neutral-700">
-                        <h3 className="font-semibold text-neutral-900 dark:text-neutral-100 mb-4">
-                          Account Actions
-                        </h3>
-                        <div className="space-y-3">
-                          <Button
-                            variant="outline"
-                            leftIcon={<Download className="w-4 h-4" />}
-                            fullWidth
-                          >
-                            Download My Data
-                          </Button>
-                          <Button
-                            variant="outline"
-                            leftIcon={<AlertTriangle className="w-4 h-4" />}
-                            fullWidth
-                            className="border-red-300 text-red-600 hover:bg-red-50 dark:border-red-700 dark:text-red-400 dark:hover:bg-red-900/20"
-                          >
-                            Delete My Account
-                          </Button>
-                        </div>
-                      </div>
+                {/* Other tabs would be implemented similarly */}
+                {(activeTab === 'wishlist' || activeTab === 'addresses' || activeTab === 'payment' || activeTab === 'settings') && (
+                  <div className="text-center py-12">
+                    <div className="w-16 h-16 bg-neutral-100 dark:bg-neutral-800 rounded-full flex items-center justify-center mx-auto mb-4">
+                      {activeTab === 'wishlist' && <Heart className="w-8 h-8 text-neutral-400" />}
+                      {activeTab === 'addresses' && <MapPin className="w-8 h-8 text-neutral-400" />}
+                      {activeTab === 'payment' && <CreditCard className="w-8 h-8 text-neutral-400" />}
+                      {activeTab === 'settings' && <Settings className="w-8 h-8 text-neutral-400" />}
                     </div>
-                  </Card>
+                    <h3 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mb-2">
+                      {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} Management
+                    </h3>
+                    <p className="text-neutral-600 dark:text-neutral-400 mb-6 max-w-md mx-auto">
+                      We're developing comprehensive user account features to enhance your marketplace experience.
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                      <Button 
+                        variant="primary" 
+                        className="bg-red-600 hover:bg-red-700"
+                        onClick={() => setActiveTab('overview')}
+                      >
+                        Back to Dashboard
+                      </Button>
+                      <Button variant="outline">
+                        Learn More
+                      </Button>
+                    </div>
+                  </div>
                 )}
               </motion.div>
             </div>
           </div>
         </div>
       </main>
+
+      <Footer />
     </div>
   );
 };
