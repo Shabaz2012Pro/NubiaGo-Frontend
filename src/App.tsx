@@ -44,7 +44,6 @@ const CareersPage = React.lazy(() => import('./pages/CareersPage'));
 const PressMediaPage = React.lazy(() => import('./pages/PressMediaPage'));
 const InvestorsPage = React.lazy(() => import('./pages/InvestorsPage'));
 const AffiliatePage = React.lazy(() => import('./pages/AffiliatePage'));
-const SustainabilityPage = React.lazy(() => import('./pages/SustainabilityPage'));
 
 // Admin pages - lazy loaded separately with explicit .tsx extensions
 const AdminDashboard = React.lazy(() => import('./pages/admin/AdminDashboard'));
@@ -210,7 +209,6 @@ const App: React.FC = () => {
                           <Route path="press-media" element={<PressMediaPage />} />
                           <Route path="investors" element={<InvestorsPage />} />
                           <Route path="affiliate" element={<AffiliatePage />} />
-                          <Route path="sustainability" element={<SustainabilityPage />} />
 
                           {/* Admin Routes */}
                           <Route path="admin" element={<AdminDashboard />} />
