@@ -1,18 +1,76 @@
+import React from 'react';
+
+export type Theme = 'light' | 'dark';
+
+export interface ThemeContextType {
+  theme: Theme;
+  toggleTheme: () => void;
+}
+
+export interface ComponentProps {
+  className?: string;
+  children?: React.ReactNode;
+}
+
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'gold';
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  leftIcon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
+  loading?: boolean;
+  loadingText?: string;
+  fullWidth?: boolean;
+  ariaLabel?: string;
+  tooltip?: string;
+  iconOnly?: boolean;
+}
+
+export interface CardProps extends ComponentProps {
+  variant?: 'default' | 'premium' | 'gold' | 'outlined' | 'elevated';
+  padding?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  hover?: boolean;
+  interactive?: boolean;
+  selected?: boolean;
+  loading?: boolean;
+}
+
+export interface InputProps {
+  label?: string;
+  placeholder?: string;
+  value?: string;
+  onChange?: (value: string) => void;
+  status?: 'default' | 'success' | 'warning' | 'error';
+  helperText?: string;
+  required?: boolean;
+  disabled?: boolean;
+  leftIcon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
+  className?: string;
+  error?: string;
+  type?: string;
+  name?: string;
+  icon?: React.ReactNode;
+  autoComplete?: string;
+}
+
+export interface CategoryCardProps extends ComponentProps {
+  category: Category;
+  onClick?: () => void;
+  loading?: boolean;
+  showProductCount?: boolean;
+}
+
 export interface User {
   id: string;
   email: string;
-  firstName?: string;
-  lastName?: string;
+  firstName: string;
+  lastName: string;
+  role?: string;
+  verified?: boolean;
   avatar?: string;
-  role: 'user' | 'admin' | 'supplier';
-  isEmailVerified: boolean;
-  preferences: {
-    notifications: boolean;
-    newsletter: boolean;
-    theme: 'light' | 'dark' | 'system';
-  };
-  createdAt: string;
-  updatedAt: string;
+  phone?: string;
+  company?: string;
+  memberSince?: string;
 }
 
 export interface Product {
@@ -20,182 +78,111 @@ export interface Product {
   name: string;
   description: string;
   price: number;
-  category: string;
+  originalPrice?: number;
+  currency: string;
   images: string[];
+  image?: string;
+  category: string;
+  subcategory?: string;
+  brand?: string;
+  supplier: Supplier;
   rating: number;
-  reviewCount: number;
+  reviews: number;
+  reviewCount?: number;
   inStock: boolean;
-  isFeatured: boolean;
+  stockCount?: number;
+  minOrder: number;
   tags: string[];
-  supplier: {
-    id: string;
-    name: string;
-    rating: number;
-  };
-  variants: any[];
-  specifications: Record<string, any>;
-  dimensions: Record<string, any>;
-  weight: number;
-  createdAt: string;
-  updatedAt: string;
+  specifications?: Record<string, string>;
+  dimensions?: Record<string, number>;
+  isNew?: boolean;
+  isFeatured?: boolean;
+  discount?: number;
+}
+
+export interface Supplier {
+  id: string;
+  name: string;
+  country: string;
+  rating: number;
+  verified: boolean;
+  totalProducts: number;
+  responseTime: string;
+  memberSince: string;
+  logo?: string;
+  categories?: string[];
 }
 
 export interface Category {
   id: string;
   name: string;
-  description: string;
-  image: string;
-  subcategories: {
-    id: string;
-    name: string;
-    description: string;
-  }[];
-}
-
-export interface Address {
-  street: string;
-  city: string;
-  state: string;
-  country: string;
-  postalCode: string;
-  isDefault?: boolean;
-}
-
-export interface ProductVariant {
-  id: string;
-  name: string;
-  type: 'color' | 'size' | 'material' | 'style';
-  value: string;
-  price?: number;
-  stock?: number;
-  sku?: string;
+  slug: string;
+  icon: React.ReactNode;
+  description?: string;
+  productCount?: number;
+  subcategories?: Subcategory[];
   image?: string;
 }
 
-export interface CartItem {
+export interface Subcategory {
   id: string;
-  productId: string;
-  product?: Product;
+  name: string;
+  slug: string;
+  icon?: React.ReactNode;
+}
+
+export interface CartItem {
+  id?: string;
+  product: Product;
   quantity: number;
-  variant?: ProductVariant;
-  price: number;
-  total: number;
-  addedAt: string;
+  variantId?: string;
+  addedAt: Date;
 }
 
 export interface Order {
   id: string;
-  userId: string;
-  user?: User;
+  orderNumber: string;
+  date: string;
+  status: 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
   items: OrderItem[];
-  status: 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled' | 'refunded';
-  paymentStatus: 'pending' | 'paid' | 'failed' | 'refunded';
-  paymentMethod: string;
-  paymentId?: string;
   subtotal: number;
-  tax: number;
   shipping: number;
-  discount: number;
+  tax: number;
   total: number;
-  currency: string;
   shippingAddress: Address;
   billingAddress?: Address;
+  paymentMethod: string;
   trackingNumber?: string;
-  estimatedDelivery?: string;
-  notes?: string;
-  createdAt: string;
-  updatedAt: string;
 }
 
 export interface OrderItem {
   id: string;
-  productId: string;
-  product?: Product;
+  product: Product;
   quantity: number;
-  variant?: ProductVariant;
   price: number;
   total: number;
 }
 
-export interface Review {
-  id: string;
-  productId: string;
-  userId: string;
-  user?: User;
-  rating: number;
-  title: string;
-  content: string;
-  images?: string[];
-  verified: boolean;
-  helpful: number;
-  notHelpful: number;
-  variant?: string;
-  createdAt: string;
-  updatedAt: string;
+export interface Address {
+  id?: string;
+  firstName: string;
+  lastName: string;
+  address: string;
+  city: string;
+  state?: string;
+  country: string;
+  postalCode?: string;
+  phone: string;
+  isDefault?: boolean;
 }
 
-export interface Notification {
-  id: string;
-  userId: string;
-  type: 'order' | 'product' | 'system' | 'promotion';
-  title: string;
-  message: string;
-  read: boolean;
-  data?: Record<string, any>;
-  createdAt: string;
+export interface AuthError extends Error {
+  code?: string;
+  statusCode?: number;
 }
 
-export interface ApiResponse<T = any> {
-  success: boolean;
-  data?: T;
-  message?: string;
-  errors?: string[];
-  meta?: {
-    page?: number;
-    limit?: number;
-    total?: number;
-    pages?: number;
-  };
-}
-
-export interface FormFieldConfig {
-  name: string;
-  label: string;
-  type: 'text' | 'email' | 'password' | 'number' | 'select' | 'textarea' | 'checkbox' | 'radio' | 'file';
-  placeholder?: string;
-  required?: boolean;
-  validation?: any;
-  options?: { value: string; label: string }[];
-  multiple?: boolean;
-  accept?: string;
-  rows?: number;
-}
-
-export interface SearchFilters {
-  category?: string;
-  subcategory?: string;
-  brand?: string;
-  minPrice?: number;
-  maxPrice?: number;
-  rating?: number;
-  inStock?: boolean;
-  sortBy?: 'name' | 'price' | 'rating' | 'newest' | 'bestselling';
-  sortOrder?: 'asc' | 'desc';
-}
-
-export interface PaymentMethod {
-  id: string;
-  type: 'card' | 'paypal' | 'bank' | 'mobile_money';
-  name: string;
-  isDefault: boolean;
-  details: Record<string, any>;
-}
-
-export interface ShippingMethod {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  estimatedDays: number;
-  trackingAvailable: boolean;
+export interface AuthResponse {
+  user: User | null;
+  session: any | null;
+  error: AuthError | null;
 }

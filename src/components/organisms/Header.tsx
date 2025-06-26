@@ -7,7 +7,7 @@ import { useWishlistStore } from '../../store/useWishlistStore';
 import { useNotificationStore } from '../../store/useNotificationStore';
 import SearchBar from './SearchBar';
 import UserMenu from '../molecules/UserMenu';
-import NotificationBell from '../molecules/NotificationBell';
+import { NotificationBell } from '../molecules/NotificationBell';
 import { ThemeToggle } from '../molecules/ThemeToggle';
 import { PWAInstallPrompt } from '../molecules/PWAInstallPrompt';
 import { debounce } from '../../utils/performance';

@@ -56,8 +56,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
     return errors;
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
+  const handleInputChange = (name: string, value: string) => {
     setFormData(prev => ({ ...prev, [name]: value }));
     
     // Clear error when user starts typing
@@ -114,9 +113,9 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
               name="firstName"
               placeholder="First Name"
               value={formData.firstName}
-              onChange={handleInputChange}
+              onChange={(value) => handleInputChange('firstName', value)}
               error={formErrors.firstName}
-              icon={<User className="w-4 h-4" />}
+              leftIcon={<User className="w-4 h-4" />}
             />
           </div>
           <div>
@@ -125,9 +124,9 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
               name="lastName"
               placeholder="Last Name"
               value={formData.lastName}
-              onChange={handleInputChange}
+              onChange={(value) => handleInputChange('lastName', value)}
               error={formErrors.lastName}
-              icon={<User className="w-4 h-4" />}
+              leftIcon={<User className="w-4 h-4" />}
             />
           </div>
         </div>
@@ -138,9 +137,9 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
           name="email"
           placeholder="Email Address"
           value={formData.email}
-          onChange={handleInputChange}
+          onChange={(value) => handleInputChange('email', value)}
           error={formErrors.email}
-          icon={<Mail className="w-4 h-4" />}
+          leftIcon={<Mail className="w-4 h-4" />}
         />
 
         {/* Company */}
@@ -149,8 +148,8 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
           name="company"
           placeholder="Company (Optional)"
           value={formData.company}
-          onChange={handleInputChange}
-          icon={<Building className="w-4 h-4" />}
+          onChange={(value) => handleInputChange('company', value)}
+          leftIcon={<Building className="w-4 h-4" />}
         />
 
         {/* Role */}
@@ -158,7 +157,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
           <select
             name="role"
             value={formData.role}
-            onChange={handleInputChange}
+            onChange={(e) => handleInputChange('role', e.target.value)}
             className="w-full px-4 py-3 border border-neutral-300 dark:border-neutral-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100"
           >
             <option value="buyer">Buyer</option>
@@ -173,7 +172,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
             name="password"
             placeholder="Password"
             value={formData.password}
-            onChange={handleInputChange}
+            onChange={(value) => handleInputChange('password', value)}
             error={formErrors.password}
           />
           <button
@@ -191,7 +190,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
           name="confirmPassword"
           placeholder="Confirm Password"
           value={formData.confirmPassword}
-          onChange={handleInputChange}
+          onChange={(value) => handleInputChange('confirmPassword', value)}
           error={formErrors.confirmPassword}
         />
 

@@ -91,9 +91,9 @@ export const SignInForm: React.FC<SignInFormProps> = ({
           name="email"
           placeholder="Email Address"
           value={formData.email}
-          onChange={handleInputChange}
+          onChange={(value) => setFormData(prev => ({ ...prev, email: value }))}
           error={formErrors.email}
-          icon={<Mail className="w-4 h-4" />}
+          leftIcon={<Mail className="w-4 h-4" />}
         />
 
         {/* Password */}
@@ -103,7 +103,7 @@ export const SignInForm: React.FC<SignInFormProps> = ({
             name="password"
             placeholder="Password"
             value={formData.password}
-            onChange={handleInputChange}
+            onChange={(value) => setFormData(prev => ({ ...prev, password: value }))}
             error={formErrors.password}
           />
           <button

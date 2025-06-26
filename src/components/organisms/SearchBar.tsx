@@ -21,7 +21,19 @@ const useDebounce = (value: string, delay: number) => {
   return debouncedValue;
 };
 
-const SearchBar: React.FC = () => {
+interface SearchBarProps {
+  placeholder?: string;
+  className?: string;
+  autoFocus?: boolean;
+  onBlur?: () => void;
+}
+
+const SearchBar: React.FC<SearchBarProps> = ({
+  placeholder = "Search products...",
+  className = "",
+  autoFocus = false,
+  onBlur
+}) => {
   const [query, setQuery] = useState('');
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
@@ -137,11 +149,13 @@ const SearchBar: React.FC = () => {
       <div className="relative">
         <input
           type="text"
-          placeholder="Search for products"
+          placeholder={placeholder}
           value={query}
           onChange={handleInputChange}
           onFocus={() => setIsOpen(true)}
-          className="w-full pl-12 pr-20 py-2 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+          onBlur={onBlur}
+          autoFocus={autoFocus}
+          className={`w-full pl-12 pr-20 py-2 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 ${className}`}
         />
         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
           <Search className="h-5 w-5 text-gray-500" />
@@ -194,7 +208,6 @@ const SearchBar: React.FC = () => {
                 <div className="px-4 py-2">
                   <div className="flex items-center justify-between">
                     <span className="text-gray-600 font-semibold">Recent Searches</span>
-                    {/* <button className="text-blue-500 text-sm focus:outline-none">Clear All</button> */}
                   </div>
                   <ul>
                     {recentSearches.map((search, index) => (

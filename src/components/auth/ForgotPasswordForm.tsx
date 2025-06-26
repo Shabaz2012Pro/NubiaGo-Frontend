@@ -28,8 +28,7 @@ export const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
     return '';
   };
 
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+  const handleEmailChange = (value: string) => {
     setEmail(value);
     
     if (emailError) {
@@ -60,7 +59,7 @@ export const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
   if (isSubmitted) {
     return (
       <div className="space-y-6 text-center">
-        <div className="w-16 h-16 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mx-auto">
+        <div className="w-16 h-16 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mx-auto mb-2">
           <Mail className="w-8 h-8 text-green-600 dark:text-green-400" />
         </div>
         
@@ -68,7 +67,7 @@ export const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
           <h2 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">
             Check Your Email
           </h2>
-          <p className="text-neutral-600 dark:text-neutral-400">
+          <p className="text-sm text-neutral-600 dark:text-neutral-400">
             We've sent a password reset link to <strong>{email}</strong>
           </p>
         </div>
@@ -113,8 +112,9 @@ export const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
           placeholder="Email Address"
           value={email}
           onChange={handleEmailChange}
-          error={emailError}
-          icon={<Mail className="w-4 h-4" />}
+          status={emailError ? 'error' : 'default'}
+          helperText={emailError}
+          leftIcon={<Mail className="w-4 h-4" />}
         />
 
         {error && (
