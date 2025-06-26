@@ -153,11 +153,9 @@ export const useCartStore = create<CartState>()(
           const state = get();
 
           try {
-            // Optimistic update
+            // Optimistic update - use product.id consistently
             set({
-              items: state.items.filter(item => 
-                item.id ? item.id !== productId : item.product.id !== productId
-              ),
+              items: state.items.filter(item => item.product.id !== productId),
               error: null
             });
 
@@ -182,16 +180,14 @@ export const useCartStore = create<CartState>()(
             if (quantity <= 0) {
               // Remove item
               set({
-                items: state.items.filter(item => 
-                  item.id ? item.id !== productId : item.product.id !== productId
-                ),
+                items: state.items.filter(item => item.product.id !== productId),
                 isLoading: false
               });
             } else {
               // Update quantity
               set({
                 items: state.items.map(item => 
-                  (item.id ? item.id === productId : item.product.id === productId)
+                  item.product.id === productId
                     ? { ...item, quantity } 
                     : item
                 ),

@@ -33,7 +33,7 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({
   onCheckout,
   className
 }) => {
-  const { items, updateQuantity, removeItem, subtotal } = useCartStore();
+  const { items, updateQuantity, removeItem, subtotal, tax, shipping, total } = useCartStore();
   const [promoCode, setPromoCode] = useState('');
   const [appliedPromo, setAppliedPromo] = useState<string | null>(null);
   const [shippingCountry, setShippingCountry] = useState('Nigeria');
@@ -70,8 +70,6 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({
   const selectedCountry = africanCountries.find(c => c.name === shippingCountry);
   const shippingCost = selectedCountry?.shipping || 0;
   const promoDiscount = appliedPromo ? subtotal * 0.1 : 0; // 10% discount
-  const tax = subtotal * 0.1; // 10% tax
-  const total = subtotal + shippingCost + tax - promoDiscount;
 
   const cartVariants = {
     hidden: { x: '100%' },
@@ -89,6 +87,23 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({
     hidden: { opacity: 0, x: 20 },
     visible: { opacity: 1, x: 0 },
     exit: { opacity: 0, x: -20 }
+  };
+
+  const handleQuantityChange = async (productId: string, quantity: number) => {
+    if (quantity <= 0) return;
+    try {
+      await updateQuantity(productId, quantity);
+    } catch (error) {
+      console.error('Failed to update quantity:', error);
+    }
+  };
+
+  const handleRemoveItem = async (productId: string) => {
+    try {
+      removeItem(productId);
+    } catch (error) {
+      console.error('Failed to remove item:', error);
+    }
   };
 
   return (
@@ -179,7 +194,7 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({
                           <div className="flex items-center justify-between">
                             <div className="flex items-center space-x-2">
                               <button
-                                onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
+                                onClick={() => handleQuantityChange(item.product.id, item.quantity - 1)}
                                 disabled={item.quantity <= 1}
                                 className="w-8 h-8 rounded-full bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 flex items-center justify-center hover:bg-neutral-100 dark:hover:bg-neutral-600"
                               >
@@ -189,7 +204,7 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({
                                 {item.quantity}
                               </span>
                               <button
-                                onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
+                                onClick={() => handleQuantityChange(item.product.id, item.quantity + 1)}
                                 className="w-8 h-8 rounded-full bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 flex items-center justify-center hover:bg-neutral-100 dark:hover:bg-neutral-600"
                               >
                                 <Plus className="w-4 h-4" />
@@ -197,7 +212,7 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({
                             </div>
                             
                             <button
-                              onClick={() => removeItem(item.product.id)}
+                              onClick={() => handleRemoveItem(item.product.id)}
                               className="text-red-500 hover:text-red-700 text-sm transition-colors"
                             >
                               Remove
@@ -299,7 +314,7 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({
                     <span className="text-neutral-600 dark:text-neutral-400">
                       Shipping to {selectedCountry?.flag} {shippingCountry}:
                     </span>
-                    <span className="font-medium">${shippingCost.toFixed(2)}</span>
+                    <span className="font-medium">${shipping.toFixed(2)}</span>
                   </div>
                   
                   <div className="flex justify-between text-sm">
