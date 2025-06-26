@@ -226,19 +226,19 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
             {/* Social Links */}
             <div className="flex items-center space-x-4">
               <span className="text-sm text-neutral-400 mr-2">Follow us:</span>
-              <a href="#" className="w-8 h-8 bg-neutral-800 hover:bg-blue-600 rounded-full flex items-center justify-center transition-colors">
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-neutral-800 hover:bg-blue-600 rounded-full flex items-center justify-center transition-colors">
                 <Facebook className="w-4 h-4" />
               </a>
-              <a href="#" className="w-8 h-8 bg-neutral-800 hover:bg-blue-400 rounded-full flex items-center justify-center transition-colors">
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-neutral-800 hover:bg-blue-400 rounded-full flex items-center justify-center transition-colors">
                 <Twitter className="w-4 h-4" />
               </a>
-              <a href="#" className="w-8 h-8 bg-neutral-800 hover:bg-pink-600 rounded-full flex items-center justify-center transition-colors">
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-neutral-800 hover:bg-pink-600 rounded-full flex items-center justify-center transition-colors">
                 <Instagram className="w-4 h-4" />
               </a>
-              <a href="#" className="w-8 h-8 bg-neutral-800 hover:bg-blue-700 rounded-full flex items-center justify-center transition-colors">
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-neutral-800 hover:bg-blue-700 rounded-full flex items-center justify-center transition-colors">
                 <Linkedin className="w-4 h-4" />
               </a>
-              <a href="#" className="w-8 h-8 bg-neutral-800 hover:bg-red-600 rounded-full flex items-center justify-center transition-colors">
+              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-neutral-800 hover:bg-red-600 rounded-full flex items-center justify-center transition-colors">
                 <Youtube className="w-4 h-4" />
               </a>
             </div>

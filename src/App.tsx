@@ -31,6 +31,21 @@ const SuppliersPage = React.lazy(() => import('./pages/SuppliersPage'));
 const BecomeSupplierPage = React.lazy(() => import('./pages/BecomeSupplierPage'));
 const NotFoundPage = React.lazy(() => import('./components/molecules/NotFoundPage'));
 
+// New pages for footer links
+const HelpPage = React.lazy(() => import('./pages/HelpPage'));
+const ShippingInfoPage = React.lazy(() => import('./pages/ShippingInfoPage'));
+const ReturnsRefundsPage = React.lazy(() => import('./pages/ReturnsRefundsPage'));
+const SizeGuidePage = React.lazy(() => import('./pages/SizeGuidePage'));
+const TrackOrderPage = React.lazy(() => import('./pages/TrackOrderPage'));
+const PrivacyPolicyPage = React.lazy(() => import('./pages/PrivacyPolicyPage'));
+const TermsOfServicePage = React.lazy(() => import('./pages/TermsOfServicePage'));
+const CookiePolicyPage = React.lazy(() => import('./pages/CookiePolicyPage'));
+const CareersPage = React.lazy(() => import('./pages/CareersPage'));
+const PressMediaPage = React.lazy(() => import('./pages/PressMediaPage'));
+const InvestorsPage = React.lazy(() => import('./pages/InvestorsPage'));
+const AffiliatePage = React.lazy(() => import('./pages/AffiliatePage'));
+const SustainabilityPage = React.lazy(() => import('./pages/SustainabilityPage'));
+
 // Admin pages - lazy loaded separately with explicit .tsx extensions
 const AdminDashboard = React.lazy(() => import('./pages/admin/AdminDashboard'));
 const AdminProducts = React.lazy(() => import('./pages/admin/AdminProducts'));
@@ -181,6 +196,21 @@ const App: React.FC = () => {
                           <Route path="faq" element={<FAQPage />} />
                           <Route path="suppliers" element={<SuppliersPage />} />
                           <Route path="become-supplier" element={<BecomeSupplierPage />} />
+                          
+                          {/* Footer Link Pages */}
+                          <Route path="help" element={<HelpPage />} />
+                          <Route path="shipping-info" element={<ShippingInfoPage />} />
+                          <Route path="returns-refunds" element={<ReturnsRefundsPage />} />
+                          <Route path="size-guide" element={<SizeGuidePage />} />
+                          <Route path="track-order" element={<TrackOrderPage />} />
+                          <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
+                          <Route path="terms-of-service" element={<TermsOfServicePage />} />
+                          <Route path="cookie-policy" element={<CookiePolicyPage />} />
+                          <Route path="careers" element={<CareersPage />} />
+                          <Route path="press-media" element={<PressMediaPage />} />
+                          <Route path="investors" element={<InvestorsPage />} />
+                          <Route path="affiliate" element={<AffiliatePage />} />
+                          <Route path="sustainability" element={<SustainabilityPage />} />
 
                           {/* Admin Routes */}
                           <Route path="admin" element={<AdminDashboard />} />
