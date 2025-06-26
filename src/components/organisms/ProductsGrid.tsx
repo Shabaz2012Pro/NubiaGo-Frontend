@@ -24,7 +24,8 @@ import CategoryFilter from '../molecules/CategoryFilter';
 import { Product } from '../../types';
 import { clsx } from 'clsx';
 import { useWishlistStore } from '../../store';
-import ProductCardOptimized from '../molecules/ProductCardOptimized'; // Changed import
+import ProductCardOptimized from '../molecules/ProductCardOptimized';
+import ProductQuickView from './ProductQuickView';
 
 interface ProductsGridProps {
   products?: Product[];
@@ -60,6 +61,7 @@ const ProductsGrid: React.FC<ProductsGridProps> = ({
   const [selectedSuppliers, setSelectedSuppliers] = useState<string[]>([]);
   const [inStockOnly, setInStockOnly] = useState(false);
   const [onSaleOnly, setOnSaleOnly] = useState(false);
+  const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
 
   // Get wishlist state
   const { addItem: addToWishlist } = useWishlistStore();
@@ -362,8 +364,6 @@ const ProductsGrid: React.FC<ProductsGridProps> = ({
     }
   ];
 
-
-
   // Initialize products
   useEffect(() => {
     setLoading(true);
@@ -463,16 +463,16 @@ const ProductsGrid: React.FC<ProductsGridProps> = ({
   ]);
 
   const handleProductClick = (product: Product) => {
-    onProductClick?.(product);
+    if (onProductClick) {
+      onProductClick(product);
+    } else {
+      // Default behavior - navigate to product detail
+      window.location.hash = `product?id=${product.id}`;
+    }
   };
 
-  const handleAddToCart = (product: Product) => {
-    // Mock add to cart functionality
-    console.log('Adding to cart:', product);
-  };
-
-  const handleAddToWishlist = (product: Product) => {
-    addToWishlist(product);
+  const handleQuickView = (product: Product) => {
+    setQuickViewProduct(product);
   };
 
   const handleCategoryChange = (selected: string[]) => {
@@ -831,7 +831,7 @@ const ProductsGrid: React.FC<ProductsGridProps> = ({
                       <ProductCardOptimized
                         product={product}
                         variant={viewMode === 'list' ? 'compact' : 'default'}
-                        onQuickView={handleProductClick}
+                        onQuickView={() => handleQuickView(product)}
                         priority={index < 3} // Only prioritize the first 3 images
                       />
                     </motion.div>
@@ -881,6 +881,15 @@ const ProductsGrid: React.FC<ProductsGridProps> = ({
           )}
         </div>
       </div>
+
+      {/* Quick View Modal */}
+      {quickViewProduct && (
+        <ProductQuickView 
+          product={quickViewProduct} 
+          isOpen={!!quickViewProduct} 
+          onClose={() => setQuickViewProduct(null)} 
+        />
+      )}
     </div>
   );
 };

@@ -43,11 +43,6 @@ const ProductsPage: React.FC = () => {
     return items;
   };
 
-  const handleProductClick = (product: Product) => {
-    // Navigate to product detail page
-    window.location.hash = `product?id=${product.id}`;
-  };
-
   return (
     <div className="min-h-screen bg-white dark:bg-neutral-900">
       <main className="py-8">
@@ -67,7 +62,6 @@ const ProductsPage: React.FC = () => {
             initialCategory={category}
             title={title}
             description={description}
-            onProductClick={handleProductClick}
             loading={loading}
           />
         </motion.div>

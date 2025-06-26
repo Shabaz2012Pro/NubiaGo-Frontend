@@ -40,15 +40,17 @@ const ProductCardOptimized: React.FC<ProductCardProps> = memo(({
 
   // Navigate to product detail page
   const handleViewProduct = () => {
-    import('../../utils/hashUtils').then(({ navigateToProduct }) => {
-      navigateToProduct(product.id);
-    });
+    window.location.hash = `product?id=${product.id}`;
   };
 
   const handleQuickView = (e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
-    handleViewProduct();
+    if (onQuickView) {
+      onQuickView(product);
+    } else {
+      handleViewProduct();
+    }
   };
 
   const handleCardClick = () => {

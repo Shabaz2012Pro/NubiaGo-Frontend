@@ -820,7 +820,6 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
                 <div>
                   <div className="font-semibold">{product.supplier.responseTime}</div>
                   <p className="text-sm text-neutral-500">Response Time</p>
-                ```text
                 </div>
                 <div>
                   <div className="font-semibold">Since {product.supplier.memberSince}</div>
@@ -864,8 +863,6 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
                 <ProductCard
                   key={relatedProduct.id}
                   product={relatedProduct}
-                  onAddToCart={(p) => addToCart({ product: p, quantity: 1 })}
-                  onAddToWishlist={(p) => addToWishlist(p)}
                   onQuickView={(p) => window.location.hash = `product?id=${p.id}`}
                 />
               ))}
