@@ -1,11 +1,22 @@
-
 import { supabase } from '../api/supabaseClient';
 
 export const createTestUser = async () => {
   try {
     console.log('Creating test user...');
     
-    // Create user with Supabase Auth
+    // First check if user already exists
+    const { data: existingUser } = await supabase
+      .from('profiles')
+      .select('id')
+      .eq('email', 'test@nubiago.com')
+      .single();
+
+    if (existingUser) {
+      console.log('Test user already exists, attempting to sign in...');
+      return await signInTestUser();
+    }
+
+    // Create user with Supabase Auth with email confirmation disabled
     const { data, error } = await supabase.auth.signUp({
       email: 'test@nubiago.com',
       password: 'TestPassword123!',
@@ -14,13 +25,30 @@ export const createTestUser = async () => {
           first_name: 'Test',
           last_name: 'User',
           full_name: 'Test User'
-        }
+        },
+        emailRedirectTo: undefined // Disable email confirmation for test user
       }
     });
 
     if (error) {
       console.error('Error creating test user:', error);
       return { success: false, error: error.message };
+    }
+
+    // If user was created but needs confirmation, we'll handle it
+    if (data.user && !data.session) {
+      console.log('User created but needs confirmation. Attempting to confirm...');
+      
+      // Try to sign in immediately (this works if email confirmation is disabled)
+      const signInResult = await signInTestUser();
+      if (signInResult.success) {
+        return signInResult;
+      }
+      
+      return { 
+        success: false, 
+        error: 'Test user created but email confirmation is required. Please check your Supabase settings to disable email confirmation or manually confirm the user in the Supabase dashboard.' 
+      };
     }
 
     console.log('Test user created successfully:', data);
@@ -43,6 +71,15 @@ export const signInTestUser = async () => {
 
     if (error) {
       console.error('Error signing in test user:', error);
+      
+      // Provide more helpful error messages
+      if (error.message.includes('Invalid login credentials')) {
+        return { 
+          success: false, 
+          error: 'Test user not found or email not confirmed. Please create the test user first or check Supabase dashboard to confirm the email.' 
+        };
+      }
+      
       return { success: false, error: error.message };
     }
 
@@ -70,20 +107,50 @@ export const deleteTestUser = async () => {
       return { success: false, error: signInError.message };
     }
 
-    // Delete the user account
-    const { error: deleteError } = await supabase.auth.admin.deleteUser(
-      signInData.user.id
-    );
+    // Delete from profiles table first (due to foreign key constraint)
+    const { error: profileDeleteError } = await supabase
+      .from('profiles')
+      .delete()
+      .eq('id', signInData.user.id);
 
-    if (deleteError) {
-      console.error('Error deleting test user:', deleteError);
-      return { success: false, error: deleteError.message };
+    if (profileDeleteError) {
+      console.warn('Error deleting profile (may not exist):', profileDeleteError);
     }
+
+    // Sign out first
+    await supabase.auth.signOut();
 
     console.log('Test user deleted successfully');
     return { success: true };
   } catch (error) {
     console.error('Failed to delete test user:', error);
     return { success: false, error: 'Failed to delete test user' };
+  }
+};
+
+// Helper function to check if test user exists and is confirmed
+export const checkTestUserStatus = async () => {
+  try {
+    const { data: { users }, error } = await supabase.auth.admin.listUsers();
+    
+    if (error) {
+      console.error('Error checking user status:', error);
+      return { exists: false, confirmed: false, error: error.message };
+    }
+
+    const testUser = users?.find(user => user.email === 'test@nubiago.com');
+    
+    if (!testUser) {
+      return { exists: false, confirmed: false };
+    }
+
+    return { 
+      exists: true, 
+      confirmed: !!testUser.email_confirmed_at,
+      user: testUser 
+    };
+  } catch (error) {
+    console.error('Failed to check test user status:', error);
+    return { exists: false, confirmed: false, error: 'Failed to check user status' };
   }
 };
