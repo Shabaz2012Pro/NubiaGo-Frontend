@@ -9,7 +9,8 @@ import TwoFactorSetup from '../components/molecules/TwoFactorSetup';
 import AccountSecurityDashboard from '../components/molecules/AccountSecurityDashboard';
 import LoadingScreen from '../components/molecules/LoadingScreen';
 import ErrorState from '../components/molecules/ErrorState';
-import { LoginForm, RegisterForm, ForgotPasswordForm, ResetPasswordForm, TwoFactorForm } from '../components/auth';
+import { SignInForm, SignUpForm } from '../components/auth';
+import ForgotPasswordForm from '../components/auth/ForgotPasswordForm';
 import Card from '../components/atoms/Card';
 import Button from '../components/atoms/Button';
 import { createTestUser, signInTestUser } from '../utils/createTestUser';
@@ -104,7 +105,7 @@ const AuthPage: React.FC = () => {
                     </p>
                   </div>
                   
-                  <LoginForm
+                  <SignInForm
                     onSuccess={() => window.location.hash = ''}
                     onForgotPassword={() => window.location.hash = 'auth?action=forgotPassword'}
                     onRegister={() => window.location.hash = 'auth?action=register'}
@@ -165,7 +166,7 @@ const AuthPage: React.FC = () => {
                     </p>
                   </div>
                   
-                  <RegisterForm
+                  <SignUpForm
                     onSuccess={() => window.location.hash = 'auth?action=verifyEmail'}
                     onLogin={() => window.location.hash = 'auth?action=login'}
                   />
@@ -203,7 +204,7 @@ const AuthPage: React.FC = () => {
                     </p>
                   </div>
                   
-                  <ResetPasswordForm
+                  <PasswordReset
                     token={token}
                     onSuccess={() => window.location.hash = 'auth?action=login'}
                   />
@@ -298,7 +299,7 @@ const AuthPage: React.FC = () => {
                     </p>
                   </div>
                   
-                  <TwoFactorForm
+                  <TwoFactorSetup
                     onVerify={(code) => {
                       console.log('Verifying code:', code);
                       window.location.hash = '';

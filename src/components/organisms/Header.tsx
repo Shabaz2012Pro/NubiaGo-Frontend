@@ -132,7 +132,7 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => {
                   alt="NubiaGO"
                   className="h-8 w-auto"
                   loading="eager"
-                  fetchPriority="high"
+                  fetchpriority="high"
                 />
                 <span className="text-xl font-bold text-gray-900 dark:text-white hidden sm:block">
                   NubiaGO
