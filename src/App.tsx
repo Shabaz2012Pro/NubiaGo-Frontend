@@ -34,12 +34,12 @@ const SuppliersPage = React.lazy(() => import('./pages/SuppliersPage'));
 const BecomeSupplierPage = React.lazy(() => import('./pages/BecomeSupplierPage'));
 const NotFoundPage = React.lazy(() => import('./components/molecules/NotFoundPage'));
 
-// Admin pages - lazy loaded separately
-const AdminDashboard = React.lazy(() => import('./pages/admin/AdminDashboard'));
-const AdminProducts = React.lazy(() => import('./pages/admin/AdminProducts'));
-const AdminOrders = React.lazy(() => import('./pages/admin/AdminOrders'));
-const AdminUsers = React.lazy(() => import('./pages/admin/AdminUsers'));
-const AdminSettings = React.lazy(() => import('./pages/admin/AdminSettings'));
+// Admin pages - lazy loaded separately with explicit .tsx extensions
+const AdminDashboard = React.lazy(() => import('./pages/admin/AdminDashboard.tsx'));
+const AdminProducts = React.lazy(() => import('./pages/admin/AdminProducts.tsx'));
+const AdminOrders = React.lazy(() => import('./pages/admin/AdminOrders.tsx'));
+const AdminUsers = React.lazy(() => import('./pages/admin/AdminUsers.tsx'));
+const AdminSettings = React.lazy(() => import('./pages/admin/AdminSettings.tsx'));
 
 // Utility imports
 import { injectResourceHints, reportWebVitals, initPerformanceMonitoring } from './utils/performance';
