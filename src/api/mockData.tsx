@@ -12,6 +12,7 @@ import {
 
 // Mock Products
 export const mockProducts: Product[] = [
+  // ELECTRONICS CATEGORY - 5 products
   {
     id: 'f47ac10b-58cc-4372-a567-0e02b2c3d479',
     name: 'Premium Wireless Headphones',
@@ -85,6 +86,114 @@ export const mockProducts: Product[] = [
     }
   },
   {
+    id: 'electronics-3',
+    name: '4K Ultra HD Smart TV',
+    description: 'Crystal clear 4K resolution with smart features and voice control',
+    price: 799.99,
+    originalPrice: 999.99,
+    currency: 'USD',
+    images: ['https://images.pexels.com/photos/6782570/pexels-photo-6782570.jpeg?auto=compress&cs=tinysrgb&w=400'],
+    category: 'electronics',
+    supplier: {
+      id: '1',
+      name: 'AudioTech Turkey',
+      country: 'Turkey',
+      rating: 4.8,
+      verified: true,
+      totalProducts: 150,
+      responseTime: '< 2 hours',
+      memberSince: '2020'
+    },
+    rating: 4.6,
+    reviews: 178,
+    inStock: true,
+    minOrder: 1,
+    tags: ['tv', '4k', 'smart', 'entertainment'],
+    isFeatured: true,
+    specifications: {
+      'Screen Size': '55 inches',
+      'Resolution': '3840 x 2160 (4K)',
+      'HDR': 'Yes, HDR10+',
+      'Smart Features': 'Voice control, streaming apps',
+      'Refresh Rate': '120Hz',
+      'Connectivity': 'HDMI x4, USB x3, WiFi, Bluetooth',
+      'Audio': '20W speakers with Dolby Atmos',
+      'Warranty': '2 years'
+    }
+  },
+  {
+    id: 'electronics-4',
+    name: 'Professional DSLR Camera',
+    description: 'High-performance DSLR camera for professional photography',
+    price: 1299.99,
+    currency: 'USD',
+    images: ['https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=400'],
+    category: 'electronics',
+    supplier: {
+      id: '2',
+      name: 'FitTech Istanbul',
+      country: 'Turkey',
+      rating: 4.6,
+      verified: true,
+      totalProducts: 85,
+      responseTime: '< 4 hours',
+      memberSince: '2019'
+    },
+    rating: 4.9,
+    reviews: 156,
+    inStock: true,
+    minOrder: 1,
+    tags: ['camera', 'photography', 'professional', 'dslr'],
+    specifications: {
+      'Sensor': '24.1 MP APS-C CMOS',
+      'Processor': 'DIGIC 8',
+      'ISO Range': '100-25600 (expandable to 51200)',
+      'Autofocus': '45-point all cross-type AF',
+      'Video': '4K 30p, Full HD 60p',
+      'Connectivity': 'WiFi, Bluetooth, NFC',
+      'Battery Life': 'Approx. 1300 shots',
+      'Weight': '730g'
+    }
+  },
+  {
+    id: 'electronics-5',
+    name: 'Wireless Gaming Mouse',
+    description: 'High-precision wireless gaming mouse with customizable RGB lighting',
+    price: 89.99,
+    originalPrice: 109.99,
+    currency: 'USD',
+    images: ['https://images.pexels.com/photos/2115257/pexels-photo-2115257.jpeg?auto=compress&cs=tinysrgb&w=400'],
+    category: 'electronics',
+    supplier: {
+      id: '1',
+      name: 'AudioTech Turkey',
+      country: 'Turkey',
+      rating: 4.8,
+      verified: true,
+      totalProducts: 150,
+      responseTime: '< 2 hours',
+      memberSince: '2020'
+    },
+    rating: 4.4,
+    reviews: 210,
+    inStock: true,
+    minOrder: 1,
+    tags: ['gaming', 'mouse', 'wireless', 'rgb'],
+    isNew: true,
+    specifications: {
+      'DPI': 'Up to 16,000',
+      'Buttons': '8 programmable buttons',
+      'Connectivity': '2.4GHz wireless, Bluetooth, USB-C',
+      'Battery Life': 'Up to 70 hours',
+      'RGB': 'Customizable 16.8M colors',
+      'Weight': '88g',
+      'Polling Rate': '1000Hz',
+      'Compatibility': 'Windows, macOS, Linux'
+    }
+  },
+
+  // FASHION CATEGORY - 5 products
+  {
     id: 'f47ac10b-58cc-4372-a567-0e02b2c3d481',
     name: 'Handcrafted Leather Bag',
     description: 'Premium leather bag handcrafted by Turkish artisans',
@@ -119,13 +228,151 @@ export const mockProducts: Product[] = [
     }
   },
   {
+    id: 'fashion-2',
+    name: 'Premium Silk Scarf',
+    description: 'Luxurious silk scarf with traditional Turkish patterns',
+    price: 59.99,
+    currency: 'USD',
+    images: ['https://images.pexels.com/photos/6311392/pexels-photo-6311392.jpeg?auto=compress&cs=tinysrgb&w=400'],
+    category: 'fashion',
+    supplier: {
+      id: '3',
+      name: 'Istanbul Leather Co.',
+      country: 'Turkey',
+      rating: 4.9,
+      verified: true,
+      totalProducts: 95,
+      responseTime: '< 2 hours',
+      memberSince: '2017'
+    },
+    rating: 4.7,
+    reviews: 89,
+    inStock: true,
+    minOrder: 1,
+    tags: ['silk', 'scarf', 'luxury', 'accessory'],
+    specifications: {
+      'Material': '100% Mulberry Silk',
+      'Dimensions': '90cm x 90cm',
+      'Pattern': 'Traditional Turkish',
+      'Edges': 'Hand-rolled',
+      'Weight': '50g',
+      'Care': 'Dry clean only'
+    }
+  },
+  {
+    id: 'fashion-3',
+    name: 'Men\'s Tailored Suit',
+    description: 'Premium tailored suit made from high-quality wool blend',
+    price: 349.99,
+    originalPrice: 449.99,
+    currency: 'USD',
+    images: ['https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg?auto=compress&cs=tinysrgb&w=400'],
+    category: 'fashion',
+    supplier: {
+      id: '3',
+      name: 'Istanbul Leather Co.',
+      country: 'Turkey',
+      rating: 4.9,
+      verified: true,
+      totalProducts: 95,
+      responseTime: '< 2 hours',
+      memberSince: '2017'
+    },
+    rating: 4.9,
+    reviews: 124,
+    inStock: true,
+    minOrder: 1,
+    tags: ['suit', 'formal', 'men', 'tailored'],
+    isFeatured: true,
+    specifications: {
+      'Material': '80% Wool, 20% Polyester',
+      'Fit': 'Slim fit',
+      'Pieces': '2 (Jacket, Trousers)',
+      'Lining': 'Full lined',
+      'Closure': 'Button',
+      'Care': 'Dry clean only',
+      'Origin': 'Made in Turkey'
+    }
+  },
+  {
+    id: 'fashion-4',
+    name: 'Women\'s Leather Boots',
+    description: 'Stylish and comfortable genuine leather boots for women',
+    price: 179.99,
+    currency: 'USD',
+    images: ['https://images.pexels.com/photos/1537671/pexels-photo-1537671.jpeg?auto=compress&cs=tinysrgb&w=400'],
+    category: 'fashion',
+    supplier: {
+      id: '3',
+      name: 'Istanbul Leather Co.',
+      country: 'Turkey',
+      rating: 4.9,
+      verified: true,
+      totalProducts: 95,
+      responseTime: '< 2 hours',
+      memberSince: '2017'
+    },
+    rating: 4.6,
+    reviews: 98,
+    inStock: true,
+    minOrder: 1,
+    tags: ['boots', 'leather', 'women', 'shoes'],
+    specifications: {
+      'Material': 'Genuine leather',
+      'Sole': 'Rubber',
+      'Heel Height': '2.5 inches',
+      'Shaft Height': '15 inches',
+      'Closure': 'Zipper',
+      'Lining': 'Textile',
+      'Color': 'Black',
+      'Care': 'Leather conditioner recommended'
+    }
+  },
+  {
+    id: 'fashion-5',
+    name: 'Handwoven Turkish Carpet',
+    description: 'Traditional handwoven carpet with authentic Turkish patterns',
+    price: 499.99,
+    originalPrice: 599.99,
+    currency: 'USD',
+    images: ['https://images.pexels.com/photos/6480707/pexels-photo-6480707.jpeg?auto=compress&cs=tinysrgb&w=400'],
+    category: 'fashion',
+    supplier: {
+      id: '3',
+      name: 'Istanbul Leather Co.',
+      country: 'Turkey',
+      rating: 4.9,
+      verified: true,
+      totalProducts: 95,
+      responseTime: '< 2 hours',
+      memberSince: '2017'
+    },
+    rating: 4.9,
+    reviews: 67,
+    inStock: true,
+    minOrder: 1,
+    tags: ['carpet', 'handwoven', 'traditional', 'home decor'],
+    specifications: {
+      'Material': 'Wool and Cotton',
+      'Dimensions': '200cm x 150cm',
+      'Technique': 'Hand-knotted',
+      'Knot Density': '120 knots per square inch',
+      'Colors': 'Natural dyes',
+      'Age': 'New',
+      'Origin': 'Central Anatolia',
+      'Care': 'Professional cleaning recommended'
+    }
+  },
+
+  // HOME & KITCHEN CATEGORY - 5 products
+  {
     id: 'f47ac10b-58cc-4372-a567-0e02b2c3d482',
     name: 'Turkish Coffee Set',
     description: 'Authentic Turkish coffee set with traditional design',
     price: 45.99,
     currency: 'USD',
     images: ['https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=400'],
-    category: 'food-beverage',
+    category: 'home-appliances',
     supplier: {
       id: '4',
       name: 'Anatolian Delights',
@@ -153,6 +400,147 @@ export const mockProducts: Product[] = [
       'Care': 'Hand wash only'
     }
   },
+  {
+    id: 'home-2',
+    name: 'Smart Home Security System',
+    description: 'Complete home security system with cameras, sensors, and mobile app control',
+    price: 349.99,
+    originalPrice: 399.99,
+    currency: 'USD',
+    images: ['https://images.pexels.com/photos/3952071/pexels-photo-3952071.jpeg?auto=compress&cs=tinysrgb&w=400'],
+    category: 'home-appliances',
+    supplier: {
+      id: '4',
+      name: 'Anatolian Delights',
+      country: 'Turkey',
+      rating: 4.7,
+      verified: true,
+      totalProducts: 120,
+      responseTime: '< 3 hours',
+      memberSince: '2018'
+    },
+    rating: 4.5,
+    reviews: 112,
+    inStock: true,
+    minOrder: 1,
+    tags: ['security', 'smart home', 'cameras', 'sensors'],
+    isNew: true,
+    specifications: {
+      'Components': 'Base station, 2 cameras, 4 door/window sensors, keypad',
+      'Resolution': '1080p HD',
+      'Storage': 'Cloud + local',
+      'Connectivity': 'WiFi, Ethernet',
+      'Power': 'Wired with battery backup',
+      'Mobile App': 'iOS, Android',
+      'Smart Home': 'Works with Alexa, Google Home',
+      'Warranty': '2 years'
+    }
+  },
+  {
+    id: 'home-3',
+    name: 'Premium Cookware Set',
+    description: 'Professional-grade stainless steel cookware set for home chefs',
+    price: 249.99,
+    currency: 'USD',
+    images: ['https://images.pexels.com/photos/6996085/pexels-photo-6996085.jpeg?auto=compress&cs=tinysrgb&w=400'],
+    category: 'home-appliances',
+    supplier: {
+      id: '4',
+      name: 'Anatolian Delights',
+      country: 'Turkey',
+      rating: 4.7,
+      verified: true,
+      totalProducts: 120,
+      responseTime: '< 3 hours',
+      memberSince: '2018'
+    },
+    rating: 4.8,
+    reviews: 145,
+    inStock: true,
+    minOrder: 1,
+    tags: ['cookware', 'kitchen', 'stainless steel', 'cooking'],
+    isFeatured: true,
+    specifications: {
+      'Material': '18/10 Stainless Steel',
+      'Pieces': '10-piece set',
+      'Includes': '2 saucepans, 2 frying pans, 1 stockpot, 1 sauté pan, 4 lids',
+      'Dishwasher Safe': 'Yes',
+      'Oven Safe': 'Up to 500°F',
+      'Induction Compatible': 'Yes',
+      'Warranty': 'Lifetime'
+    }
+  },
+  {
+    id: 'home-4',
+    name: 'Luxury Bedding Set',
+    description: 'High-thread-count Egyptian cotton bedding set with duvet cover and pillowcases',
+    price: 199.99,
+    originalPrice: 249.99,
+    currency: 'USD',
+    images: ['https://images.pexels.com/photos/1034584/pexels-photo-1034584.jpeg?auto=compress&cs=tinysrgb&w=400'],
+    category: 'home-appliances',
+    supplier: {
+      id: '4',
+      name: 'Anatolian Delights',
+      country: 'Turkey',
+      rating: 4.7,
+      verified: true,
+      totalProducts: 120,
+      responseTime: '< 3 hours',
+      memberSince: '2018'
+    },
+    rating: 4.7,
+    reviews: 89,
+    inStock: true,
+    minOrder: 1,
+    tags: ['bedding', 'cotton', 'luxury', 'bedroom'],
+    specifications: {
+      'Material': '100% Egyptian Cotton',
+      'Thread Count': '800',
+      'Includes': 'Duvet cover, flat sheet, fitted sheet, 4 pillowcases',
+      'Sizes': 'King, Queen, Double, Single',
+      'Colors': 'White, Ivory, Grey, Navy',
+      'Care': 'Machine washable',
+      'Origin': 'Made in Turkey'
+    }
+  },
+  {
+    id: 'home-5',
+    name: 'Smart Robot Vacuum Cleaner',
+    description: 'Automated vacuum with mapping technology and app control',
+    price: 299.99,
+    currency: 'USD',
+    images: ['https://images.pexels.com/photos/4428286/pexels-photo-4428286.jpeg?auto=compress&cs=tinysrgb&w=400'],
+    category: 'home-appliances',
+    supplier: {
+      id: '4',
+      name: 'Anatolian Delights',
+      country: 'Turkey',
+      rating: 4.7,
+      verified: true,
+      totalProducts: 120,
+      responseTime: '< 3 hours',
+      memberSince: '2018'
+    },
+    rating: 4.5,
+    reviews: 132,
+    inStock: true,
+    minOrder: 1,
+    tags: ['vacuum', 'robot', 'smart home', 'cleaning'],
+    isNew: true,
+    specifications: {
+      'Suction Power': '2500Pa',
+      'Battery Life': 'Up to 150 minutes',
+      'Mapping': 'LIDAR technology',
+      'Dustbin Capacity': '0.5L',
+      'Noise Level': '<65dB',
+      'App Control': 'iOS, Android',
+      'Smart Home': 'Works with Alexa, Google Home',
+      'Features': 'Scheduled cleaning, No-go zones, Multi-floor mapping'
+    }
+  },
+
+  // BEAUTY CATEGORY - 5 products
   {
     id: 'f47ac10b-58cc-4372-a567-0e02b2c3d483',
     name: 'Professional Hair Dryer',
@@ -189,6 +577,145 @@ export const mockProducts: Product[] = [
     }
   },
   {
+    id: 'beauty-2',
+    name: 'Organic Skincare Set',
+    description: 'Complete skincare routine with natural and organic ingredients',
+    price: 89.99,
+    currency: 'USD',
+    images: ['https://images.pexels.com/photos/3321416/pexels-photo-3321416.jpeg?auto=compress&cs=tinysrgb&w=400'],
+    category: 'beauty',
+    supplier: {
+      id: '5',
+      name: 'Beauty Pro Turkey',
+      country: 'Turkey',
+      rating: 4.4,
+      verified: true,
+      totalProducts: 120,
+      responseTime: '< 3 hours',
+      memberSince: '2021'
+    },
+    rating: 4.7,
+    reviews: 103,
+    inStock: true,
+    minOrder: 1,
+    tags: ['skincare', 'organic', 'natural', 'beauty'],
+    isNew: true,
+    specifications: {
+      'Includes': 'Cleanser, toner, serum, moisturizer, eye cream',
+      'Skin Type': 'All skin types',
+      'Ingredients': 'Organic, vegan, cruelty-free',
+      'Volume': '30-50ml each',
+      'Benefits': 'Hydrating, anti-aging, brightening',
+      'Free From': 'Parabens, sulfates, artificial fragrances',
+      'Origin': 'Made in Turkey'
+    }
+  },
+  {
+    id: 'beauty-3',
+    name: 'Professional Makeup Brush Set',
+    description: 'Complete set of high-quality makeup brushes for professional application',
+    price: 69.99,
+    originalPrice: 89.99,
+    currency: 'USD',
+    images: ['https://images.pexels.com/photos/2688992/pexels-photo-2688992.jpeg?auto=compress&cs=tinysrgb&w=400'],
+    category: 'beauty',
+    supplier: {
+      id: '5',
+      name: 'Beauty Pro Turkey',
+      country: 'Turkey',
+      rating: 4.4,
+      verified: true,
+      totalProducts: 120,
+      responseTime: '< 3 hours',
+      memberSince: '2021'
+    },
+    rating: 4.6,
+    reviews: 87,
+    inStock: true,
+    minOrder: 1,
+    tags: ['makeup', 'brushes', 'professional', 'beauty'],
+    specifications: {
+      'Pieces': '15-piece set',
+      'Bristles': 'Synthetic, cruelty-free',
+      'Handles': 'Wooden',
+      'Includes': 'Face brushes, eye brushes, lip brushes',
+      'Case': 'Professional carrying case included',
+      'Care': 'Wash with mild soap, air dry',
+      'Warranty': '1 year'
+    }
+  },
+  {
+    id: 'beauty-4',
+    name: 'Luxury Perfume Collection',
+    description: 'Set of premium fragrances with long-lasting scents',
+    price: 149.99,
+    currency: 'USD',
+    images: ['https://images.pexels.com/photos/965989/pexels-photo-965989.jpeg?auto=compress&cs=tinysrgb&w=400'],
+    category: 'beauty',
+    supplier: {
+      id: '5',
+      name: 'Beauty Pro Turkey',
+      country: 'Turkey',
+      rating: 4.4,
+      verified: true,
+      totalProducts: 120,
+      responseTime: '< 3 hours',
+      memberSince: '2021'
+    },
+    rating: 4.8,
+    reviews: 76,
+    inStock: true,
+    minOrder: 1,
+    tags: ['perfume', 'fragrance', 'luxury', 'gift set'],
+    isFeatured: true,
+    specifications: {
+      'Includes': '3 premium fragrances',
+      'Volume': '30ml each',
+      'Scent Families': 'Floral, Oriental, Fresh',
+      'Concentration': 'Eau de Parfum',
+      'Longevity': '8-10 hours',
+      'Packaging': 'Luxury gift box',
+      'Origin': 'Made in Turkey'
+    }
+  },
+  {
+    id: 'beauty-5',
+    name: 'Electric Facial Cleansing Brush',
+    description: 'Deep cleansing facial brush with multiple speed settings',
+    price: 59.99,
+    originalPrice: 79.99,
+    currency: 'USD',
+    images: ['https://images.pexels.com/photos/3997379/pexels-photo-3997379.jpeg?auto=compress&cs=tinysrgb&w=400'],
+    category: 'beauty',
+    supplier: {
+      id: '5',
+      name: 'Beauty Pro Turkey',
+      country: 'Turkey',
+      rating: 4.4,
+      verified: true,
+      totalProducts: 120,
+      responseTime: '< 3 hours',
+      memberSince: '2021'
+    },
+    rating: 4.3,
+    reviews: 92,
+    inStock: true,
+    minOrder: 1,
+    tags: ['skincare', 'cleansing', 'facial', 'electric'],
+    specifications: {
+      'Brush Heads': '3 interchangeable heads',
+      'Speed Settings': '5 levels',
+      'Waterproof': 'IPX7 rated',
+      'Battery': 'Rechargeable, up to 2 weeks use',
+      'Material': 'Silicone, BPA-free',
+      'Features': 'Timer, pressure sensor',
+      'Charging': 'USB-C',
+      'Warranty': '1 year'
+    }
+  },
+
+  // SPORTS CATEGORY - 5 products
+  {
     id: 'f47ac10b-58cc-4372-a567-0e02b2c3d484',
     name: 'Fitness Resistance Bands Set',
     description: 'Complete resistance bands set with door anchor and exercise guide',
@@ -224,6 +751,148 @@ export const mockProducts: Product[] = [
     }
   },
   {
+    id: 'sports-2',
+    name: 'Premium Yoga Mat',
+    description: 'Eco-friendly non-slip yoga mat with alignment markings',
+    price: 49.99,
+    currency: 'USD',
+    images: ['https://images.pexels.com/photos/4056535/pexels-photo-4056535.jpeg?auto=compress&cs=tinysrgb&w=400'],
+    category: 'sports',
+    supplier: {
+      id: '6',
+      name: 'FitLife Turkey',
+      country: 'Turkey',
+      rating: 4.3,
+      verified: true,
+      totalProducts: 75,
+      responseTime: '< 6 hours',
+      memberSince: '2020'
+    },
+    rating: 4.7,
+    reviews: 128,
+    inStock: true,
+    minOrder: 1,
+    tags: ['yoga', 'fitness', 'exercise', 'mat'],
+    specifications: {
+      'Material': 'TPE, eco-friendly',
+      'Dimensions': '183cm x 61cm',
+      'Thickness': '6mm',
+      'Features': 'Alignment markings, non-slip surface',
+      'Weight': '1.2kg',
+      'Includes': 'Carrying strap',
+      'Colors': 'Multiple options',
+      'Care': 'Wipe clean with damp cloth'
+    }
+  },
+  {
+    id: 'sports-3',
+    name: 'Smart Jump Rope',
+    description: 'Digital jump rope with calorie counter and workout tracking',
+    price: 39.99,
+    originalPrice: 49.99,
+    currency: 'USD',
+    images: ['https://images.pexels.com/photos/6389075/pexels-photo-6389075.jpeg?auto=compress&cs=tinysrgb&w=400'],
+    category: 'sports',
+    supplier: {
+      id: '6',
+      name: 'FitLife Turkey',
+      country: 'Turkey',
+      rating: 4.3,
+      verified: true,
+      totalProducts: 75,
+      responseTime: '< 6 hours',
+      memberSince: '2020'
+    },
+    rating: 4.4,
+    reviews: 76,
+    inStock: true,
+    minOrder: 1,
+    tags: ['fitness', 'cardio', 'jump rope', 'smart'],
+    isNew: true,
+    specifications: {
+      'Display': 'LED screen',
+      'Metrics': 'Jump count, calories, time',
+      'Connectivity': 'Bluetooth, app compatible',
+      'Battery': 'CR2032, replaceable',
+      'Rope Length': 'Adjustable',
+      'Material': 'PVC rope, ABS handles',
+      'Weight': '290g',
+      'Warranty': '1 year'
+    }
+  },
+  {
+    id: 'sports-4',
+    name: 'Adjustable Dumbbell Set',
+    description: 'Space-saving adjustable dumbbells for home workouts',
+    price: 199.99,
+    currency: 'USD',
+    images: ['https://images.pexels.com/photos/4164761/pexels-photo-4164761.jpeg?auto=compress&cs=tinysrgb&w=400'],
+    category: 'sports',
+    supplier: {
+      id: '6',
+      name: 'FitLife Turkey',
+      country: 'Turkey',
+      rating: 4.3,
+      verified: true,
+      totalProducts: 75,
+      responseTime: '< 6 hours',
+      memberSince: '2020'
+    },
+    rating: 4.6,
+    reviews: 112,
+    inStock: true,
+    minOrder: 1,
+    tags: ['fitness', 'weights', 'strength training', 'home gym'],
+    isFeatured: true,
+    specifications: {
+      'Weight Range': '5-52.5 lbs each',
+      'Increments': '2.5 lbs',
+      'Material': 'Steel, nylon',
+      'Handle': 'Ergonomic grip',
+      'Storage': 'Included tray',
+      'Dimensions': '40cm x 20cm x 20cm (per dumbbell)',
+      'Total Weight': '105 lbs (set)',
+      'Warranty': '2 years'
+    }
+  },
+  {
+    id: 'sports-5',
+    name: 'Waterproof Fitness Tracker',
+    description: 'Advanced activity tracker with heart rate monitoring and GPS',
+    price: 79.99,
+    originalPrice: 99.99,
+    currency: 'USD',
+    images: ['https://images.pexels.com/photos/4498482/pexels-photo-4498482.jpeg?auto=compress&cs=tinysrgb&w=400'],
+    category: 'sports',
+    supplier: {
+      id: '6',
+      name: 'FitLife Turkey',
+      country: 'Turkey',
+      rating: 4.3,
+      verified: true,
+      totalProducts: 75,
+      responseTime: '< 6 hours',
+      memberSince: '2020'
+    },
+    rating: 4.3,
+    reviews: 87,
+    inStock: true,
+    minOrder: 1,
+    tags: ['fitness', 'tracker', 'waterproof', 'gps'],
+    specifications: {
+      'Display': '1.3" color touchscreen',
+      'Waterproof': '5 ATM',
+      'Battery Life': 'Up to 7 days',
+      'Sensors': 'Heart rate, accelerometer, GPS',
+      'Tracking': 'Steps, sleep, 15+ sports modes',
+      'Connectivity': 'Bluetooth, app compatible',
+      'Notifications': 'Call, text, app alerts',
+      'Compatibility': 'iOS, Android'
+    }
+  },
+
+  // HOME & KITCHEN CATEGORY - 5 products
+  {
     id: 'f47ac10b-58cc-4372-a567-0e02b2c3d485',
     name: 'Ceramic Dinnerware Set',
     description: '16-piece ceramic dinnerware set with modern geometric design',
@@ -258,6 +927,8 @@ export const mockProducts: Product[] = [
       'Care': 'Dishwasher and microwave safe'
     }
   },
+
+  // AUTOMOTIVE CATEGORY - 5 products
   {
     id: 'f47ac10b-58cc-4372-a567-0e02b2c3d486',
     name: 'Car Phone Mount',
@@ -291,6 +962,320 @@ export const mockProducts: Product[] = [
       'Adjustable': 'Yes',
       'Weight': '0.1kg',
       'Warranty': '1 year'
+    }
+  },
+  {
+    id: 'automotive-2',
+    name: 'Portable Car Vacuum Cleaner',
+    description: 'Powerful handheld vacuum for cleaning car interiors',
+    price: 49.99,
+    originalPrice: 59.99,
+    currency: 'USD',
+    images: ['https://images.pexels.com/photos/3806288/pexels-photo-3806288.jpeg?auto=compress&cs=tinysrgb&w=400'],
+    category: 'automotive',
+    supplier: {
+      id: '8',
+      name: 'AutoTech Turkey',
+      country: 'Turkey',
+      rating: 4.2,
+      verified: true,
+      totalProducts: 60,
+      responseTime: '< 4 hours',
+      memberSince: '2021'
+    },
+    rating: 4.3,
+    reviews: 94,
+    inStock: true,
+    minOrder: 1,
+    tags: ['vacuum', 'car', 'cleaning', 'portable'],
+    specifications: {
+      'Power': '120W',
+      'Suction': '8000Pa',
+      'Filter': 'HEPA',
+      'Cord Length': '16ft',
+      'Attachments': 'Crevice tool, brush tool',
+      'Dustbin Capacity': '0.5L',
+      'Weight': '1.2kg',
+      'Warranty': '1 year'
+    }
+  },
+  {
+    id: 'automotive-3',
+    name: 'Car Dash Camera',
+    description: '4K dash cam with night vision and parking monitoring',
+    price: 129.99,
+    currency: 'USD',
+    images: ['https://images.pexels.com/photos/3806288/pexels-photo-3806288.jpeg?auto=compress&cs=tinysrgb&w=400'],
+    category: 'automotive',
+    supplier: {
+      id: '8',
+      name: 'AutoTech Turkey',
+      country: 'Turkey',
+      rating: 4.2,
+      verified: true,
+      totalProducts: 60,
+      responseTime: '< 4 hours',
+      memberSince: '2021'
+    },
+    rating: 4.5,
+    reviews: 76,
+    inStock: true,
+    minOrder: 1,
+    tags: ['dash cam', 'car', 'security', '4k'],
+    isNew: true,
+    specifications: {
+      'Resolution': '4K Ultra HD',
+      'Field of View': '170°',
+      'Night Vision': 'Enhanced',
+      'Storage': 'MicroSD up to 256GB',
+      'Features': 'G-sensor, parking monitor, loop recording',
+      'Display': '2.4" LCD',
+      'Connectivity': 'WiFi, app control',
+      'Warranty': '1 year'
+    }
+  },
+  {
+    id: 'automotive-4',
+    name: 'Car Seat Covers Set',
+    description: 'Premium leather seat covers for complete car interior protection',
+    price: 149.99,
+    originalPrice: 179.99,
+    currency: 'USD',
+    images: ['https://images.pexels.com/photos/2036544/pexels-photo-2036544.jpeg?auto=compress&cs=tinysrgb&w=400'],
+    category: 'automotive',
+    supplier: {
+      id: '8',
+      name: 'AutoTech Turkey',
+      country: 'Turkey',
+      rating: 4.2,
+      verified: true,
+      totalProducts: 60,
+      responseTime: '< 4 hours',
+      memberSince: '2021'
+    },
+    rating: 4.4,
+    reviews: 108,
+    inStock: true,
+    minOrder: 1,
+    tags: ['seat covers', 'car interior', 'leather', 'protection'],
+    specifications: {
+      'Material': 'PU leather',
+      'Compatibility': 'Universal fit for most vehicles',
+      'Pieces': 'Full set (front and rear)',
+      'Installation': 'DIY, tools included',
+      'Waterproof': 'Yes',
+      'Features': 'Airbag compatible, storage pockets',
+      'Colors': 'Black, Beige, Brown',
+      'Warranty': '1 year'
+    }
+  },
+  {
+    id: 'automotive-5',
+    name: 'Portable Car Jump Starter',
+    description: 'Emergency jump starter and power bank for vehicles',
+    price: 89.99,
+    currency: 'USD',
+    images: ['https://images.pexels.com/photos/4480505/pexels-photo-4480505.jpeg?auto=compress&cs=tinysrgb&w=400'],
+    category: 'automotive',
+    supplier: {
+      id: '8',
+      name: 'AutoTech Turkey',
+      country: 'Turkey',
+      rating: 4.2,
+      verified: true,
+      totalProducts: 60,
+      responseTime: '< 4 hours',
+      memberSince: '2021'
+    },
+    rating: 4.6,
+    reviews: 132,
+    inStock: true,
+    minOrder: 1,
+    tags: ['jump starter', 'emergency', 'power bank', 'car'],
+    isFeatured: true,
+    specifications: {
+      'Peak Current': '1000A',
+      'Battery Capacity': '12000mAh',
+      'Compatible With': 'Up to 6.0L gas, 3.0L diesel engines',
+      'Features': 'LED flashlight, USB charging ports',
+      'Safety': 'Spark-proof, reverse polarity protection',
+      'Includes': 'Jumper cables, USB cable, carrying case',
+      'Size': 'Compact, portable',
+      'Warranty': '2 years'
+    }
+  },
+
+  // FOOD & BEVERAGE CATEGORY - 5 products
+  {
+    id: 'food-1',
+    name: 'Premium Turkish Tea Set',
+    description: 'Traditional Turkish tea set with authentic design',
+    price: 59.99,
+    currency: 'USD',
+    images: ['https://images.pexels.com/photos/1251095/pexels-photo-1251095.jpeg?auto=compress&cs=tinysrgb&w=400'],
+    category: 'food-beverage',
+    supplier: {
+      id: '4',
+      name: 'Anatolian Delights',
+      country: 'Turkey',
+      rating: 4.7,
+      verified: true,
+      totalProducts: 120,
+      responseTime: '< 3 hours',
+      memberSince: '2018'
+    },
+    rating: 4.8,
+    reviews: 145,
+    inStock: true,
+    minOrder: 1,
+    tags: ['tea', 'traditional', 'turkish'],
+    isFeatured: true,
+    specifications: {
+      'Material': 'Glass, stainless steel',
+      'Includes': 'Teapot, 6 glasses, 6 saucers, sugar bowl',
+      'Capacity': 'Teapot: 800ml, Glasses: 100ml each',
+      'Dishwasher Safe': 'Yes',
+      'Origin': 'Turkey',
+      'Design': 'Traditional Turkish',
+      'Weight': '1.5kg',
+      'Care': 'Dishwasher safe'
+    }
+  },
+  {
+    id: 'food-2',
+    name: 'Gourmet Turkish Delight Assortment',
+    description: 'Luxury assortment of authentic Turkish delight in various flavors',
+    price: 34.99,
+    currency: 'USD',
+    images: ['https://images.pexels.com/photos/2531194/pexels-photo-2531194.jpeg?auto=compress&cs=tinysrgb&w=400'],
+    category: 'food-beverage',
+    supplier: {
+      id: '4',
+      name: 'Anatolian Delights',
+      country: 'Turkey',
+      rating: 4.7,
+      verified: true,
+      totalProducts: 120,
+      responseTime: '< 3 hours',
+      memberSince: '2018'
+    },
+    rating: 4.9,
+    reviews: 167,
+    inStock: true,
+    minOrder: 1,
+    tags: ['turkish delight', 'sweets', 'gourmet', 'gift'],
+    specifications: {
+      'Weight': '500g',
+      'Flavors': 'Rose, pistachio, pomegranate, lemon, mint',
+      'Ingredients': 'Natural, no artificial colors or flavors',
+      'Packaging': 'Luxury gift box',
+      'Shelf Life': '6 months',
+      'Storage': 'Store in cool, dry place',
+      'Dietary': 'Vegetarian',
+      'Origin': 'Turkey'
+    }
+  },
+  {
+    id: 'food-3',
+    name: 'Artisanal Turkish Olive Oil',
+    description: 'Cold-pressed extra virgin olive oil from Aegean olive groves',
+    price: 24.99,
+    currency: 'USD',
+    images: ['https://images.pexels.com/photos/33783/olive-oil-salad-dressing-cooking.jpg?auto=compress&cs=tinysrgb&w=400'],
+    category: 'food-beverage',
+    supplier: {
+      id: '4',
+      name: 'Anatolian Delights',
+      country: 'Turkey',
+      rating: 4.7,
+      verified: true,
+      totalProducts: 120,
+      responseTime: '< 3 hours',
+      memberSince: '2018'
+    },
+    rating: 4.7,
+    reviews: 89,
+    inStock: true,
+    minOrder: 1,
+    tags: ['olive oil', 'gourmet', 'cooking', 'organic'],
+    specifications: {
+      'Volume': '500ml',
+      'Type': 'Extra virgin',
+      'Acidity': '<0.4%',
+      'Process': 'Cold-pressed',
+      'Origin': 'Aegean region, Turkey',
+      'Harvest': 'Single estate',
+      'Certification': 'Organic',
+      'Packaging': 'Dark glass bottle'
+    }
+  },
+  {
+    id: 'food-4',
+    name: 'Premium Turkish Coffee',
+    description: 'Finely ground traditional Turkish coffee with rich flavor',
+    price: 19.99,
+    currency: 'USD',
+    images: ['https://images.pexels.com/photos/2396220/pexels-photo-2396220.jpeg?auto=compress&cs=tinysrgb&w=400'],
+    category: 'food-beverage',
+    supplier: {
+      id: '4',
+      name: 'Anatolian Delights',
+      country: 'Turkey',
+      rating: 4.7,
+      verified: true,
+      totalProducts: 120,
+      responseTime: '< 3 hours',
+      memberSince: '2018'
+    },
+    rating: 4.8,
+    reviews: 156,
+    inStock: true,
+    minOrder: 1,
+    tags: ['coffee', 'turkish', 'gourmet', 'beverage'],
+    specifications: {
+      'Weight': '250g',
+      'Grind': 'Extra fine (Turkish)',
+      'Roast': 'Medium-dark',
+      'Beans': 'Arabica blend',
+      'Packaging': 'Vacuum sealed',
+      'Origin': 'Turkey',
+      'Flavor Profile': 'Rich, full-bodied',
+      'Preparation': 'Traditional Turkish method'
+    }
+  },
+  {
+    id: 'food-5',
+    name: 'Luxury Spice Collection',
+    description: 'Set of premium Turkish spices in decorative containers',
+    price: 49.99,
+    originalPrice: 59.99,
+    currency: 'USD',
+    images: ['https://images.pexels.com/photos/4198370/pexels-photo-4198370.jpeg?auto=compress&cs=tinysrgb&w=400'],
+    category: 'food-beverage',
+    supplier: {
+      id: '4',
+      name: 'Anatolian Delights',
+      country: 'Turkey',
+      rating: 4.7,
+      verified: true,
+      totalProducts: 120,
+      responseTime: '< 3 hours',
+      memberSince: '2018'
+    },
+    rating: 4.6,
+    reviews: 112,
+    inStock: true,
+    minOrder: 1,
+    tags: ['spices', 'gourmet', 'cooking', 'gift set'],
+    specifications: {
+      'Includes': '8 premium spices',
+      'Spices': 'Sumac, Aleppo pepper, Turkish oregano, mint, cumin, cinnamon, thyme, black pepper',
+      'Weight': '25g each',
+      'Packaging': 'Decorative glass jars with wooden rack',
+      'Origin': 'Turkey',
+      'Organic': 'Yes',
+      'Shelf Life': '2 years',
+      'Storage': 'Cool, dry place'
     }
   }
 ];

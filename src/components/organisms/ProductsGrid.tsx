@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Filter, 
@@ -26,6 +26,7 @@ import { clsx } from 'clsx';
 import { useWishlistStore } from '../../store';
 import ProductCardOptimized from '../molecules/ProductCardOptimized';
 import ProductQuickView from './ProductQuickView';
+import { productApi } from '../../api/productApi';
 
 interface ProductsGridProps {
   products?: Product[];
@@ -105,275 +106,36 @@ const ProductsGrid: React.FC<ProductsGridProps> = ({
     { id: '1', label: '1★ & up', count: 5500 }
   ];
 
-  // Mock products data
-  const mockProducts: Product[] = [
-    {
-      id: 'f47ac10b-58cc-4372-a567-0e02b2c3d479',
-      name: 'Premium Wireless Headphones',
-      description: 'High-quality wireless headphones with active noise cancellation',
-      price: 199.99,
-      originalPrice: 249.99,
-      currency: 'USD',
-      image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop&crop=center&auto=format&q=80',
-      images: [
-        'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop&crop=center&auto=format&q=80',
-        'https://images.unsplash.com/photo-1484704849700-f032a568e944?w=400&h=400&fit=crop&crop=center&auto=format&q=80'
-      ],
-      category: 'electronics',
-      supplier: {
-        id: '1',
-        name: 'AudioTech Turkey',
-        country: 'Turkey',
-        rating: 4.8,
-        verified: true,
-        totalProducts: 150,
-        responseTime: '< 2 hours',
-        memberSince: '2020'
-      },
-      rating: 4.7,
-      reviews: 234,
-      inStock: true,
-      minOrder: 1,
-      tags: ['wireless', 'premium', 'noise-cancelling'],
-      isNew: true,
-      isFeatured: true
-    },
-    {
-      id: '2',
-      name: 'Smart Fitness Watch',
-      description: 'Advanced fitness tracking with health monitoring',
-      price: 299.99,
-      currency: 'USD',
-      image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=400&fit=crop&crop=center&auto=format&q=80',
-      images: [
-        'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=400&fit=crop&crop=center&auto=format&q=80',
-        'https://images.unsplash.com/photo-1544117519-31a4b719223d?w=400&h=400&fit=crop&crop=center&auto=format&q=80'
-      ],
-      category: 'electronics',
-      supplier: {
-        id: '2',
-        name: 'FitTech Istanbul',
-        country: 'Turkey',
-        rating: 4.6,
-        verified: true,
-        totalProducts: 85,
-        responseTime: '< 4 hours',
-        memberSince: '2019'
-      },
-      rating: 4.5,
-      reviews: 189,
-      inStock: true,
-      minOrder: 1,
-      tags: ['fitness', 'smart', 'health'],
-      isNew: true
-    },
-    {
-      id: 'f47ac10b-58cc-4372-a567-0e02b2c3d481',
-      name: 'Handcrafted Leather Bag',
-      description: 'Premium leather bag handcrafted by Turkish artisans',
-      price: 129.99,
-      currency: 'USD',
-      image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=400&fit=crop&crop=center&auto=format&q=80',
-      images: [
-        'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=400&fit=crop&crop=center&auto=format&q=80',
-        'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400&h=400&fit=crop&crop=center&auto=format&q=80'
-      ],
-      category: 'fashion',
-      supplier: {
-        id: '3',
-        name: 'Istanbul Leather Co.',
-        country: 'Turkey',
-        rating: 4.9,
-        verified: true,
-        totalProducts: 95,
-        responseTime: '< 2 hours',
-        memberSince: '2017'
-      },
-      rating: 4.8,
-      reviews: 156,
-      inStock: true,
-      minOrder: 1,
-      tags: ['leather', 'handcrafted', 'premium']
-    },
-    {
-      id: '4',
-      name: 'Turkish Coffee Set',
-      description: 'Authentic Turkish coffee set with traditional design',
-      price: 45.99,
-      currency: 'USD',
-      image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=400&fit=crop&crop=center&auto=format&q=80',
-      images: [
-        'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=400&fit=crop&crop=center&auto=format&q=80',
-        'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=400&fit=crop&crop=center&auto=format&q=80'
-      ],
-      category: 'food-beverage',
-      supplier: {
-        id: '4',
-        name: 'Anatolian Delights',
-        country: 'Turkey',
-        rating: 4.7,
-        verified: true,
-        totalProducts: 120,
-        responseTime: '< 3 hours',
-        memberSince: '2018'
-      },
-      rating: 4.6,
-      reviews: 98,
-      inStock: true,
-      minOrder: 1,
-      tags: ['coffee', 'traditional', 'authentic']
-    },
-    {
-      id: '5',
-      name: 'Professional Hair Dryer',
-      description: 'Salon-grade ionic hair dryer with multiple heat settings',
-      price: 79.99,
-      originalPrice: 99.99,
-      currency: 'USD',
-      image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400&h=400&fit=crop&crop=center&auto=format&q=80',
-      images: [
-        'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400&h=400&fit=crop&crop=center&auto=format&q=80',
-        'https://images.unsplash.com/photo-1457972729786-0411a3b2b626?w=400&h=400&fit=crop&crop=center&auto=format&q=80'
-      ],
-      category: 'beauty',
-      supplier: {
-        id: '5',
-        name: 'Beauty Pro Turkey',
-        country: 'Turkey',
-        rating: 4.4,
-        verified: true,
-        totalProducts: 120,
-        responseTime: '< 3 hours',
-        memberSince: '2021'
-      },
-      rating: 4.2,
-      reviews: 67,
-      inStock: true,
-      minOrder: 1,
-      tags: ['professional', 'ionic', 'salon-grade']
-    },
-    {
-      id: '6',
-      name: 'Fitness Resistance Bands Set',
-      description: 'Complete resistance bands set with door anchor and exercise guide',
-      price: 29.99,
-      originalPrice: 39.99,
-      currency: 'USD',
-      image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=400&fit=crop&crop=center&auto=format&q=80',
-      images: [
-        'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=400&fit=crop&crop=center&auto=format&q=80'
-      ],
-      category: 'sports',
-      supplier: {
-        id: '6',
-        name: 'FitLife Turkey',
-        country: 'Turkey',
-        rating: 4.3,
-        verified: true,
-        totalProducts: 75,
-        responseTime: '< 6 hours',
-        memberSince: '2020'
-      },
-      rating: 4.1,
-      reviews: 92,
-      inStock: true,
-      minOrder: 1,
-      tags: ['fitness', 'resistance', 'home-gym']
-    },
-    {
-      id: '7',
-      name: 'Ceramic Dinnerware Set',
-      description: '16-piece ceramic dinnerware set with modern geometric design',
-      price: 89.99,
-      currency: 'USD',
-      image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop&crop=center&auto=format&q=80',
-      images: [
-        'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop&crop=center&auto=format&q=80'
-      ],
-      category: 'home-appliances',
-      supplier: {
-        id: '7',
-        name: 'Cappadocia Ceramics',
-        country: 'Turkey',
-        rating: 4.8,
-        verified: true,
-        totalProducts: 110,
-        responseTime: '< 2 hours',
-        memberSince: '2019'
-      },
-      rating: 4.7,
-      reviews: 134,
-      inStock: true,
-      minOrder: 1,
-      tags: ['ceramic', 'dinnerware', 'modern']
-    },
-    {
-      id: '8',
-      name: 'Car Phone Mount',
-      description: 'Universal magnetic car phone mount with 360° rotation',
-      price: 19.99,
-      originalPrice: 29.99,
-      currency: 'USD',
-      image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop&crop=center&auto=format&q=80',
-      images: [
-        'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop&crop=center&auto=format&q=80'
-      ],
-      category: 'automotive',
-      supplier: {
-        id: '8',
-        name: 'AutoTech Turkey',
-        country: 'Turkey',
-        rating: 4.2,
-        verified: true,
-        totalProducts: 60,
-        responseTime: '< 4 hours',
-        memberSince: '2021'
-      },
-      rating: 4.0,
-      reviews: 78,
-      inStock: true,
-      minOrder: 1,
-      tags: ['magnetic', 'universal', 'car-accessory']
-    },
-    {
-      id: '9',
-      name: 'Baby Organic Cotton Clothing Set',
-      description: 'Soft organic cotton clothing set for babies',
-      price: 34.99,
-      currency: 'USD',
-      image: 'https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?w=400&h=400&fit=crop&crop=center&auto=format&q=80',
-      images: [
-        'https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?w=400&h=400&fit=crop&crop=center&auto=format&q=80'
-      ],
-      category: 'baby-kids',
-      supplier: {
-        id: '9',
-        name: 'Organic Baby Turkey',
-        country: 'Turkey',
-        rating: 4.9,
-        verified: true,
-        totalProducts: 85,
-        responseTime: '< 2 hours',
-        memberSince: '2020'
-      },
-      rating: 4.8,
-      reviews: 112,
-      inStock: true,
-      minOrder: 1,
-      tags: ['organic', 'baby', 'cotton']
+  // Fetch products based on category
+  const fetchProducts = useCallback(async () => {
+    setLoading(true);
+    try {
+      const filters: any = {};
+      
+      if (initialCategory) {
+        filters.category = initialCategory;
+      }
+      
+      const fetchedProducts = await productApi.getProducts(filters);
+      setProducts(fetchedProducts);
+      setFilteredProducts(fetchedProducts);
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    } finally {
+      setLoading(false);
     }
-  ];
+  }, [initialCategory]);
 
   // Initialize products
   useEffect(() => {
-    setLoading(true);
-
-    // Simulate API call
-    setTimeout(() => {
-      setProducts(initialProducts || mockProducts);
+    if (initialProducts) {
+      setProducts(initialProducts);
+      setFilteredProducts(initialProducts);
       setLoading(false);
-    }, 500);
-  }, [initialProducts]);
+    } else {
+      fetchProducts();
+    }
+  }, [initialProducts, fetchProducts]);
 
   // Apply filters when they change
   useEffect(() => {

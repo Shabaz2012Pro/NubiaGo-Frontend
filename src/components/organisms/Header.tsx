@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Search, Menu, X, ShoppingCart, User, Bell, Heart, Globe, Smartphone, Laptop, Home, Shirt, Sparkles, Dumbbell, Database } from 'lucide-react';
+import { Search, Menu, X, ShoppingCart, User, Bell, Heart, Globe, Smartphone, Laptop, Home, Shirt, Sparkles, Dumbbell, Database, Car, Utensils, Baby } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useCartStore } from '../../store/useCartStore';
 import { useWishlistStore } from '../../store/useWishlistStore';
@@ -31,6 +31,8 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false);
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
   // Memoized values
   const cartItemCount = useMemo(() => 
@@ -46,10 +48,13 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => {
   // Navigation items
   const navigationItems = useMemo(() => [
     { name: 'Electronics', href: '/products?category=electronics', icon: <Smartphone className="w-5 h-5" /> },
-    { name: 'Appliances', href: '/products?category=appliances', icon: <Home className="w-5 h-5" /> },
+    { name: 'Appliances', href: '/products?category=home-appliances', icon: <Home className="w-5 h-5" /> },
     { name: 'Fashion', href: '/products?category=fashion', icon: <Shirt className="w-5 h-5" /> },
-    { name: 'Personal Care', href: '/products?category=personal-care', icon: <Sparkles className="w-5 h-5" /> },
+    { name: 'Personal Care', href: '/products?category=beauty', icon: <Sparkles className="w-5 h-5" /> },
     { name: 'Sports', href: '/products?category=sports', icon: <Dumbbell className="w-5 h-5" /> },
+    { name: 'Automotive', href: '/products?category=automotive', icon: <Car className="w-5 h-5" /> },
+    { name: 'Food & Beverage', href: '/products?category=food-beverage', icon: <Utensils className="w-5 h-5" /> },
+    { name: 'Baby & Kids', href: '/products?category=baby-kids', icon: <Baby className="w-5 h-5" /> },
     { name: 'All Products', href: '/products', icon: null }
   ], []);
 
@@ -71,6 +76,7 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => {
     // Close mobile menu on route change
     setIsMobileMenuOpen(false);
     setIsSearchOpen(false);
+    setIsCategoryMenuOpen(false);
   }, [location.pathname]);
 
   // Keyboard event handlers
@@ -80,6 +86,7 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => {
       if (event.key === 'Escape') {
         setIsMobileMenuOpen(false);
         setIsSearchOpen(false);
+        setIsCategoryMenuOpen(false);
       }
 
       // Ctrl/Cmd + K opens search
@@ -111,7 +118,8 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => {
   }, [location.pathname, navigate]);
 
   const handleCategoryClick = (category: string) => {
-    navigate(`/products?category=${category.toLowerCase()}`);
+    navigate(`/products?category=${category}`);
+    setIsCategoryMenuOpen(false);
   };
 
   return (

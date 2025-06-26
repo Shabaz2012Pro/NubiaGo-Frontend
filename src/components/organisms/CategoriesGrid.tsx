@@ -152,7 +152,7 @@ const CategoriesGrid: React.FC<CategoriesGridProps> = ({ className }) => {
   };
 
   const handleCategoryClick = (category: Category) => {
-    // Navigate to category page
+    // Navigate to category page with query parameter
     window.location.href = `/products?category=${category.slug}`;
   };
 
