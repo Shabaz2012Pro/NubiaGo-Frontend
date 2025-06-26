@@ -91,7 +91,7 @@ const ProductCardOptimized: React.FC<ProductCardOptimizedProps> = memo(({
       return 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=400&fit=crop';
     }
 
-    const primaryImage = product.image || product.images?.[0];
+    const primaryImage = product.images?.[0];
     if (!primaryImage) {
       return 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=400&fit=crop';
     }
@@ -202,7 +202,7 @@ const ProductCardOptimized: React.FC<ProductCardOptimizedProps> = memo(({
               size="sm"
               onClick={handleAddToCart}
               loading={isLoading}
-              className="w-full bg-blue-600 hover:bg-blue-700 !text-white text-sm py-2"
+              className="w-full bg-red-600 hover:bg-red-700 !text-white text-sm py-2"
               leftIcon={<ShoppingCart className="w-4 h-4" />}
             >
               Add to Cart

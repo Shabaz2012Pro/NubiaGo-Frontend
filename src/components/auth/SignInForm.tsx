@@ -39,8 +39,7 @@ export const SignInForm: React.FC<SignInFormProps> = ({
     return errors;
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+  const handleInputChange = (name: string, value: string) => {
     setFormData(prev => ({ ...prev, [name]: value }));
     
     // Clear error when user starts typing
@@ -80,7 +79,7 @@ export const SignInForm: React.FC<SignInFormProps> = ({
           Welcome Back
         </h2>
         <p className="mt-2 text-neutral-600 dark:text-neutral-400">
-          Sign in to your Nubiago account
+          Sign in to your NubiaGo account
         </p>
       </div>
 
@@ -91,7 +90,7 @@ export const SignInForm: React.FC<SignInFormProps> = ({
           name="email"
           placeholder="Email Address"
           value={formData.email}
-          onChange={(value) => setFormData(prev => ({ ...prev, email: value }))}
+          onChange={(value) => handleInputChange('email', value)}
           error={formErrors.email}
           leftIcon={<Mail className="w-4 h-4" />}
         />
@@ -103,7 +102,7 @@ export const SignInForm: React.FC<SignInFormProps> = ({
             name="password"
             placeholder="Password"
             value={formData.password}
-            onChange={(value) => setFormData(prev => ({ ...prev, password: value }))}
+            onChange={(value) => handleInputChange('password', value)}
             error={formErrors.password}
           />
           <button
@@ -138,7 +137,7 @@ export const SignInForm: React.FC<SignInFormProps> = ({
           type="submit"
           variant="primary"
           size="lg"
-          className="w-full"
+          className="w-full bg-red-600 hover:bg-red-700"
           loading={isLoading}
         >
           Sign In

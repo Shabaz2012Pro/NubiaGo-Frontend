@@ -100,7 +100,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
           Create Your Account
         </h2>
         <p className="mt-2 text-neutral-600 dark:text-neutral-400">
-          Join Nubiago and start shopping
+          Join NubiaGo and start shopping
         </p>
       </div>
 
@@ -206,7 +206,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
           type="submit"
           variant="primary"
           size="lg"
-          className="w-full"
+          className="w-full bg-red-600 hover:bg-red-700"
           loading={isLoading}
         >
           Create Account

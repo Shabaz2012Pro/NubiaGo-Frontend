@@ -151,18 +151,9 @@ const CategoriesGrid: React.FC<CategoriesGridProps> = ({ className }) => {
     }
   };
 
-  const statsVariants = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: { duration: 0.6, ease: 'easeOut' }
-    }
-  };
-
   const handleCategoryClick = (category: Category) => {
     // Navigate to category page
-    window.location.href = `/categories/${category.slug}`;
+    window.location.href = `/products?category=${category.slug}`;
   };
 
   return (
@@ -234,7 +225,7 @@ const CategoriesGrid: React.FC<CategoriesGridProps> = ({ className }) => {
           
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             <motion.div 
-              variants={statsVariants}
+              variants={itemVariants}
               className="text-center group"
             >
               <div className="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
@@ -247,7 +238,7 @@ const CategoriesGrid: React.FC<CategoriesGridProps> = ({ className }) => {
             </motion.div>
             
             <motion.div 
-              variants={statsVariants}
+              variants={itemVariants}
               className="text-center group"
             >
               <div className="w-16 h-16 bg-gold-100 dark:bg-gold-900/30 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
@@ -258,7 +249,7 @@ const CategoriesGrid: React.FC<CategoriesGridProps> = ({ className }) => {
             </motion.div>
             
             <motion.div 
-              variants={statsVariants}
+              variants={itemVariants}
               className="text-center group"
             >
               <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
@@ -269,7 +260,7 @@ const CategoriesGrid: React.FC<CategoriesGridProps> = ({ className }) => {
             </motion.div>
             
             <motion.div 
-              variants={statsVariants}
+              variants={itemVariants}
               className="text-center group"
             >
               <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
