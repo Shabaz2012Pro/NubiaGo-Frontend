@@ -54,3 +54,46 @@ export const createTestProfile = async () => {
     return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
   }
 };
+
+export const fetchSupabaseData = async () => {
+  try {
+    console.log('📊 Fetching data from Supabase...');
+    
+    // Fetch products
+    const { data: products, error: productsError } = await supabase
+      .from('products')
+      .select('*')
+      .limit(10);
+    
+    if (productsError) {
+      console.error('❌ Failed to fetch products:', productsError.message);
+      return { success: false, error: productsError.message };
+    }
+    
+    // Fetch profiles
+    const { data: profiles, error: profilesError } = await supabase
+      .from('profiles')
+      .select('*')
+      .limit(10);
+    
+    if (profilesError) {
+      console.error('❌ Failed to fetch profiles:', profilesError.message);
+      return { success: false, error: profilesError.message };
+    }
+    
+    console.log('✅ Data fetched successfully!');
+    console.log(`📦 Products: ${products.length}`);
+    console.log(`👥 Profiles: ${profiles.length}`);
+    
+    return { 
+      success: true, 
+      data: { 
+        products, 
+        profiles 
+      } 
+    };
+  } catch (error) {
+    console.error('❌ Data fetch failed:', error);
+    return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+  }
+};

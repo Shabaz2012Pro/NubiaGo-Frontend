@@ -34,7 +34,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ className }) => {
       setIsSubmitting(true);
       
       try {
-        // In a real app, this would submit to an API
+        // In a real app, this would call an API
         console.log('Form submitted:', data);
         
         // Simulate API call
