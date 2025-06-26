@@ -12,6 +12,7 @@ import { ThemeToggle } from '../molecules/ThemeToggle';
 import { PWAInstallPrompt } from '../molecules/PWAInstallPrompt';
 import { debounce } from '../../utils/performance';
 import { clsx } from 'clsx';
+import AuthButton from '../auth/AuthButton';
 
 interface HeaderProps {
   className?: string;
@@ -259,17 +260,8 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => {
                 />
               )}
 
-              {/* User Menu */}
-              {!isLoading && (
-                <div className="flex items-center">
-                  <img 
-                    src="https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=100"
-                    alt="John"
-                    className="w-8 h-8 rounded-full object-cover"
-                  />
-                  <span className="ml-2 text-gray-900 dark:text-white">John</span>
-                </div>
-              )}
+              {/* Auth Button - Sign In/Sign Up */}
+              <AuthButton />
 
               {/* Mobile Menu Toggle */}
               <button
