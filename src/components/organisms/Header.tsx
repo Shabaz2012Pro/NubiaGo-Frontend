@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Search, Menu, X, ShoppingCart, User, Bell, Heart, Globe, Smartphone, Laptop, Home, Shirt, Sparkles, Dumbbell, Database, Car, Utensils, Baby } from 'lucide-react';
+import { Search, Menu, X, ShoppingCart, User, Bell, Heart, Globe, Smartphone, Laptop, Home, Shirt, Sparkles, Dumbbell, Car, Utensils, Baby } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useCartStore } from '../../store/useCartStore';
 import { useWishlistStore } from '../../store/useWishlistStore';
@@ -197,20 +197,23 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => {
 
             {/* Right Side Actions */}
             <div className="flex items-center space-x-4">
-              {/* Supabase Test Link */}
-              <Link
-                to="/supabase-test"
-                className="relative p-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md transition-colors duration-200"
-                aria-label="Supabase Test"
+              {/* Search Toggle (Mobile) */}
+              <button
+                onClick={toggleSearch}
+                className="md:hidden p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md"
+                aria-label="Toggle search"
               >
-                <Database className="h-5 w-5" />
-              </Link>
-              
+                <Search className="h-5 w-5" />
+              </button>
+
+              {/* Theme Toggle */}
+              <ThemeToggle />
+
               {/* Admin Link */}
               <Link
-                to="/admin/update-images"
+                to="/admin"
                 className="relative p-2 text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md transition-colors duration-200"
-                aria-label="Update Product Images"
+                aria-label="Admin Dashboard"
               >
                 <User className="h-5 w-5" />
               </Link>
@@ -331,22 +334,13 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => {
                 </Link>
               ))}
 
-              {/* Supabase Test Link */}
-              <Link
-                to="/supabase-test"
-                className="flex items-center space-x-2 px-3 py-2 text-base font-medium rounded-md transition-colors duration-200 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800"
-              >
-                <Database className="w-5 h-5" />
-                <span>Supabase Test</span>
-              </Link>
-              
               {/* Admin Link */}
               <Link
-                to="/admin/update-images"
+                to="/admin"
                 className="flex items-center space-x-2 px-3 py-2 text-base font-medium rounded-md transition-colors duration-200 text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-gray-50 dark:hover:bg-gray-800"
               >
                 <User className="w-5 h-5" />
-                <span>Update Product Images</span>
+                <span>Admin Dashboard</span>
               </Link>
 
               {user && (
