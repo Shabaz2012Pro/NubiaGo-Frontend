@@ -1,8 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Search, Home, ArrowLeft, AlertTriangle } from 'lucide-react';
-import Header from '../organisms/Header';
-import Footer from '../organisms/Footer';
 import Button from '../atoms/Button';
 import Card from '../atoms/Card';
 
@@ -42,8 +40,6 @@ const NotFoundPage: React.FC<NotFoundPageProps> = ({
 
   return (
     <div className="min-h-screen bg-white dark:bg-neutral-900">
-      {showHeader && <Header />}
-      
       <main className="py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -109,8 +105,6 @@ const NotFoundPage: React.FC<NotFoundPageProps> = ({
           </motion.div>
         </div>
       </main>
-      
-      {showFooter && <Footer />}
     </div>
   );
 };

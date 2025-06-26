@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
-import Header from '../components/organisms/Header';
-import Footer from '../components/organisms/Footer';
 import EmailVerification from '../components/molecules/EmailVerification';
 import PasswordReset from '../components/molecules/PasswordReset';
 import TwoFactorSetup from '../components/molecules/TwoFactorSetup';
@@ -67,7 +65,6 @@ const AuthPage: React.FC = () => {
   if (error && !authAction) {
     return (
       <div className="min-h-screen bg-white dark:bg-neutral-900">
-        <Header />
         <main className="py-16">
           <ErrorState 
             title="Authentication Error"
@@ -76,15 +73,12 @@ const AuthPage: React.FC = () => {
             onHome={() => window.location.hash = ''}
           />
         </main>
-        <Footer />
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-white dark:bg-neutral-900">
-      <Header />
-      
       <main className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -319,8 +313,6 @@ const AuthPage: React.FC = () => {
           </motion.div>
         </div>
       </main>
-      
-      <Footer />
     </div>
   );
 };

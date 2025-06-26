@@ -24,8 +24,6 @@ import {
   Download,
   Eye
 } from 'lucide-react';
-import Header from '../components/organisms/Header';
-import Footer from '../components/organisms/Footer';
 import Card from '../components/atoms/Card';
 import Button from '../components/atoms/Button';
 import Badge from '../components/atoms/Badge';
@@ -100,8 +98,6 @@ const UserDashboardPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white dark:bg-neutral-900">
-      <Header />
-      
       <main className="py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
@@ -514,8 +510,6 @@ const UserDashboardPage: React.FC = () => {
           </div>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 };
