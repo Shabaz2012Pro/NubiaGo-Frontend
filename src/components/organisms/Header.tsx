@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Search, Menu, X, ShoppingCart, User, Bell, Heart, Globe } from 'lucide-react';
+import { Search, Menu, X, ShoppingCart, User, Bell, Heart, Globe, Smartphone, Laptop, Home, Shirt, Sparkles, Dumbbell } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useCartStore } from '../../store/useCartStore';
 import { useWishlistStore } from '../../store/useWishlistStore';
@@ -11,6 +11,7 @@ import { NotificationBell } from '../molecules/NotificationBell';
 import { ThemeToggle } from '../molecules/ThemeToggle';
 import { PWAInstallPrompt } from '../molecules/PWAInstallPrompt';
 import { debounce } from '../../utils/performance';
+import { clsx } from 'clsx';
 
 interface HeaderProps {
   className?: string;
@@ -44,12 +45,12 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => {
 
   // Navigation items
   const navigationItems = useMemo(() => [
-    { name: 'Home', href: '/', current: location.pathname === '/' },
-    { name: 'Products', href: '/products', current: location.pathname === '/products' },
-    { name: 'Categories', href: '/categories', current: location.pathname.startsWith('/category') },
-    { name: 'Suppliers', href: '/suppliers', current: location.pathname === '/suppliers' },
-    { name: 'About', href: '/about', current: location.pathname === '/about' },
-    { name: 'Contact', href: '/contact', current: location.pathname === '/contact' },
+    { name: 'Electronics', href: '/categories/electronics', icon: <Smartphone className="w-5 h-5" /> },
+    { name: 'Appliances', href: '/categories/appliances', icon: <Home className="w-5 h-5" /> },
+    { name: 'Fashion', href: '/categories/fashion', icon: <Shirt className="w-5 h-5" /> },
+    { name: 'Personal Care', href: '/categories/personal-care', icon: <Sparkles className="w-5 h-5" /> },
+    { name: 'Sports', href: '/categories/sports', icon: <Dumbbell className="w-5 h-5" /> },
+    { name: 'All Products', href: '/products', icon: null }
   ], [location.pathname]);
 
   // Scroll handler with debouncing
@@ -111,6 +112,36 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => {
 
   return (
     <>
+      {/* Top Bar */}
+      <div className="bg-black text-white py-2">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+          <div className="flex items-center">
+            <span className="text-sm">Free shipping on orders over $100</span>
+            <span className="mx-4 text-gray-500">|</span>
+            <div className="flex items-center">
+              <span className="mr-2">24/7 Support</span>
+            </div>
+          </div>
+          
+          <div className="flex items-center space-x-4">
+            <div className="flex items-center">
+              <Globe className="w-4 h-4 mr-1" />
+              <span className="text-sm mr-1">TR</span>
+              <span className="text-sm">Turkish Quality</span>
+              <span className="mx-2">•</span>
+              <span className="text-sm">African Markets</span>
+            </div>
+            
+            <div className="flex items-center">
+              <Globe className="w-4 h-4 mr-1" />
+              <span className="text-sm">US</span>
+              <span className="text-sm ml-1">English</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      {/* Main Header */}
       <header 
         className={`
           sticky top-0 z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700 
@@ -127,60 +158,33 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => {
                 className="flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md p-1"
                 aria-label="NubiaGo - Home"
               >
-                <img
-                  src="/brandmark-design-1024x0 (3) copy.png"
-                  alt="NubiaGo"
-                  className="h-8 w-auto"
-                  loading="eager"
-                />
+                <div className="w-10 h-10 bg-red-600 flex items-center justify-center">
+                  <span className="text-white text-2xl font-bold">n</span>
+                </div>
                 <span className="text-xl font-bold text-gray-900 dark:text-white hidden sm:block">
                   NubiaGo
                 </span>
+                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
               </button>
             </div>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden lg:flex space-x-8" role="navigation" aria-label="Main navigation">
-              {navigationItems.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className={`
-                    px-3 py-2 text-sm font-medium rounded-md transition-colors duration-200
-                    ${item.current
-                      ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20'
-                      : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800'
-                    }
-                  `}
-                  aria-current={item.current ? 'page' : undefined}
-                >
-                  {item.name}
-                </Link>
-              ))}
-            </nav>
-
-            {/* Search Bar (Desktop) */}
+            {/* Search Bar */}
             <div className="hidden md:block flex-1 max-w-lg mx-8">
-              <SearchBar 
-                placeholder="Search products..."
-                className="w-full"
-              />
+              <div className="relative w-full">
+                <input
+                  type="text"
+                  placeholder="Search 10M+ products from verified suppliers..."
+                  className="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-500"
+                />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <button className="absolute right-0 top-0 h-full bg-red-600 text-white px-6 rounded-r-full">
+                  Search
+                </button>
+              </div>
             </div>
 
             {/* Right Side Actions */}
             <div className="flex items-center space-x-4">
-              {/* Search Toggle (Mobile) */}
-              <button
-                onClick={toggleSearch}
-                className="md:hidden p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md"
-                aria-label="Toggle search"
-              >
-                <Search className="h-5 w-5" />
-              </button>
-
-              {/* Theme Toggle */}
-              <ThemeToggle />
-
               {/* Wishlist */}
               <Link
                 to="/wishlist"
@@ -188,11 +192,6 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => {
                 aria-label={`Wishlist (${wishlistItems.length} items)`}
               >
                 <Heart className="h-5 w-5" />
-                {wishlistItems.length > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
-                    {wishlistItems.length > 99 ? '99+' : wishlistItems.length}
-                  </span>
-                )}
               </Link>
 
               {/* Shopping Cart */}
@@ -203,7 +202,7 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => {
               >
                 <ShoppingCart className="h-5 w-5" />
                 {cartItemCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-blue-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
                     {cartItemCount > 99 ? '99+' : cartItemCount}
                   </span>
                 )}
@@ -219,9 +218,14 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => {
 
               {/* User Menu */}
               {!isLoading && (
-                <UserMenu 
-                  className="relative"
-                />
+                <div className="flex items-center">
+                  <img 
+                    src="https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=100"
+                    alt="John"
+                    className="w-8 h-8 rounded-full object-cover"
+                  />
+                  <span className="ml-2 text-gray-900 dark:text-white">John</span>
+                </div>
               )}
 
               {/* Mobile Menu Toggle */}
@@ -255,6 +259,33 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => {
           </div>
         )}
 
+        {/* Category Navigation */}
+        <div className="border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-between h-12">
+              <nav className="flex space-x-8 overflow-x-auto scrollbar-hide" role="navigation" aria-label="Categories">
+                {navigationItems.map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className="flex items-center space-x-1 px-1 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 whitespace-nowrap"
+                  >
+                    {item.icon && <span>{item.icon}</span>}
+                    <span>{item.name}</span>
+                  </Link>
+                ))}
+              </nav>
+              
+              <Link
+                to="/contact"
+                className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 whitespace-nowrap border border-gray-300 rounded-md px-4 py-1"
+              >
+                Contact Us
+              </Link>
+            </div>
+          </div>
+        </div>
+
         {/* Mobile Navigation Menu */}
         {isMobileMenuOpen && (
           <div className="lg:hidden border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
@@ -263,16 +294,10 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => {
                 <Link
                   key={item.name}
                   to={item.href}
-                  className={`
-                    block px-3 py-2 text-base font-medium rounded-md transition-colors duration-200
-                    ${item.current
-                      ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20'
-                      : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800'
-                    }
-                  `}
-                  aria-current={item.current ? 'page' : undefined}
+                  className="flex items-center space-x-2 px-3 py-2 text-base font-medium rounded-md transition-colors duration-200 text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 hover:bg-gray-50 dark:hover:bg-gray-800"
                 >
-                  {item.name}
+                  {item.icon && <span>{item.icon}</span>}
+                  <span>{item.name}</span>
                 </Link>
               ))}
 
@@ -281,13 +306,13 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => {
                   <div className="border-t border-gray-200 dark:border-gray-700 my-2"></div>
                   <Link
                     to="/dashboard"
-                    className="block px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors duration-200"
+                    className="block px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors duration-200"
                   >
                     Dashboard
                   </Link>
                   <Link
                     to="/orders"
-                    className="block px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors duration-200"
+                    className="block px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors duration-200"
                   >
                     Orders
                   </Link>
