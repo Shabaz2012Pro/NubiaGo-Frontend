@@ -72,7 +72,7 @@ const ProductQuickView: React.FC<ProductQuickViewProps> = ({ product, isOpen, on
   };
 
   const handleViewDetails = () => {
-    window.location.hash = `product?id=${product.id}`;
+    window.location.hash = `products/${product.id}`;
     onClose();
   };
 

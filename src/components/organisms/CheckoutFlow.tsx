@@ -97,7 +97,9 @@ const CheckoutFlow: React.FC<CheckoutFlowProps> = ({
       await createOrder({
         cartItems,
         shippingAddress: data.shippingAddress,
+        billingAddress: data.billingAddress.sameAsShipping ? data.shippingAddress : data.billingAddress.address,
         paymentMethod: data.paymentMethod,
+        notes: data.notes
       }, {
         onSuccess: () => {
           clearCart();
@@ -417,7 +419,7 @@ const CheckoutFlow: React.FC<CheckoutFlowProps> = ({
             <h3 className="font-semibold mb-4">Payment Method</h3>
             <div className="flex items-center space-x-3">
               <CreditCard className="w-5 h-5 text-neutral-500" />
-              <span className="text-sm">
+              <span className="text-sm font-medium text-neutral-900 dark:text-neutral-100">
                 {form.watch('paymentMethod') === 'card' ? 'Credit/Debit Card' : 
                  form.watch('paymentMethod') === 'paypal' ? 'PayPal' :
                  form.watch('paymentMethod') === 'bank' ? 'Bank Transfer' : 'Mobile Money'}
@@ -443,13 +445,13 @@ const CheckoutFlow: React.FC<CheckoutFlowProps> = ({
                 <span>$25.00</span>
               </div>
               <div className="flex justify-between">
-                <span>Tax:</span>
-                <span>${(subtotal * 0.075).toFixed(2)}</span>
+                <span>Tax (10%):</span>
+                <span>${(subtotal * 0.1).toFixed(2)}</span>
               </div>
               <div className="border-t border-neutral-200 dark:border-neutral-700 pt-2">
                 <div className="flex justify-between font-semibold text-lg">
                   <span>Total:</span>
-                  <span className="text-red-600">${(subtotal + 25 + subtotal * 0.075).toFixed(2)}</span>
+                  <span className="text-red-600">${(subtotal + 25 + subtotal * 0.1).toFixed(2)}</span>
                 </div>
               </div>
             </div>
@@ -564,13 +566,13 @@ const CheckoutFlow: React.FC<CheckoutFlowProps> = ({
                   <span>$25.00</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Tax:</span>
-                  <span>${(subtotal * 0.075).toFixed(2)}</span>
+                  <span>Tax (10%):</span>
+                  <span>${(subtotal * 0.1).toFixed(2)}</span>
                 </div>
                 <div className="border-t border-neutral-200 dark:border-neutral-700 pt-2">
                   <div className="flex justify-between font-semibold text-lg">
                     <span>Total:</span>
-                    <span className="text-red-600">${(subtotal + 25 + subtotal * 0.075).toFixed(2)}</span>
+                    <span className="text-red-600">${(subtotal + 25 + subtotal * 0.1).toFixed(2)}</span>
                   </div>
                 </div>
               </div>
