@@ -1,8 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ShoppingCart, Trash2, Plus, Minus, ArrowRight, ShoppingBag } from 'lucide-react';
-import Header from '../components/organisms/Header';
-import Footer from '../components/organisms/Footer';
 import Breadcrumb from '../components/molecules/Breadcrumb';
 import Card from '../components/atoms/Card';
 import Button from '../components/atoms/Button';
@@ -73,8 +71,6 @@ const CartPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white dark:bg-neutral-900">
-      <Header />
-      
       <main className="py-8">
         {/* Breadcrumb */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
@@ -229,8 +225,6 @@ const CartPage: React.FC = () => {
           )}
         </div>
       </main>
-      
-      <Footer />
     </div>
   );
 };

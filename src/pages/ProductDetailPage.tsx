@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import Header from '../components/organisms/Header';
-import Footer from '../components/organisms/Footer';
 import ProductDetail from '../components/organisms/ProductDetail';
 import ShoppingCart from '../components/organisms/ShoppingCart';
 import CheckoutFlow from '../components/organisms/CheckoutFlow';
@@ -71,8 +69,6 @@ const ProductDetailPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white dark:bg-neutral-900">
-      <Header />
-
       <main className="py-8">
         {/* Breadcrumb */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
@@ -107,8 +103,6 @@ const ProductDetailPage: React.FC = () => {
         onClose={closeModal}
         onComplete={handleOrderComplete}
       />
-
-      <Footer />
     </div>
   );
 };

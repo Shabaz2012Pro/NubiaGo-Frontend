@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import Header from '../components/organisms/Header';
-import Footer from '../components/organisms/Footer';
 import SearchResults from '../components/organisms/SearchResults';
 import { Product } from '../types';
 
@@ -131,8 +129,6 @@ const SearchPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white dark:bg-neutral-900">
-      <Header />
-      
       <main>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -148,8 +144,6 @@ const SearchPage: React.FC = () => {
           />
         </motion.div>
       </main>
-
-      <Footer />
     </div>
   );
 };

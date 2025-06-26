@@ -18,8 +18,6 @@ import {
   Globe,
   CheckCircle
 } from 'lucide-react';
-import Header from '../components/organisms/Header';
-import Footer from '../components/organisms/Footer';
 import Card from '../components/atoms/Card';
 import Badge from '../components/atoms/Badge';
 import Button from '../components/atoms/Button';
@@ -102,7 +100,7 @@ const FAQPage: React.FC = () => {
     // Account & Security
     {
       id: 'account-1',
-      question: 'How do I create an account on NubiaGO?',
+      question: 'How do I create an account on NubiaGo?',
       answer: 'Creating an account is simple! Click the "Sign Up" button in the top right corner, enter your email address, create a password, and verify your email. You can also sign up during checkout as a guest and convert to a full account later.',
       category: 'account',
       helpful: 45
@@ -223,7 +221,7 @@ const FAQPage: React.FC = () => {
     {
       id: 'products-1',
       question: 'Are all products authentic and genuine?',
-      answer: 'Yes, all products on NubiaGO are authentic and sourced directly from verified Turkish suppliers. We have a rigorous supplier verification process and quality control measures to ensure the authenticity and quality of all products.',
+      answer: 'Yes, all products on NubiaGo are authentic and sourced directly from verified Turkish suppliers. We have a rigorous supplier verification process and quality control measures to ensure the authenticity and quality of all products.',
       category: 'products',
       helpful: 67
     },
@@ -253,7 +251,7 @@ const FAQPage: React.FC = () => {
     {
       id: 'suppliers-1',
       question: 'Are all suppliers verified?',
-      answer: 'Yes! All suppliers on NubiaGO go through a rigorous verification process. We check business licenses, quality certifications, production capabilities, and conduct on-site inspections when necessary.',
+      answer: 'Yes! All suppliers on NubiaGo go through a rigorous verification process. We check business licenses, quality certifications, production capabilities, and conduct on-site inspections when necessary.',
       category: 'suppliers',
       helpful: 67
     },
@@ -273,7 +271,7 @@ const FAQPage: React.FC = () => {
     },
     {
       id: 'suppliers-4',
-      question: 'Can I become a supplier on NubiaGO?',
+      question: 'Can I become a supplier on NubiaGo?',
       answer: 'Yes, if you\'re a Turkish manufacturer or supplier interested in reaching African markets, you can apply to become a supplier. Visit our "Become a Supplier" page to learn about our requirements and application process.',
       category: 'suppliers',
       helpful: 32
@@ -312,8 +310,6 @@ const FAQPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white dark:bg-neutral-900">
-      <Header />
-      
       <main className="py-8">
         {/* Breadcrumb */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
@@ -332,7 +328,7 @@ const FAQPage: React.FC = () => {
               <h1 className="text-4xl font-bold mb-4">How Can We Help?</h1>
               
               <p className="text-xl text-orange-100 mb-8">
-                Find answers to common questions about NubiaGO marketplace, orders, shipping, and more.
+                Find answers to common questions about NubiaGo marketplace, orders, shipping, and more.
               </p>
               
               <div className="max-w-2xl mx-auto">
@@ -631,8 +627,6 @@ const FAQPage: React.FC = () => {
           </motion.div>
         </section>
       </main>
-
-      <Footer />
     </div>
   );
 };
