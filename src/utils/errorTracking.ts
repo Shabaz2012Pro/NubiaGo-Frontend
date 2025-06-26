@@ -1,4 +1,3 @@
-
 // Error tracking and monitoring utilities
 
 interface ErrorEvent {
@@ -26,8 +25,10 @@ interface ErrorReport {
 class ErrorTracker {
   private errors: ErrorReport[] = [];
   private maxErrors = 100;
+  private originalConsoleError: typeof console.error;
 
   constructor() {
+    this.originalConsoleError = console.error;
     this.setupGlobalErrorHandlers();
   }
 
@@ -55,8 +56,13 @@ class ErrorTracker {
     });
 
     // Handle React errors (requires error boundary)
-    const originalConsoleError = console.error;
     console.error = (...args) => {
+      // Prevent infinite recursion by checking if this is already an error tracking call
+      if (args[0]?.includes?.('Error Tracked') || args[0]?.includes?.('trackError')) {
+        this.originalConsoleError.apply(console, args);
+        return;
+      }
+
       if (args[0]?.includes?.('React')) {
         this.trackError({
           message: `React Error: ${args.join(' ')}`,
@@ -65,7 +71,7 @@ class ErrorTracker {
           url: window.location.href,
         });
       }
-      originalConsoleError.apply(console, args);
+      this.originalConsoleError.apply(console, args);
     };
   }
 
@@ -131,15 +137,14 @@ class ErrorTracker {
       this.errors = this.errors.slice(-this.maxErrors);
     }
 
-    // Log error in development
+    // Log error in development using original console.error to prevent recursion
     if (import.meta.env.DEV) {
-      console.group('🚨 Error Tracked');
-      console.error(fullError.message);
+      this.originalConsoleError('🚨 Error Tracked');
+      this.originalConsoleError(fullError.message);
       if (fullError.stack) {
-        console.error(fullError.stack);
+        this.originalConsoleError(fullError.stack);
       }
-      console.log('Details:', fullError);
-      console.groupEnd();
+      this.originalConsoleError('Details:', fullError);
     }
 
     // Send to monitoring service in production
@@ -176,7 +181,7 @@ class ErrorTracker {
         body: JSON.stringify(errorEvent)
       });
     } catch (e) {
-      console.error('Failed to send error to tracking service:', e);
+      this.originalConsoleError('Failed to send error to tracking service:', e);
     }
   }
 
@@ -191,7 +196,7 @@ class ErrorTracker {
         body: JSON.stringify(error),
       });
     } catch (e) {
-      console.warn('Failed to send error to tracking service:', e);
+      this.originalConsoleError('Failed to send error to tracking service:', e);
     }
   }
 

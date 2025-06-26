@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ErrorBoundary } from 'react-error-boundary';
@@ -93,7 +93,6 @@ const App: React.FC = () => {
   useEffect(() => {
     // Initialize enterprise performance monitoring
     enterprisePerformance.initializeMemoryManagement();
-    enterprisePerformance.initializeEnterpriseErrorTracking();
     enterprisePerformance.preloadCriticalResources();
     enterprisePerformance.optimizeImageDelivery();
 
@@ -150,67 +149,65 @@ const App: React.FC = () => {
       <QueryClientProvider client={queryClient}>
         <ThemeProvider>
           <AuthProvider>
-            <Router>
-              <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-200">
-                {/* Performance Monitor (development only) */}
-                {process.env.NODE_ENV === 'development' && <PerformanceMonitor />}
+            <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-200">
+              {/* Performance Monitor (development only) */}
+              {process.env.NODE_ENV === 'development' && <PerformanceMonitor />}
 
-                {/* PWA Features */}
-                <PWAInstallPrompt />
-                <OfflineIndicator />
+              {/* PWA Features */}
+              <PWAInstallPrompt />
+              <OfflineIndicator />
 
-                {/* Main Layout */}
+              {/* Main Layout */}
+              <Suspense fallback={<LoadingScreen />}>
+                <Header />
+              </Suspense>
+
+              <main className="flex-1">
                 <Suspense fallback={<LoadingScreen />}>
-                  <Header />
+                  <Routes>
+                    {/* Main Routes */}
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/products" element={<ProductsPage />} />
+                    <Route path="/products/:id" element={<ProductDetailPage />} />
+                    <Route path="/category/:category" element={<CategoryPage />} />
+                    <Route path="/search" element={<SearchPage />} />
+                    <Route path="/cart" element={<CartPage />} />
+                    <Route path="/dashboard" element={<UserDashboardPage />} />
+                    <Route path="/auth" element={<AuthPage />} />
+
+                    {/* Company Pages */}
+                    <Route path="/about" element={<AboutPage />} />
+                    <Route path="/contact" element={<ContactPage />} />
+                    <Route path="/faq" element={<FAQPage />} />
+                    <Route path="/suppliers" element={<SuppliersPage />} />
+                    <Route path="/become-supplier" element={<BecomeSupplierPage />} />
+
+                    {/* Redirects for SEO */}
+                    <Route path="/home" element={<Navigate to="/" replace />} />
+                    <Route path="/product/:id" element={<Navigate to="/products/$1" replace />} />
+
+                    {/* 404 Page */}
+                    <Route path="*" element={<NotFoundPage />} />
+                  </Routes>
                 </Suspense>
+              </main>
 
-                <main className="flex-1">
-                  <Suspense fallback={<LoadingScreen />}>
-                    <Routes>
-                      {/* Main Routes */}
-                      <Route path="/" element={<HomePage />} />
-                      <Route path="/products" element={<ProductsPage />} />
-                      <Route path="/products/:id" element={<ProductDetailPage />} />
-                      <Route path="/category/:category" element={<CategoryPage />} />
-                      <Route path="/search" element={<SearchPage />} />
-                      <Route path="/cart" element={<CartPage />} />
-                      <Route path="/dashboard" element={<UserDashboardPage />} />
-                      <Route path="/auth" element={<AuthPage />} />
+              <Suspense fallback={<div className="h-16" />}>
+                <Footer />
+              </Suspense>
 
-                      {/* Company Pages */}
-                      <Route path="/about" element={<AboutPage />} />
-                      <Route path="/contact" element={<ContactPage />} />
-                      <Route path="/faq" element={<FAQPage />} />
-                      <Route path="/suppliers" element={<SuppliersPage />} />
-                      <Route path="/become-supplier" element={<BecomeSupplierPage />} />
-
-                      {/* Redirects for SEO */}
-                      <Route path="/home" element={<Navigate to="/" replace />} />
-                      <Route path="/product/:id" element={<Navigate to="/products/$1" replace />} />
-
-                      {/* 404 Page */}
-                      <Route path="*" element={<NotFoundPage />} />
-                    </Routes>
-                  </Suspense>
-                </main>
-
-                <Suspense fallback={<div className="h-16" />}>
-                  <Footer />
-                </Suspense>
-
-                {/* Global Toast Notifications */}
-                <Toaster
-                  position="top-right"
-                  toastOptions={{
-                    duration: 4000,
-                    style: {
-                      background: 'var(--toast-bg)',
-                      color: 'var(--toast-color)',
-                    },
-                  }}
-                />
-              </div>
-            </Router>
+              {/* Global Toast Notifications */}
+              <Toaster
+                position="top-right"
+                toastOptions={{
+                  duration: 4000,
+                  style: {
+                    background: 'var(--toast-bg)',
+                    color: 'var(--toast-color)',
+                  },
+                }}
+              />
+            </div>
           </AuthProvider>
         </ThemeProvider>
 

@@ -1,13 +1,12 @@
-
 import { supabase } from '../api/supabaseClient';
 
 export const testSupabaseConnection = async () => {
   try {
     console.log('🔗 Testing Supabase connection...');
     
-    // Test basic connection
+    // Test basic connection using the users table
     const { data, error } = await supabase
-      .from('profiles')
+      .from('users')
       .select('count', { count: 'exact', head: true });
     
     if (error) {
@@ -16,7 +15,7 @@ export const testSupabaseConnection = async () => {
     }
     
     console.log('✅ Supabase connection successful!');
-    console.log('📊 Profiles table count:', data);
+    console.log('📊 Users table count:', data);
     
     // Test auth
     const { data: { session } } = await supabase.auth.getSession();
@@ -31,10 +30,10 @@ export const testSupabaseConnection = async () => {
 
 export const createTestProfile = async () => {
   try {
-    console.log('👤 Creating test profile...');
+    console.log('👤 Creating test user...');
     
     const { data, error } = await supabase
-      .from('profiles')
+      .from('users')
       .insert({
         first_name: 'Test',
         last_name: 'User',
@@ -45,14 +44,14 @@ export const createTestProfile = async () => {
       .single();
     
     if (error) {
-      console.error('❌ Failed to create test profile:', error.message);
+      console.error('❌ Failed to create test user:', error.message);
       return { success: false, error: error.message };
     }
     
-    console.log('✅ Test profile created:', data);
+    console.log('✅ Test user created:', data);
     return { success: true, data };
   } catch (error) {
-    console.error('❌ Profile creation failed:', error);
+    console.error('❌ User creation failed:', error);
     return { success: false, error: error.message };
   }
 };
