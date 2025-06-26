@@ -1,0 +1,26 @@
+1. Profile Creation Issue
+**Frontend & Backend**: Fix the user profile creation functionality. The create profile feature is currently not working. Please implement a working user registration system with form validation, user data storage, and proper error handling.
+2. Admin Panel Connection
+**Frontend & Backend**: Create an admin panel with a proper dashboard. The admin panel should be accessible via /admin route and include sections for: product management, user management, order management, and site settings. Connect it to the main navigation if needed.
+3. Duplicate Headers/Footers
+**Frontend**: Fix the duplicate headers and footers issue on the Products page, Help page, and other pages. Ensure each page only renders one header and one footer component. Check the routing structure and component imports to eliminate duplicates.
+4. Add to Cart Functionality
+**Frontend & Backend**: Fix the Add to Cart button functionality. Currently the buttons are not working. Implement proper cart state management, add items to cart when clicked, update cart count in header, and provide user feedback when items are added.
+5. Quick View Feature
+**Frontend**: Implement the Quick View functionality for products. When users click the Quick View button, it should open a modal/popup showing product details, images, price, and add to cart option without navigating away from the current page.
+6. Newsletter Subscribe
+**Frontend & Backend**: Fix the newsletter subscription functionality. The subscribe button/form is not working. Implement proper form handling, email validation, and success/error feedback for newsletter signups.
+7. Page Refresh Issue
+**Frontend**: Fix the page refresh requirement after button clicks. Currently users need to refresh the page to see results after clicking buttons. Implement proper state updates and re-rendering so changes appear immediately without page refresh.
+8. Track Order Functionality
+**Frontend & Backend**: Implement the Track Order feature. Currently it shows "something is wrong" error. Create a working order tracking system where users can enter order numbers and see order status, shipping information, and delivery updates.
+9. FAQ Section
+**Frontend**: Fix the FAQ page that currently shows "something is wrong" error. Create a proper FAQ section with expandable questions and answers, organized by categories like shipping, returns, payments, etc.
+10. Size Guide
+**Frontend**: Fix the Size Guide link that currently leads to an error page. Create a comprehensive size guide with charts for different product categories (clothing, shoes, etc.) with measurements and fitting advice.
+11. Contact Page
+**Frontend & Backend**: Fix the Contact page that shows error instead of contact information. Create a proper contact page with contact form, business address, phone numbers, email, business hours, and maybe a map integration.
+12. Category Navigation Links
+**Frontend**: Fix the "Explore Categories" section on homepage where category links show "#" instead of actual URLs. Update the category links to navigate to proper filtered product pages (e.g., /products?category=electronics).
+Bonus: Comprehensive Fix Prompt
+**Frontend & Backend**: Please review and fix the entire website navigation and functionality. Issues include: duplicate headers/footers on multiple pages, broken category links using "#", non-functional Add to Cart buttons, broken Quick View, non-working subscription form, pages showing "something is wrong" errors (FAQ, Track Order, Size Guide, Contact), and the need to refresh pages after button clicks. Also ensure there's a working admin panel accessible via proper routing.

@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NubiaGo - Premium Marketplace Connecting Turkish Suppliers with African Markets</title>
+    <meta name="description" content="Discover premium products from verified Turkish suppliers. Your trusted gateway to quality electronics, home appliances, fashion, and more." />
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#dc2626" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="NubiaGo" />
+    <meta name="msapplication-TileColor" content="#dc2626" />
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" href="/brandmark-design-1024x0 (3).png" />
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://images.pexels.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://api.nubiago.com" />
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+    
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style" />
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap" as="style" />
+    
+    <!-- Preload critical resources -->
+    <link rel="modulepreload" href="/src/main.tsx" />
+    <link rel="modulepreload" href="/src/App.tsx" />
+    <link rel="preload" href="/brandmark-design-1024x0 (3).png" as="image" type="image/png" />
+    
+    <!-- Resource hints for better performance -->
+    <link rel="prefetch" href="/src/pages/ProductsPage.tsx" />
+    <link rel="prefetch" href="/src/pages/CartPage.tsx" />
+    
+    <!-- Load fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap" />
+    
+    <!-- Preload critical images -->
+    <link rel="preload" as="image" href="https://images.pexels.com/photos/356056/pexels-photo-356056.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop" />
+    
+    <!-- Critical CSS -->
+    <style>
+      /* Inline critical CSS for faster initial render */
+      :root {
+        --color-background: 255 255 255;
+        --color-surface: 250 250 250;
+        --color-text-primary: 23 23 23;
+        --color-text-secondary: 115 115 115;
+        --color-border: 229 229 229;
+        --color-primary: 30 64 175;
+        --color-gold: 245 158 11;
+        --color-success: 34 197 94;
+        --color-warning: 234 179 8;
+        --color-error: 239 68 68;
+      }
+      
+      .dark {
+        --color-background: 23 23 23;
+        --color-surface: 38 38 38;
+        --color-text-primary: 250 250 250;
+        --color-text-secondary: 163 163 163;
+        --color-border: 64 64 64;
+      }
+      
+      body {
+        margin: 0;
+        font-family: 'Inter', system-ui, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      
+      /* Loading spinner */
+      .initial-loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #fff;
+      }
+      
+      .dark .initial-loader {
+        background-color: #171717;
+      }
+      
+      .spinner {
+        width: 48px;
+        height: 48px;
+        border: 4px solid rgba(0, 0, 0, 0.1);
+        border-radius: 50%;
+        border-top-color: #dc2626;
+        animation: spin 1s ease-in-out infinite;
+      }
+      
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+      
+      .dark .spinner {
+        border-color: rgba(255, 255, 255, 0.1);
+        border-top-color: #dc2626;
+      }
+      
+      /* Prevent FOUC */
+      .no-js {
+        display: none;
+      }
+      
+      /* Lazy loading */
+      .lazy-loaded {
+        animation: fadeIn 0.5s ease-in;
+      }
+      
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+    </style>
+    
+    <!-- Preload critical JS -->
+    <link rel="modulepreload" href="/src/main.tsx" />
+  </head>
+  <body>
+    <div id="root">
+      <!-- Initial loading state -->
+      <div class="initial-loader">
+        <div class="spinner"></div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Inline script to detect JS and set theme -->
+    <script>
+      // Remove no-js class
+      document.documentElement.classList.remove('no-js');
+      
+      // Set theme based on user preference
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      
+      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      }
+      
+      // Performance monitoring
+      if (window.performance) {
+        const timing = performance.timing;
+        window.addEventListener('load', () => {
+          // Calculate and log performance metrics
+          setTimeout(() => {
+            const navStart = timing.navigationStart;
+            const loadTime = timing.loadEventEnd - navStart;
+            const domReady = timing.domContentLoadedEventEnd - navStart;
+            console.log(`Page load time: ${loadTime}ms`);
+            console.log(`DOM ready time: ${domReady}ms`);
+          }, 0);
+        });
+      }
+    </script>
+  </body>
+</html>
