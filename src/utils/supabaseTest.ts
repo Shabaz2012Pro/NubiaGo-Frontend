@@ -4,9 +4,9 @@ export const testSupabaseConnection = async () => {
   try {
     console.log('🔗 Testing Supabase connection...');
     
-    // Test basic connection using the users table
+    // Test basic connection using the profiles table
     const { data, error } = await supabase
-      .from('users')
+      .from('profiles')
       .select('count', { count: 'exact', head: true });
     
     if (error) {
@@ -15,7 +15,7 @@ export const testSupabaseConnection = async () => {
     }
     
     console.log('✅ Supabase connection successful!');
-    console.log('📊 Users table count:', data);
+    console.log('📊 Profiles table count:', data);
     
     // Test auth
     const { data: { session } } = await supabase.auth.getSession();
@@ -33,7 +33,7 @@ export const createTestProfile = async () => {
     console.log('👤 Creating test user...');
     
     const { data, error } = await supabase
-      .from('users')
+      .from('profiles')
       .insert({
         first_name: 'Test',
         last_name: 'User',

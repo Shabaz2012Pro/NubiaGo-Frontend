@@ -48,7 +48,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     updateProfile,
     verifyEmail,
     resendVerificationEmail,
-    setInitialUser,
+    getCurrentUser,
     clearError
   } = useAuthStore();
 
@@ -58,7 +58,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       try {
         const user = await authApi.checkAuth();
         if (user) {
-          setInitialUser(user);
+          getCurrentUser();
         }
       } catch (error) {
         console.error('Authentication error:', error);
@@ -66,7 +66,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
 
     checkAuth();
-  }, [setInitialUser]);
+  }, [getCurrentUser]);
 
   // Create the auth value object
   const authValue: AuthContextType = {
