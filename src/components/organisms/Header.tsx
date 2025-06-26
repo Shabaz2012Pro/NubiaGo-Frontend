@@ -125,17 +125,16 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => {
               <button
                 onClick={handleLogoClick}
                 className="flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md p-1"
-                aria-label="NubiaGO - Home"
+                aria-label="NubiaGo - Home"
               >
                 <img
-                  src="/nubiago-logo.png"
-                  alt="NubiaGO"
+                  src="/brandmark-design-1024x0 (3) copy.png"
+                  alt="NubiaGo"
                   className="h-8 w-auto"
                   loading="eager"
-                  fetchpriority="high"
                 />
                 <span className="text-xl font-bold text-gray-900 dark:text-white hidden sm:block">
-                  NubiaGO
+                  NubiaGo
                 </span>
               </button>
             </div>

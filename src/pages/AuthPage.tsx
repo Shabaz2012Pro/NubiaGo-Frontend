@@ -9,7 +9,7 @@ import TwoFactorSetup from '../components/molecules/TwoFactorSetup';
 import AccountSecurityDashboard from '../components/molecules/AccountSecurityDashboard';
 import LoadingScreen from '../components/molecules/LoadingScreen';
 import ErrorState from '../components/molecules/ErrorState';
-import { SignInForm, SignUpForm } from '../components/auth';
+import { LoginForm, RegisterForm } from '../components/auth';
 import ForgotPasswordForm from '../components/auth/ForgotPasswordForm';
 import Card from '../components/atoms/Card';
 import Button from '../components/atoms/Button';
@@ -101,11 +101,11 @@ const AuthPage: React.FC = () => {
                       Welcome Back
                     </h2>
                     <p className="text-neutral-600 dark:text-neutral-400">
-                      Sign in to your NubiaGO account
+                      Sign in to your NubiaGo account
                     </p>
                   </div>
                   
-                  <SignInForm
+                  <LoginForm
                     onSuccess={() => window.location.hash = ''}
                     onForgotPassword={() => window.location.hash = 'auth?action=forgotPassword'}
                     onRegister={() => window.location.hash = 'auth?action=register'}
@@ -162,11 +162,11 @@ const AuthPage: React.FC = () => {
                       Create an Account
                     </h2>
                     <p className="text-neutral-600 dark:text-neutral-400">
-                      Join NubiaGO to start shopping
+                      Join NubiaGo to start shopping
                     </p>
                   </div>
                   
-                  <SignUpForm
+                  <RegisterForm
                     onSuccess={() => window.location.hash = 'auth?action=verifyEmail'}
                     onLogin={() => window.location.hash = 'auth?action=login'}
                   />
@@ -300,10 +300,7 @@ const AuthPage: React.FC = () => {
                   </div>
                   
                   <TwoFactorSetup
-                    onVerify={(code) => {
-                      console.log('Verifying code:', code);
-                      window.location.hash = '';
-                    }}
+                    onComplete={() => window.location.hash = ''}
                     onCancel={() => window.location.hash = 'auth?action=login'}
                   />
                 </div>

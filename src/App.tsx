@@ -13,7 +13,6 @@ import { RouteErrorBoundary } from './components/molecules/RouteErrorBoundary';
 import LoadingScreen from './components/molecules/LoadingScreen';
 import OfflineIndicator from './components/molecules/OfflineIndicator';
 import PWAInstallPrompt from './components/molecules/PWAInstallPrompt';
-import PerformanceMonitor from './components/molecules/PerformanceMonitor';
 
 // Lazy-loaded components for code splitting
 const Header = React.lazy(() => import('./components/organisms/Header'));
@@ -35,8 +34,14 @@ const SuppliersPage = React.lazy(() => import('./pages/SuppliersPage'));
 const BecomeSupplierPage = React.lazy(() => import('./pages/BecomeSupplierPage'));
 const NotFoundPage = React.lazy(() => import('./components/molecules/NotFoundPage'));
 
+// Admin pages - lazy loaded separately
+const AdminDashboard = React.lazy(() => import('./pages/admin/AdminDashboard'));
+const AdminProducts = React.lazy(() => import('./pages/admin/AdminProducts'));
+const AdminOrders = React.lazy(() => import('./pages/admin/AdminOrders'));
+const AdminUsers = React.lazy(() => import('./pages/admin/AdminUsers'));
+const AdminSettings = React.lazy(() => import('./pages/admin/AdminSettings'));
+
 // Utility imports
-import { enterprisePerformance } from './utils/enterprisePerformance';
 import { injectResourceHints, reportWebVitals, initPerformanceMonitoring } from './utils/performance';
 
 // Create optimized QueryClient
@@ -90,11 +95,6 @@ const ErrorFallback: React.FC<{ error: Error; resetErrorBoundary: () => void }> 
 
 const App: React.FC = () => {
   useEffect(() => {
-    // Initialize enterprise performance monitoring
-    enterprisePerformance.initializeMemoryManagement();
-    enterprisePerformance.preloadCriticalResources();
-    enterprisePerformance.optimizeImageDelivery();
-
     // Initialize performance monitoring
     initPerformanceMonitoring();
 
@@ -149,9 +149,6 @@ const App: React.FC = () => {
         <ThemeProvider>
           <AuthProvider>
             <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-200">
-              {/* Performance Monitor (development only) */}
-              {process.env.NODE_ENV === 'development' && <PerformanceMonitor />}
-
               {/* PWA Features */}
               <PWAInstallPrompt />
               <OfflineIndicator />
@@ -180,6 +177,13 @@ const App: React.FC = () => {
                     <Route path="/faq" element={<FAQPage />} />
                     <Route path="/suppliers" element={<SuppliersPage />} />
                     <Route path="/become-supplier" element={<BecomeSupplierPage />} />
+
+                    {/* Admin Routes */}
+                    <Route path="/admin" element={<AdminDashboard />} />
+                    <Route path="/admin/products" element={<AdminProducts />} />
+                    <Route path="/admin/orders" element={<AdminOrders />} />
+                    <Route path="/admin/users" element={<AdminUsers />} />
+                    <Route path="/admin/settings" element={<AdminSettings />} />
 
                     {/* Redirects for SEO */}
                     <Route path="/home" element={<Navigate to="/" replace />} />
