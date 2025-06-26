@@ -14,7 +14,10 @@ import {
   Zap,
   RefreshCw,
   ArrowRight,
-  Settings
+  Settings,
+  Database as DatabaseIcon,
+  HardDrive as HardDriveIcon,
+  Server
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Card from '../../components/atoms/Card';
@@ -22,13 +25,12 @@ import Button from '../../components/atoms/Button';
 import Badge from '../../components/atoms/Badge';
 import AdminLayout from './AdminLayout';
 import PerformanceMonitor from '../../components/molecules/PerformanceMonitor';
-import Database from './Database';
-import HardDrive from './HardDrive';
-import ListOrdered from './ListOrdered';
+import SupabaseConnectionTest from '../../components/SupabaseConnectionTest';
 
 const AdminDashboard: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [showPerformanceMonitor, setShowPerformanceMonitor] = useState(false);
+  const [showSupabaseTest, setShowSupabaseTest] = useState(false);
   
   // Mock data for dashboard
   const [dashboardData, setDashboardData] = useState({
@@ -329,7 +331,7 @@ const AdminDashboard: React.FC = () => {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
                       <div className="p-2 bg-neutral-100 dark:bg-neutral-800 rounded-lg">
-                        <Database className="w-4 h-4 text-neutral-500" />
+                        <DatabaseIcon className="w-4 h-4 text-neutral-500" />
                       </div>
                       <span className="text-neutral-700 dark:text-neutral-300">Database</span>
                     </div>
@@ -341,7 +343,7 @@ const AdminDashboard: React.FC = () => {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
                       <div className="p-2 bg-neutral-100 dark:bg-neutral-800 rounded-lg">
-                        <HardDrive className="w-4 h-4 text-neutral-500" />
+                        <HardDriveIcon className="w-4 h-4 text-neutral-500" />
                       </div>
                       <span className="text-neutral-700 dark:text-neutral-300">Storage</span>
                     </div>
@@ -365,7 +367,7 @@ const AdminDashboard: React.FC = () => {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
                       <div className="p-2 bg-neutral-100 dark:bg-neutral-800 rounded-lg">
-                        <ListOrdered className="w-4 h-4 text-neutral-500" />
+                        <Server className="w-4 h-4 text-neutral-500" />
                       </div>
                       <span className="text-neutral-700 dark:text-neutral-300">Queue</span>
                     </div>
@@ -391,6 +393,8 @@ const AdminDashboard: React.FC = () => {
             <motion.div variants={itemVariants} className="lg:col-span-2">
               {showPerformanceMonitor ? (
                 <PerformanceMonitor />
+              ) : showSupabaseTest ? (
+                <SupabaseConnectionTest />
               ) : (
                 <Card variant="default" padding="lg" className="h-full">
                   <div className="flex items-center justify-between mb-6">
@@ -441,6 +445,27 @@ const AdminDashboard: React.FC = () => {
                         leftIcon={<Settings className="w-5 h-5" />}
                       >
                         System Settings
+                      </Button>
+                    </Link>
+                    
+                    <Button 
+                      variant="outline" 
+                      size="lg" 
+                      fullWidth
+                      leftIcon={<DatabaseIcon className="w-5 h-5" />}
+                      onClick={() => setShowSupabaseTest(true)}
+                    >
+                      Test Database Connection
+                    </Button>
+                    
+                    <Link to="/admin/update-images">
+                      <Button 
+                        variant="outline" 
+                        size="lg" 
+                        fullWidth
+                        leftIcon={<RefreshCw className="w-5 h-5" />}
+                      >
+                        Update Product Images
                       </Button>
                     </Link>
                   </div>

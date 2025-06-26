@@ -69,7 +69,8 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({
   const selectedCountry = africanCountries.find(c => c.name === shippingCountry);
   const shippingCost = selectedCountry?.shipping || 0;
   const promoDiscount = appliedPromo ? subtotal * 0.1 : 0; // 10% discount
-  const total = subtotal + shippingCost - promoDiscount;
+  const tax = subtotal * 0.1; // 10% tax
+  const total = subtotal + shippingCost + tax - promoDiscount;
 
   const cartVariants = {
     hidden: { x: '100%' },
@@ -297,6 +298,11 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({
                       Shipping to {selectedCountry?.flag} {shippingCountry}:
                     </span>
                     <span className="font-medium">${shippingCost.toFixed(2)}</span>
+                  </div>
+                  
+                  <div className="flex justify-between text-sm">
+                    <span className="text-neutral-600 dark:text-neutral-400">Tax (10%):</span>
+                    <span className="font-medium">${tax.toFixed(2)}</span>
                   </div>
                   
                   {appliedPromo && (

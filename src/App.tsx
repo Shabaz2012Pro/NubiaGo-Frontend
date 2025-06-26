@@ -30,7 +30,6 @@ const FAQPage = React.lazy(() => import('./pages/FAQPage'));
 const SuppliersPage = React.lazy(() => import('./pages/SuppliersPage'));
 const BecomeSupplierPage = React.lazy(() => import('./pages/BecomeSupplierPage'));
 const NotFoundPage = React.lazy(() => import('./components/molecules/NotFoundPage'));
-const SupabaseTestPage = React.lazy(() => import('./pages/SupabaseTestPage'));
 
 // Admin pages - lazy loaded separately with explicit .tsx extensions
 const AdminDashboard = React.lazy(() => import('./pages/admin/AdminDashboard'));
@@ -159,17 +158,6 @@ const App: React.FC = () => {
                   <Suspense fallback={<LoadingScreen isLoading={true} />}>
                     <HomePage />
                   </Suspense>
-                } />
-                
-                {/* Supabase Test Page */}
-                <Route path="/supabase-test" element={
-                  <>
-                    <Header />
-                    <Suspense fallback={<LoadingScreen isLoading={true} />}>
-                      <SupabaseTestPage />
-                    </Suspense>
-                    <Footer />
-                  </>
                 } />
                 
                 {/* Routes with Header and Footer */}

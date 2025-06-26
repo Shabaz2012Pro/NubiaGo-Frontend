@@ -122,6 +122,14 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => {
     setIsCategoryMenuOpen(false);
   };
 
+  // Check if current path is admin route
+  const isAdminRoute = location.pathname.startsWith('/admin');
+
+  // Don't show admin-specific links for regular users
+  if (isAdminRoute && user?.role !== 'admin') {
+    return null;
+  }
+
   return (
     <>
       {/* Top Bar */}
@@ -209,14 +217,16 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => {
               {/* Theme Toggle */}
               <ThemeToggle />
 
-              {/* Admin Link */}
-              <Link
-                to="/admin"
-                className="relative p-2 text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md transition-colors duration-200"
-                aria-label="Admin Dashboard"
-              >
-                <User className="h-5 w-5" />
-              </Link>
+              {/* Admin Link - Only show for admin users */}
+              {user?.role === 'admin' && (
+                <Link
+                  to="/admin"
+                  className="relative p-2 text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md transition-colors duration-200"
+                  aria-label="Admin Dashboard"
+                >
+                  <User className="h-5 w-5" />
+                </Link>
+              )}
               
               {/* Wishlist */}
               <Link
@@ -334,14 +344,16 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => {
                 </Link>
               ))}
 
-              {/* Admin Link */}
-              <Link
-                to="/admin"
-                className="flex items-center space-x-2 px-3 py-2 text-base font-medium rounded-md transition-colors duration-200 text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-gray-50 dark:hover:bg-gray-800"
-              >
-                <User className="w-5 h-5" />
-                <span>Admin Dashboard</span>
-              </Link>
+              {/* Admin Link - Only show for admin users */}
+              {user?.role === 'admin' && (
+                <Link
+                  to="/admin"
+                  className="flex items-center space-x-2 px-3 py-2 text-base font-medium rounded-md transition-colors duration-200 text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-gray-50 dark:hover:bg-gray-800"
+                >
+                  <User className="w-5 h-5" />
+                  <span>Admin Dashboard</span>
+                </Link>
+              )}
 
               {user && (
                 <>
