@@ -114,7 +114,8 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
               placeholder="First Name"
               value={formData.firstName}
               onChange={(value) => handleInputChange('firstName', value)}
-              error={formErrors.firstName}
+              status={formErrors.firstName ? 'error' : 'default'}
+              helperText={formErrors.firstName}
               leftIcon={<User className="w-4 h-4" />}
             />
           </div>
@@ -125,7 +126,8 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
               placeholder="Last Name"
               value={formData.lastName}
               onChange={(value) => handleInputChange('lastName', value)}
-              error={formErrors.lastName}
+              status={formErrors.lastName ? 'error' : 'default'}
+              helperText={formErrors.lastName}
               leftIcon={<User className="w-4 h-4" />}
             />
           </div>
@@ -138,7 +140,8 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
           placeholder="Email Address"
           value={formData.email}
           onChange={(value) => handleInputChange('email', value)}
-          error={formErrors.email}
+          status={formErrors.email ? 'error' : 'default'}
+          helperText={formErrors.email}
           leftIcon={<Mail className="w-4 h-4" />}
         />
 
@@ -158,7 +161,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
             name="role"
             value={formData.role}
             onChange={(e) => handleInputChange('role', e.target.value)}
-            className="w-full px-4 py-3 border border-neutral-300 dark:border-neutral-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100"
+            className="w-full px-3 py-2.5 text-sm border rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-1 border-neutral-300 focus:border-red-500 focus:ring-red-500 dark:border-neutral-600 dark:bg-neutral-800 dark:text-neutral-100"
           >
             <option value="buyer">Buyer</option>
             <option value="supplier">Supplier</option>
@@ -173,15 +176,18 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
             placeholder="Password"
             value={formData.password}
             onChange={(value) => handleInputChange('password', value)}
-            error={formErrors.password}
+            status={formErrors.password ? 'error' : 'default'}
+            helperText={formErrors.password}
+            rightIcon={
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="focus:outline-none"
+              >
+                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              </button>
+            }
           />
-          <button
-            type="button"
-            onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-neutral-400 hover:text-neutral-600"
-          >
-            {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-          </button>
         </div>
 
         {/* Confirm Password */}
@@ -191,7 +197,8 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
           placeholder="Confirm Password"
           value={formData.confirmPassword}
           onChange={(value) => handleInputChange('confirmPassword', value)}
-          error={formErrors.confirmPassword}
+          status={formErrors.confirmPassword ? 'error' : 'default'}
+          helperText={formErrors.confirmPassword}
         />
 
         {/* Error Display */}

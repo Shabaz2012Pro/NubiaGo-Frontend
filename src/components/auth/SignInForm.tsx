@@ -91,7 +91,8 @@ export const SignInForm: React.FC<SignInFormProps> = ({
           placeholder="Email Address"
           value={formData.email}
           onChange={(value) => handleInputChange('email', value)}
-          error={formErrors.email}
+          status={formErrors.email ? 'error' : 'default'}
+          helperText={formErrors.email}
           leftIcon={<Mail className="w-4 h-4" />}
         />
 
@@ -103,15 +104,18 @@ export const SignInForm: React.FC<SignInFormProps> = ({
             placeholder="Password"
             value={formData.password}
             onChange={(value) => handleInputChange('password', value)}
-            error={formErrors.password}
+            status={formErrors.password ? 'error' : 'default'}
+            helperText={formErrors.password}
+            rightIcon={
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="focus:outline-none"
+              >
+                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              </button>
+            }
           />
-          <button
-            type="button"
-            onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-neutral-400 hover:text-neutral-600"
-          >
-            {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-          </button>
         </div>
 
         {/* Forgot Password */}
