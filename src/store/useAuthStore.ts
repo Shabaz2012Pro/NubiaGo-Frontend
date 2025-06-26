@@ -110,7 +110,7 @@ export const useAuthStore = create<AuthState>()(
               .from('profiles')
               .select('*')
               .eq('id', authData.user.id)
-              .single();
+              .maybeSingle();
               
             if (profileError) {
               console.warn('Profile fetch error:', profileError);
@@ -270,7 +270,7 @@ export const useAuthStore = create<AuthState>()(
               .from('profiles')
               .select('*')
               .eq('id', session.user.id)
-              .single();
+              .maybeSingle();
               
             if (profileError) {
               console.warn('Profile fetch error:', profileError);
