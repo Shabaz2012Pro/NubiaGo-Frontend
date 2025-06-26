@@ -1,4 +1,3 @@
-
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
@@ -30,7 +29,7 @@ initErrorTracking();
 
 // Initialize enterprise performance management
 enterprisePerformance.initializeMemoryManagement();
-enterprisePerformance.initializeEnterpriseErrorTracking();
+enterprisePerformance.initializeEnterpriseMonitoring();
 
 // Preload critical enterprise resources
 enterprisePerformance.preloadCriticalResources();

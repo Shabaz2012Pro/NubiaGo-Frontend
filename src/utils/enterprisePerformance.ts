@@ -1,5 +1,6 @@
-
 // Enterprise-grade performance utilities for 100k+ daily users
+import { errorTracker } from './errorTracking';
+
 interface ErrorData {
   type: string;
   message: string;
@@ -57,8 +58,7 @@ export class EnterprisePerformanceManager {
         this.initializePerformanceObserver(),
         this.initializeNetworkMonitoring(),
         this.initializeUserExperienceTracking(),
-        this.initializeBundleAnalysis(),
-        this.initializeErrorTracking()
+        this.initializeBundleAnalysis()
       ]);
 
       console.log('✅ Enterprise Performance Monitoring initialized');
@@ -515,51 +515,6 @@ export class EnterprisePerformanceManager {
     }
   }
 
-  // Enhanced error tracking
-  async initializeErrorTracking(): Promise<void> {
-    if (typeof window === 'undefined') return;
-
-    // Global error handler
-    window.addEventListener('error', (event) => {
-      this.trackError({
-        type: 'javascript',
-        message: event.message,
-        filename: event.filename,
-        lineno: event.lineno,
-        colno: event.colno,
-        stack: event.error?.stack,
-        timestamp: Date.now(),
-        userAgent: navigator.userAgent,
-        url: window.location.href
-      });
-    });
-
-    // Promise rejection handler
-    window.addEventListener('unhandledrejection', (event) => {
-      this.trackError({
-        type: 'promise',
-        message: event.reason?.message || 'Unhandled Promise Rejection',
-        stack: event.reason?.stack,
-        timestamp: Date.now(),
-        userAgent: navigator.userAgent,
-        url: window.location.href
-      });
-    });
-
-    // Console error tracking
-    const originalConsoleError = console.error;
-    console.error = (...args) => {
-      this.trackError({
-        type: 'console',
-        message: args.join(' '),
-        timestamp: Date.now(),
-        userAgent: navigator.userAgent,
-        url: window.location.href
-      });
-      originalConsoleError.apply(console, args);
-    };
-  }
-
   private trackError(errorData: ErrorData): void {
     // Add to error queue
     this.errorQueue.push(errorData);
@@ -569,8 +524,20 @@ export class EnterprisePerformanceManager {
       this.errorQueue.splice(0, this.errorQueue.length - 1000);
     }
 
-    // Send to monitoring service
-    console.error('Enterprise Error Tracked:', errorData);
+    // Use centralized error tracking instead of console.error to avoid recursion
+    errorTracker.logError(errorData.message, {
+      type: errorData.type,
+      filename: errorData.filename,
+      lineno: errorData.lineno,
+      colno: errorData.colno,
+      stack: errorData.stack,
+      timestamp: errorData.timestamp,
+      userAgent: errorData.userAgent,
+      url: errorData.url,
+      status: errorData.status,
+      userId: errorData.userId,
+      sessionId: errorData.sessionId
+    });
 
     // Store locally for offline scenarios
     try {
