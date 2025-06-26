@@ -165,13 +165,13 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
             <div>
               <h3 className="font-display font-semibold text-lg mb-6">Categories</h3>
               <ul className="space-y-3">
-                <li><Link to="/categories/electronics" className="text-neutral-300 hover:text-gold-400 transition-colors text-sm">Electronics & Tech</Link></li>
-                <li><Link to="/categories/home-appliances" className="text-neutral-300 hover:text-gold-400 transition-colors text-sm">Home Appliances</Link></li>
-                <li><Link to="/categories/fashion" className="text-neutral-300 hover:text-gold-400 transition-colors text-sm">Fashion & Apparel</Link></li>
-                <li><Link to="/categories/beauty" className="text-neutral-300 hover:text-gold-400 transition-colors text-sm">Beauty & Personal Care</Link></li>
-                <li><Link to="/categories/sports" className="text-neutral-300 hover:text-gold-400 transition-colors text-sm">Sports & Fitness</Link></li>
-                <li><Link to="/categories/automotive" className="text-neutral-300 hover:text-gold-400 transition-colors text-sm">Automotive</Link></li>
-                <li><Link to="/categories/food-beverage" className="text-neutral-300 hover:text-gold-400 transition-colors text-sm">Food & Beverage</Link></li>
+                <li><Link to="/products?category=electronics" className="text-neutral-300 hover:text-gold-400 transition-colors text-sm">Electronics & Tech</Link></li>
+                <li><Link to="/products?category=home-appliances" className="text-neutral-300 hover:text-gold-400 transition-colors text-sm">Home Appliances</Link></li>
+                <li><Link to="/products?category=fashion" className="text-neutral-300 hover:text-gold-400 transition-colors text-sm">Fashion & Apparel</Link></li>
+                <li><Link to="/products?category=beauty" className="text-neutral-300 hover:text-gold-400 transition-colors text-sm">Beauty & Personal Care</Link></li>
+                <li><Link to="/products?category=sports" className="text-neutral-300 hover:text-gold-400 transition-colors text-sm">Sports & Fitness</Link></li>
+                <li><Link to="/products?category=automotive" className="text-neutral-300 hover:text-gold-400 transition-colors text-sm">Automotive</Link></li>
+                <li><Link to="/products?category=food-beverage" className="text-neutral-300 hover:text-gold-400 transition-colors text-sm">Food & Beverage</Link></li>
                 <li><Link to="/products" className="text-neutral-300 hover:text-gold-400 transition-colors text-sm">View All Categories</Link></li>
               </ul>
             </div>

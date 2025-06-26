@@ -13,16 +13,13 @@ import { RouteErrorBoundary } from './components/molecules/RouteErrorBoundary';
 import LoadingScreen from './components/molecules/LoadingScreen';
 import OfflineIndicator from './components/molecules/OfflineIndicator';
 import PWAInstallPrompt from './components/molecules/PWAInstallPrompt';
+import Header from './components/organisms/Header';
+import Footer from './components/organisms/Footer';
 
 // Lazy-loaded components for code splitting
-const Header = React.lazy(() => import('./components/organisms/Header'));
-const Footer = React.lazy(() => import('./components/organisms/Footer'));
-
-// Pages
 const HomePage = React.lazy(() => import('./pages/HomePage'));
 const ProductsPage = React.lazy(() => import('./pages/ProductsPage'));
 const ProductDetailPage = React.lazy(() => import('./pages/ProductDetailPage'));
-const CategoryPage = React.lazy(() => import('./pages/CategoryPage'));
 const SearchPage = React.lazy(() => import('./pages/SearchPage'));
 const CartPage = React.lazy(() => import('./pages/CartPage'));
 const UserDashboardPage = React.lazy(() => import('./pages/UserDashboardPage'));
@@ -35,11 +32,11 @@ const BecomeSupplierPage = React.lazy(() => import('./pages/BecomeSupplierPage')
 const NotFoundPage = React.lazy(() => import('./components/molecules/NotFoundPage'));
 
 // Admin pages - lazy loaded separately with explicit .tsx extensions
-const AdminDashboard = React.lazy(() => import('./pages/admin/AdminDashboard.tsx'));
-const AdminProducts = React.lazy(() => import('./pages/admin/AdminProducts.tsx'));
-const AdminOrders = React.lazy(() => import('./pages/admin/AdminOrders.tsx'));
-const AdminUsers = React.lazy(() => import('./pages/admin/AdminUsers.tsx'));
-const AdminSettings = React.lazy(() => import('./pages/admin/AdminSettings.tsx'));
+const AdminDashboard = React.lazy(() => import('./pages/admin/AdminDashboard'));
+const AdminProducts = React.lazy(() => import('./pages/admin/AdminProducts'));
+const AdminOrders = React.lazy(() => import('./pages/admin/AdminOrders'));
+const AdminUsers = React.lazy(() => import('./pages/admin/AdminUsers'));
+const AdminSettings = React.lazy(() => import('./pages/admin/AdminSettings'));
 
 // Utility imports
 import { injectResourceHints, reportWebVitals, initPerformanceMonitoring } from './utils/performance';
@@ -154,50 +151,52 @@ const App: React.FC = () => {
               <OfflineIndicator />
 
               {/* Main Layout */}
-              <Suspense fallback={<LoadingScreen isLoading={true} />}>
-                <Header />
-              </Suspense>
+              <Routes>
+                {/* Main Routes */}
+                <Route path="/" element={
+                  <Suspense fallback={<LoadingScreen isLoading={true} />}>
+                    <HomePage />
+                  </Suspense>
+                } />
+                
+                {/* Routes with Header and Footer */}
+                <Route path="/*" element={
+                  <>
+                    <Header />
+                    <main className="flex-1">
+                      <Suspense fallback={<LoadingScreen isLoading={true} />}>
+                        <Routes>
+                          <Route path="products" element={<ProductsPage />} />
+                          <Route path="products/:id" element={<ProductDetailPage />} />
+                          <Route path="categories/:category" element={<ProductsPage />} />
+                          <Route path="search" element={<SearchPage />} />
+                          <Route path="cart" element={<CartPage />} />
+                          <Route path="dashboard" element={<UserDashboardPage />} />
+                          <Route path="auth" element={<AuthPage />} />
 
-              <main className="flex-1">
-                <Suspense fallback={<LoadingScreen isLoading={true} />}>
-                  <Routes>
-                    {/* Main Routes */}
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/products" element={<ProductsPage />} />
-                    <Route path="/products/:id" element={<ProductDetailPage />} />
-                    <Route path="/categories/:category" element={<ProductsPage />} />
-                    <Route path="/search" element={<SearchPage />} />
-                    <Route path="/cart" element={<CartPage />} />
-                    <Route path="/dashboard" element={<UserDashboardPage />} />
-                    <Route path="/auth" element={<AuthPage />} />
+                          {/* Company Pages */}
+                          <Route path="about" element={<AboutPage />} />
+                          <Route path="contact" element={<ContactPage />} />
+                          <Route path="faq" element={<FAQPage />} />
+                          <Route path="suppliers" element={<SuppliersPage />} />
+                          <Route path="become-supplier" element={<BecomeSupplierPage />} />
 
-                    {/* Company Pages */}
-                    <Route path="/about" element={<AboutPage />} />
-                    <Route path="/contact" element={<ContactPage />} />
-                    <Route path="/faq" element={<FAQPage />} />
-                    <Route path="/suppliers" element={<SuppliersPage />} />
-                    <Route path="/become-supplier" element={<BecomeSupplierPage />} />
+                          {/* Admin Routes */}
+                          <Route path="admin" element={<AdminDashboard />} />
+                          <Route path="admin/products" element={<AdminProducts />} />
+                          <Route path="admin/orders" element={<AdminOrders />} />
+                          <Route path="admin/users" element={<AdminUsers />} />
+                          <Route path="admin/settings" element={<AdminSettings />} />
 
-                    {/* Admin Routes */}
-                    <Route path="/admin" element={<AdminDashboard />} />
-                    <Route path="/admin/products" element={<AdminProducts />} />
-                    <Route path="/admin/orders" element={<AdminOrders />} />
-                    <Route path="/admin/users" element={<AdminUsers />} />
-                    <Route path="/admin/settings" element={<AdminSettings />} />
-
-                    {/* Redirects for SEO */}
-                    <Route path="/home" element={<Navigate to="/" replace />} />
-                    <Route path="/product/:id" element={<Navigate to="/products/$1" replace />} />
-
-                    {/* 404 Page */}
-                    <Route path="*" element={<NotFoundPage />} />
-                  </Routes>
-                </Suspense>
-              </main>
-
-              <Suspense fallback={<div className="h-16" />}>
-                <Footer />
-              </Suspense>
+                          {/* 404 Page */}
+                          <Route path="*" element={<NotFoundPage />} />
+                        </Routes>
+                      </Suspense>
+                    </main>
+                    <Footer />
+                  </>
+                } />
+              </Routes>
 
               {/* Global Toast Notifications */}
               <Toaster

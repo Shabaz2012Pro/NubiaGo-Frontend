@@ -11,7 +11,6 @@ import {
   Shield,
   Zap,
   Award,
-  Database,
   Package,
   ArrowRight,
   Truck
@@ -21,7 +20,6 @@ import { Button } from '../components/atoms/Button';
 import FeaturedProducts from '../components/organisms/FeaturedProducts';
 import { Badge } from '../components/atoms/Badge';
 import { LazyImage } from '../components/atoms/LazyImage';
-import { imageOptimizer } from '../utils/imageOptimizer';
 import { useProductStore } from '../store/useProductStore';
 import { useAuthStore } from '../store/useAuthStore';
 import { testSupabaseConnection } from '../utils/supabaseTest';
@@ -29,6 +27,8 @@ import ImageSlider from '../components/organisms/ImageSlider';
 import CategoriesGrid from '../components/organisms/CategoriesGrid';
 import TrustIndicators from '../components/organisms/TrustIndicators';
 import Newsletter from '../components/organisms/Newsletter';
+import Header from '../components/organisms/Header';
+import Footer from '../components/organisms/Footer';
 import { Suspense } from 'react';
 
 // Lazy-loaded components
@@ -60,6 +60,7 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white dark:bg-neutral-900">
+      <Header />
       <main>
         <ImageSlider />
         <CategoriesGrid />
@@ -73,6 +74,7 @@ const HomePage: React.FC = () => {
         <TrustIndicators />
         <Newsletter />
       </main>
+      <Footer />
     </div>
   );
 };

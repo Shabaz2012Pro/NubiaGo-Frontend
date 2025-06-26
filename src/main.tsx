@@ -23,7 +23,7 @@ initErrorTracking();
 // Preload critical resources
 const preloadCriticalResources = () => {
   const criticalResources = [
-    '/brandmark-design-1024x0 (3).png'
+    '/brandmark-design-1024x0 (3) copy.png'
   ];
   
   criticalResources.forEach(resource => {
