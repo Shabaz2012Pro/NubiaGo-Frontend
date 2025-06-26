@@ -13,7 +13,8 @@ import {
   Award,
   Package,
   ArrowRight,
-  Truck
+  Truck,
+  X
 } from 'lucide-react';
 import { Card } from '../components/atoms/Card';
 import { Button } from '../components/atoms/Button';
