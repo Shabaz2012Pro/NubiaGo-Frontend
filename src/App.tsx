@@ -15,6 +15,7 @@ import OfflineIndicator from './components/molecules/OfflineIndicator';
 import PWAInstallPrompt from './components/molecules/PWAInstallPrompt';
 import Header from './components/organisms/Header';
 import Footer from './components/organisms/Footer';
+import AdminProtectedRoute from './components/admin/AdminProtectedRoute';
 
 // Lazy-loaded components for code splitting
 const HomePage = React.lazy(() => import('./pages/HomePage'));
@@ -46,6 +47,7 @@ const InvestorsPage = React.lazy(() => import('./pages/InvestorsPage'));
 const AffiliatePage = React.lazy(() => import('./pages/AffiliatePage'));
 
 // Admin pages - lazy loaded separately with explicit .tsx extensions
+const AdminLogin = React.lazy(() => import('./pages/admin/AdminLogin'));
 const AdminDashboard = React.lazy(() => import('./pages/admin/AdminDashboard'));
 const AdminProducts = React.lazy(() => import('./pages/admin/AdminProducts'));
 const AdminOrders = React.lazy(() => import('./pages/admin/AdminOrders'));
@@ -167,6 +169,61 @@ const App: React.FC = () => {
 
               {/* Main Layout */}
               <Routes>
+                {/* Admin Routes */}
+                <Route path="/admin/login" element={
+                  <Suspense fallback={<LoadingScreen isLoading={true} />}>
+                    <AdminLogin />
+                  </Suspense>
+                } />
+                
+                <Route path="/admin" element={
+                  <AdminProtectedRoute>
+                    <Suspense fallback={<LoadingScreen isLoading={true} />}>
+                      <AdminDashboard />
+                    </Suspense>
+                  </AdminProtectedRoute>
+                } />
+                
+                <Route path="/admin/products" element={
+                  <AdminProtectedRoute>
+                    <Suspense fallback={<LoadingScreen isLoading={true} />}>
+                      <AdminProducts />
+                    </Suspense>
+                  </AdminProtectedRoute>
+                } />
+                
+                <Route path="/admin/orders" element={
+                  <AdminProtectedRoute>
+                    <Suspense fallback={<LoadingScreen isLoading={true} />}>
+                      <AdminOrders />
+                    </Suspense>
+                  </AdminProtectedRoute>
+                } />
+                
+                <Route path="/admin/users" element={
+                  <AdminProtectedRoute>
+                    <Suspense fallback={<LoadingScreen isLoading={true} />}>
+                      <AdminUsers />
+                    </Suspense>
+                  </AdminProtectedRoute>
+                } />
+                
+                <Route path="/admin/settings" element={
+                  <AdminProtectedRoute>
+                    <Suspense fallback={<LoadingScreen isLoading={true} />}>
+                      <AdminSettings />
+                    </Suspense>
+                  </AdminProtectedRoute>
+                } />
+                
+                <Route path="/admin/update-images" element={
+                  <AdminProtectedRoute>
+                    <Suspense fallback={<LoadingScreen isLoading={true} />}>
+                      <UpdateProductImages />
+                    </Suspense>
+                  </AdminProtectedRoute>
+                } />
+
                 {/* Main Routes */}
                 <Route path="/" element={
                   <Suspense fallback={<LoadingScreen isLoading={true} />}>
@@ -209,14 +266,6 @@ const App: React.FC = () => {
                           <Route path="press-media" element={<PressMediaPage />} />
                           <Route path="investors" element={<InvestorsPage />} />
                           <Route path="affiliate" element={<AffiliatePage />} />
-
-                          {/* Admin Routes */}
-                          <Route path="admin" element={<AdminDashboard />} />
-                          <Route path="admin/products" element={<AdminProducts />} />
-                          <Route path="admin/orders" element={<AdminOrders />} />
-                          <Route path="admin/users" element={<AdminUsers />} />
-                          <Route path="admin/settings" element={<AdminSettings />} />
-                          <Route path="admin/update-images" element={<UpdateProductImages />} />
 
                           {/* 404 Page */}
                           <Route path="*" element={<NotFoundPage />} />

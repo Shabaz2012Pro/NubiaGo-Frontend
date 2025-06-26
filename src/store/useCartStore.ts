@@ -149,7 +149,7 @@ export const useCartStore = create<CartState>()(
           }
         },
 
-        removeItem: async (productId: string) => {
+        removeItem: (productId: string) => {
           const state = get();
 
           try {

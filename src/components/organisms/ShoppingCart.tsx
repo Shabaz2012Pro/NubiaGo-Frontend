@@ -68,7 +68,6 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({
   };
 
   const selectedCountry = africanCountries.find(c => c.name === shippingCountry);
-  const shippingCost = selectedCountry?.shipping || 0;
   const promoDiscount = appliedPromo ? subtotal * 0.1 : 0; // 10% discount
 
   const cartVariants = {
