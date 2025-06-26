@@ -1,9 +1,8 @@
-
 import React, { useState } from 'react';
 import { Eye, EyeOff, Mail } from 'lucide-react';
 import { useAuthStore } from '../../store/useAuthStore';
 import { Button } from '../atoms/Button';
-import { Input } from '../atoms/Input';
+import Input from '../atoms/Input';
 
 interface SignInFormProps {
   onSuccess?: () => void;

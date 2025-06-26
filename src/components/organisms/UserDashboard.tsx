@@ -26,7 +26,8 @@ import {
   X,
   Check,
   Clock,
-  AlertCircle
+  AlertCircle,
+  LogOut
 } from 'lucide-react';
 import { useTheme } from '../../contexts/ThemeContext';
 import Card from '../atoms/Card';
