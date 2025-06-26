@@ -12,7 +12,8 @@ import {
   Award,
   Truck,
   Package,
-  Shield
+  Shield,
+  Download
 } from 'lucide-react';
 import Card from '../components/atoms/Card';
 import Badge from '../components/atoms/Badge';
