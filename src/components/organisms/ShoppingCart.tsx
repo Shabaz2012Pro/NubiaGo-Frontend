@@ -183,7 +183,7 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({
                                 disabled={item.quantity <= 1}
                                 className="w-8 h-8 rounded-full bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 flex items-center justify-center hover:bg-neutral-100 dark:hover:bg-neutral-600"
                               >
-                                <Minus className="w-3 h-3" />
+                                <Minus className="w-4 h-4" />
                               </button>
                               <span className="w-8 text-center font-medium">
                                 {item.quantity}
@@ -192,15 +192,15 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({
                                 onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
                                 className="w-8 h-8 rounded-full bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 flex items-center justify-center hover:bg-neutral-100 dark:hover:bg-neutral-600"
                               >
-                                <Plus className="w-3 h-3" />
+                                <Plus className="w-4 h-4" />
                               </button>
                             </div>
                             
                             <button
                               onClick={() => removeItem(item.product.id)}
-                              className="w-8 h-8 rounded-full bg-red-100 dark:bg-red-900/20 text-red-600 flex items-center justify-center hover:bg-red-200 dark:hover:bg-red-900/40 transition-colors"
+                              className="text-red-500 hover:text-red-700 text-sm transition-colors"
                             >
-                              <Trash2 className="w-3 h-3" />
+                              Remove
                             </button>
                           </div>
                           
@@ -238,7 +238,7 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({
                           onClick={removePromoCode}
                           className="text-green-600 hover:text-green-700"
                         >
-                          <X className="w-4 h-4" />
+                          <Trash2 className="w-4 h-4" />
                         </button>
                       </div>
                     ) : (
