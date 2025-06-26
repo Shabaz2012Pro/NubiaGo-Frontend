@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  ShoppingCart as ShoppingCartIcon, 
+  ShoppingCart, 
+  Trash2, 
   Plus, 
   Minus, 
-  Trash2, 
-  X, 
   ArrowRight, 
   Truck, 
   Shield, 
@@ -15,8 +14,8 @@ import {
   CreditCard
 } from 'lucide-react';
 import Button from '../atoms/Button';
-import Badge from '../atoms/Badge';
 import Card from '../atoms/Card';
+import Badge from '../atoms/Badge';
 import Input from '../atoms/Input';
 import { clsx } from 'clsx';
 import { useCartStore } from '../../store/useCartStore';
@@ -49,6 +48,8 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({
   ];
 
   const applyPromoCode = () => {
+    if (!promoCode) return;
+    
     // Mock promo codes
     const validCodes = {
       'WELCOME10': 10,
@@ -117,7 +118,7 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({
             {/* Header */}
             <div className="flex items-center justify-between p-6 border-b border-neutral-200 dark:border-neutral-700">
               <div className="flex items-center space-x-3">
-                <ShoppingCartIcon className="w-6 h-6 text-red-600" />
+                <ShoppingCart className="w-6 h-6 text-red-600" />
                 <h2 className="text-xl font-bold text-neutral-900 dark:text-neutral-100">
                   Shopping Cart
                 </h2>
@@ -129,7 +130,7 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({
                 onClick={onClose}
                 className="w-8 h-8 rounded-full bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors"
               >
-                <X className="w-4 h-4" />
+                ×
               </button>
             </div>
 
@@ -137,7 +138,7 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({
             <div className="flex-1 overflow-y-auto p-6">
               {items.length === 0 ? (
                 <div className="text-center py-12">
-                  <ShoppingCartIcon className="w-16 h-16 text-neutral-400 mx-auto mb-4" />
+                  <ShoppingCart className="w-16 h-16 text-neutral-400 mx-auto mb-4" />
                   <h3 className="text-lg font-medium text-neutral-900 dark:text-neutral-100 mb-2">
                     Your cart is empty
                   </h3>
@@ -179,6 +180,7 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({
                             <div className="flex items-center space-x-2">
                               <button
                                 onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
+                                disabled={item.quantity <= 1}
                                 className="w-8 h-8 rounded-full bg-white dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-600 flex items-center justify-center hover:bg-neutral-100 dark:hover:bg-neutral-600"
                               >
                                 <Minus className="w-3 h-3" />
@@ -327,15 +329,15 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({
                 {/* Trust Indicators */}
                 <div className="flex items-center justify-center space-x-6 py-3 bg-neutral-50 dark:bg-neutral-800 rounded-lg">
                   <div className="flex items-center space-x-1 text-xs text-neutral-600 dark:text-neutral-400">
-                    <Shield className="w-3 h-3 text-green-500" />
+                    <Shield className="w-3 h-3" />
                     <span>Secure</span>
                   </div>
                   <div className="flex items-center space-x-1 text-xs text-neutral-600 dark:text-neutral-400">
-                    <Truck className="w-3 h-3 text-blue-500" />
+                    <Truck className="w-3 h-3" />
                     <span>Fast Shipping</span>
                   </div>
                   <div className="flex items-center space-x-1 text-xs text-neutral-600 dark:text-neutral-400">
-                    <CreditCard className="w-3 h-3 text-purple-500" />
+                    <CreditCard className="w-3 h-3" />
                     <span>Safe Payment</span>
                   </div>
                 </div>
