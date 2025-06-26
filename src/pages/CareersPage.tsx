@@ -137,7 +137,7 @@ const CareersPage: React.FC = () => {
     },
     {
       title: 'Integrity',
-      description: 'We are honest, transparent, and committed to doing what's best for our customers and our company.',
+      description: 'We are honest, transparent, and committed to doing what\'s best for our customers and our company.',
       icon: <Shield className="w-6 h-6" />
     },
     {
