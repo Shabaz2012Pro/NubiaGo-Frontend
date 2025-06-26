@@ -22,6 +22,9 @@ import Button from '../../components/atoms/Button';
 import Badge from '../../components/atoms/Badge';
 import AdminLayout from './AdminLayout';
 import PerformanceMonitor from '../../components/molecules/PerformanceMonitor';
+import Database from './Database';
+import HardDrive from './HardDrive';
+import ListOrdered from './ListOrdered';
 
 const AdminDashboard: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
