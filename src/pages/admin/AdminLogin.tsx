@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Shield, Lock, Mail, Eye, EyeOff, AlertCircle } from 'lucide-react';
@@ -6,6 +6,7 @@ import Card from '../../components/atoms/Card';
 import Button from '../../components/atoms/Button';
 import Input from '../../components/atoms/Input';
 import { useAuthStore } from '../../store/useAuthStore';
+import { createAdminUser, signInAdminUser } from '../../utils/createAdminUser';
 
 const AdminLogin: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -13,9 +14,19 @@ const AdminLogin: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [creatingAdmin, setCreatingAdmin] = useState(false);
+  const [adminCreated, setAdminCreated] = useState(false);
   
   const { signIn } = useAuthStore();
   const navigate = useNavigate();
+
+  // Check if user is already logged in as admin
+  useEffect(() => {
+    const user = useAuthStore.getState().user;
+    if (user?.role === 'admin') {
+      navigate('/admin');
+    }
+  }, [navigate]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,6 +57,27 @@ const AdminLogin: React.FC = () => {
       setError(error instanceof Error ? error.message : 'Login failed. Please try again.');
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleCreateAdminUser = async () => {
+    setCreatingAdmin(true);
+    setError(null);
+    
+    try {
+      const result = await createAdminUser();
+      if (result.success) {
+        setAdminCreated(true);
+        setEmail('admin@nubiago.com');
+        setPassword('Admin123!@#');
+        setError(null);
+      } else {
+        setError(result.error || 'Failed to create admin user');
+      }
+    } catch (error) {
+      setError(error instanceof Error ? error.message : 'Failed to create admin user');
+    } finally {
+      setCreatingAdmin(false);
     }
   };
 
@@ -110,6 +142,13 @@ const AdminLogin: React.FC = () => {
               </div>
             )}
             
+            {adminCreated && (
+              <div className="p-3 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 rounded-lg flex items-center space-x-2 text-sm">
+                <CheckCircle className="w-4 h-4 flex-shrink-0" />
+                <span>Admin user created successfully! You can now sign in.</span>
+              </div>
+            )}
+            
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <input
@@ -142,9 +181,19 @@ const AdminLogin: React.FC = () => {
             </Button>
           </form>
           
-          <div className="mt-6 pt-6 border-t border-neutral-200 dark:border-neutral-700 text-center">
-            <p className="text-sm text-neutral-600 dark:text-neutral-400">
-              Need help? Contact <a href="mailto:support@nubiago.com" className="text-red-600 hover:text-red-500">IT Support</a>
+          <div className="mt-6 pt-6 border-t border-neutral-200 dark:border-neutral-700">
+            <Button
+              variant="outline"
+              size="sm"
+              fullWidth
+              onClick={handleCreateAdminUser}
+              loading={creatingAdmin}
+            >
+              Create Admin User
+            </Button>
+            <p className="text-xs text-neutral-500 mt-2 text-center">
+              Email: admin@nubiago.com<br />
+              Password: Admin123!@#
             </p>
           </div>
         </Card>
