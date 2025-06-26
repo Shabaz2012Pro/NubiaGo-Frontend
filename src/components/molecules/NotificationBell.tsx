@@ -78,3 +78,4 @@ const NotificationBell: React.FC<NotificationBellProps> = ({
 };
 
 export default NotificationBell;
+export { NotificationBell };
