@@ -1,4 +1,5 @@
 // Error tracking and monitoring utilities
+import { api } from '../api/apiClient';
 
 interface ErrorEvent {
   id: string;
@@ -174,8 +175,9 @@ class ErrorTracker {
 
   private async sendToService(errorEvent: ErrorEvent): Promise<void> {
     try {
-      // In production, send to error tracking service like Sentry
-      await fetch('/api/errors', {
+      // Use the correct backend API base URL
+      const errorTrackingUrl = `${api.defaults.baseURL}/errors`;
+      await fetch(errorTrackingUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(errorEvent)
@@ -187,8 +189,9 @@ class ErrorTracker {
 
   private async sendErrorToService(error: ErrorReport): Promise<void> {
     try {
-      // Replace with your actual error reporting service
-      await fetch('/api/errors', {
+      // Use the correct backend API base URL
+      const errorTrackingUrl = `${api.defaults.baseURL}/errors`;
+      await fetch(errorTrackingUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
