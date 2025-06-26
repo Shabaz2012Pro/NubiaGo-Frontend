@@ -27,34 +27,6 @@ export const testSupabaseConnection = async () => {
   }
 };
 
-export const createTestProfile = async () => {
-  try {
-    console.log('👤 Creating test user...');
-    
-    const { data, error } = await supabase
-      .from('profiles')
-      .insert({
-        first_name: 'Test',
-        last_name: 'User',
-        email: 'test@nubiago.com',
-        role: 'buyer'
-      })
-      .select()
-      .single();
-    
-    if (error) {
-      console.error('❌ Failed to create test user:', error.message);
-      return { success: false, error: error.message };
-    }
-    
-    console.log('✅ Test user created:', data);
-    return { success: true, data };
-  } catch (error) {
-    console.error('❌ User creation failed:', error);
-    return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
-  }
-};
-
 export const fetchSupabaseData = async () => {
   try {
     console.log('📊 Fetching data from Supabase...');
@@ -94,6 +66,57 @@ export const fetchSupabaseData = async () => {
     };
   } catch (error) {
     console.error('❌ Data fetch failed:', error);
+    return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+  }
+};
+
+export const updateProductImages = async (productId: string, newImages: string[]) => {
+  try {
+    console.log(`🖼️ Updating images for product ${productId}...`);
+    
+    const { data, error } = await supabase
+      .from('products')
+      .update({ images: newImages })
+      .eq('id', productId)
+      .select();
+    
+    if (error) {
+      console.error('❌ Failed to update product images:', error.message);
+      return { success: false, error: error.message };
+    }
+    
+    console.log('✅ Product images updated successfully!');
+    return { success: true, data };
+  } catch (error) {
+    console.error('❌ Image update failed:', error);
+    return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+  }
+};
+
+export const createTestProfile = async () => {
+  try {
+    console.log('👤 Creating test user...');
+    
+    const { data, error } = await supabase
+      .from('profiles')
+      .insert({
+        first_name: 'Test',
+        last_name: 'User',
+        email: 'test@nubiago.com',
+        role: 'buyer'
+      })
+      .select()
+      .single();
+    
+    if (error) {
+      console.error('❌ Failed to create test user:', error.message);
+      return { success: false, error: error.message };
+    }
+    
+    console.log('✅ Test user created:', data);
+    return { success: true, data };
+  } catch (error) {
+    console.error('❌ User creation failed:', error);
     return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
   }
 };

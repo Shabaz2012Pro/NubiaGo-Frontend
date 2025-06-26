@@ -38,6 +38,7 @@ const AdminProducts = React.lazy(() => import('./pages/admin/AdminProducts'));
 const AdminOrders = React.lazy(() => import('./pages/admin/AdminOrders'));
 const AdminUsers = React.lazy(() => import('./pages/admin/AdminUsers'));
 const AdminSettings = React.lazy(() => import('./pages/admin/AdminSettings'));
+const UpdateProductImages = React.lazy(() => import('./pages/admin/UpdateProductImages'));
 
 // Utility imports
 import { injectResourceHints, reportWebVitals, initPerformanceMonitoring } from './utils/performance';
@@ -199,6 +200,7 @@ const App: React.FC = () => {
                           <Route path="admin/orders" element={<AdminOrders />} />
                           <Route path="admin/users" element={<AdminUsers />} />
                           <Route path="admin/settings" element={<AdminSettings />} />
+                          <Route path="admin/update-images" element={<UpdateProductImages />} />
 
                           {/* 404 Page */}
                           <Route path="*" element={<NotFoundPage />} />
