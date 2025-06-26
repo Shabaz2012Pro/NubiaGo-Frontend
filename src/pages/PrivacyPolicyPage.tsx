@@ -9,7 +9,8 @@ import {
   Globe, 
   Clock,
   Mail,
-  Phone
+  Phone,
+  MapPin
 } from 'lucide-react';
 import Card from '../components/atoms/Card';
 import Button from '../components/atoms/Button';
