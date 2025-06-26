@@ -71,7 +71,7 @@ export const AuthButton: React.FC = () => {
                 className="w-full flex items-center space-x-2 p-2 text-left hover:bg-neutral-100 dark:hover:bg-neutral-700 rounded-lg transition-colors"
               >
                 <User className="w-4 h-4" />
-                <span>My Profile</span>
+                <span>My Dashboard</span>
               </button>
               
               <button
