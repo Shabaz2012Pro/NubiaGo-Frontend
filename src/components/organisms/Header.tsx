@@ -221,7 +221,6 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => {
               {/* User Menu */}
               {!isLoading && (
                 <UserMenu 
-                  user={user}
                   className="relative"
                 />
               )}
