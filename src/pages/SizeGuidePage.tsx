@@ -7,7 +7,6 @@ import {
   Briefcase, 
   HelpCircle, 
   ArrowRight,
-  Tape,
   User,
   Info
 } from 'lucide-react';
@@ -599,7 +598,7 @@ const SizeGuidePage: React.FC = () => {
                     <div className="flex flex-col md:flex-row md:items-center md:space-x-8">
                       <div className="mb-6 md:mb-0 md:w-1/3">
                         <div className="p-6 bg-teal-100 dark:bg-teal-900/20 rounded-xl flex items-center justify-center">
-                          <Tape className="w-16 h-16 text-teal-600" />
+                          <Ruler className="w-16 h-16 text-teal-600" />
                         </div>
                       </div>
                       <div className="md:w-2/3">
