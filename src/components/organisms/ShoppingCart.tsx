@@ -220,7 +220,7 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({
                           
                           <div className="flex items-center justify-between mt-2">
                             <span className="text-sm text-neutral-600 dark:text-neutral-400">
-                              ${item.product.price} each
+                              ${item.product.price.toFixed(2)} each
                             </span>
                             <span className="font-semibold text-neutral-900 dark:text-neutral-100">
                               ${(item.product.price * item.quantity).toFixed(2)}
@@ -317,7 +317,7 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({
                   </div>
                   
                   <div className="flex justify-between text-sm">
-                    <span className="text-neutral-600 dark:text-neutral-400">Tax (10%):</span>
+                    <span className="text-neutral-600 dark:text-neutral-400">Tax (8%):</span>
                     <span className="font-medium">${tax.toFixed(2)}</span>
                   </div>
                   

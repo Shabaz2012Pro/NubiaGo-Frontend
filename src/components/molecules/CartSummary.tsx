@@ -15,12 +15,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({
   onCheckout,
   className
 }) => {
-  const { items, subtotal } = useCartStore();
-  
-  // Calculate shipping, tax, and total
-  const shipping = subtotal > 100 ? 0 : 10; // Free shipping over $100
-  const tax = subtotal * 0.1; // 10% tax
-  const total = subtotal + shipping + tax;
+  const { items, subtotal, tax, shipping, total } = useCartStore();
   
   // Check if cart is empty
   const isEmpty = items.length === 0;
@@ -50,7 +45,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({
         </div>
         
         <div className="flex justify-between">
-          <span className="text-neutral-600 dark:text-neutral-400">Tax (10%)</span>
+          <span className="text-neutral-600 dark:text-neutral-400">Tax (8%)</span>
           <span className="font-medium text-neutral-900 dark:text-neutral-100">${tax.toFixed(2)}</span>
         </div>
         
@@ -64,7 +59,7 @@ const CartSummary: React.FC<CartSummaryProps> = ({
       
       {shipping === 0 && (
         <div className="flex items-start space-x-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg mb-6">
-          <Truck className="w-5 h-5 text-green-600 flex-shrink-0" />
+          <Truck className="w-5 h-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
           <div>
             <p className="text-sm font-medium text-green-700 dark:text-green-300">
               Free Shipping
