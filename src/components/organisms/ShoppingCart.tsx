@@ -114,7 +114,7 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 z-40"
+            className="fixed inset-0 bg-black/50 z-[150]"
             onClick={onClose}
           />
           
@@ -125,7 +125,7 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({
             animate="visible"
             exit="exit"
             className={clsx(
-              'fixed top-0 right-0 h-full w-full max-w-md bg-white dark:bg-neutral-900 shadow-2xl z-50 flex flex-col',
+              'fixed top-0 right-0 h-full w-full max-w-md bg-white dark:bg-neutral-900 shadow-2xl z-[151] flex flex-col',
               className
             )}
           >
