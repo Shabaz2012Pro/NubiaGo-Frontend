@@ -41,7 +41,6 @@ export const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setFormError(null);
     
     const emailValidationError = validateEmail(email);
     if (emailValidationError) {
