@@ -44,7 +44,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
+      <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 overflow-y-auto">
         {/* Backdrop */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -60,7 +60,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
-          className="relative w-full max-w-md mx-4 bg-white dark:bg-neutral-800 rounded-xl shadow-xl overflow-hidden max-h-[90vh] overflow-y-auto"
+          className="relative w-full max-w-md mx-4 bg-white dark:bg-neutral-800 rounded-xl shadow-xl overflow-hidden max-h-[90vh] overflow-y-auto z-[101]"
         >
           {/* Close Button */}
           <button
